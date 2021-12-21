@@ -1,0 +1,89 @@
+import 'dart:convert';
+
+import 'package:flutter_secentry/helpers/sharedpreferences.dart';
+import 'package:flutter_secentry/models/user_model.dart';
+import 'package:flutter_secentry/services/api.dart';
+import 'package:flutter_secentry/widget/toast.dart';
+import 'package:http/http.dart' as http;
+
+class CompanyServices {
+  companyRegistration(
+    context,
+    String estateId,
+  ) async {
+    UserModel userData = await SharedPreference().readAsModel('userData');
+    try {
+      var client = http.Client();
+      var url = Uri.parse("${Api.baseUrl}company-user/");
+      final http.Response response = await client
+          .post(
+            url,
+            headers: <String, String>{
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Token ${userData.key}'
+            },
+            body: jsonEncode(<String, dynamic>{"company_id": estateId}),
+          )
+          .timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseJson = json.decode(response.body);
+        // SharedPreference().save("estateInformation", responseJson);
+        // SharedPreference().save("userData", responseJson);
+        print(responseJson);
+        return true;
+      } else {
+        final responseJson = json.decode(response.body);
+        print(responseJson);
+        ToastUtils.showRedToast(response.body);
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      // if (e is SocketException) {
+      //   return '"Please check your Internet Connection", "No Internet Connection"';
+      // } else {
+      //   print(e.toString());
+      // }
+    }
+  }
+
+  // DioCacheManager? _dioCacheManager;
+  // Future<EstateDetails> getEstateDetail() async {
+  //   _dioCacheManager = DioCacheManager(CacheConfig());
+  //   UserModel userData = await SharedPreference().readAsModel('userData');
+  //   print(userData.phoneNumber);
+  //   var client = http.Client();
+  //   var url =
+  //       "${Api.baseUrl}user-estate-detail/?estate_user_phone=${userData.phoneNumber}";
+  //   Options _cacheOptions = buildCacheOptions(
+  //     Duration(seconds: 120),
+  //   );
+  //   _cacheOptions.headers.addAll({
+  //     'Content-Type': 'application/json; charset=UTF-8',
+  //     'Accept': 'application/json',
+  //     'Authorization': 'Token ${userData.key}',
+  //   });
+  //   try {
+  //     Dio _dio = Dio();
+  //     _dio.interceptors.add(_dioCacheManager.interceptor);
+  //     Response response = await _dio.get(url, options: _cacheOptions);
+  //     if (response.statusCode == 200) {
+  //       // final responseJson = json.decode(response.data);
+  //       // print(response.data);
+  //       SharedPreference().save("estateDetails", response.data);
+  //       return EstateDetails.fromJson(json.decode(response.data));
+  //     } else {
+  //       print(response.data);
+  //       ToastUtils.showRedToast(json.decode(response.data));
+  //     }
+  //   } catch (e) {
+  //     if (e is DioError) {
+  //       print(e.response);
+  //     } else {
+  //       print(e.toString());
+  //     }
+  //   }
+  // }
+}
