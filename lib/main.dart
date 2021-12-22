@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'Pages/Estate/estate_dashboard.dart';
+import 'Pages/guard/guard_join_facility.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
         ),
-        home: const EstateDashoard(),
+        home: const GuardJoinFacility(),
       ),
     );
   }

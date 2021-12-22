@@ -10,18 +10,3 @@ saveUser(context) async {
   UserModel userData = await SharedPreference().readAsModel("userData");
   _profileNotifier.setUserProfile(userData);
 }
-
-checkProfile(context) async {
-  ProfileDataNotifier _profileNotifier =
-      Provider.of<ProfileDataNotifier>(context, listen: false);
-  UserModel userData = await SharedPreference().readAsModel("userData");
-  if (userData.isGuard == true &&
-      userData.belongToEstateidGuard == "No Estate joined yet") {
-    Navigator.pushNamed(context, '/add_estateid');
-  } else if (userData.isGuard == true &&
-      userData.belongToEstateidGuard != "No Estate joined yet") {
-    Navigator.pushNamed(context, '/security_dashboard');
-  } else {
-    Navigator.pushNamed(context, '/dashboard');
-  }
-}

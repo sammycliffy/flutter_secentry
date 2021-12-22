@@ -15,6 +15,8 @@ import 'package:flutter_secentry/Pages/authpages/registration.dart';
 import 'package:flutter_secentry/Pages/authpages/resetpassword.dart';
 import 'package:flutter_secentry/Pages/Estate/no_facility.dart';
 import 'package:flutter_secentry/Pages/Estate/no_facility_invitation.dart';
+import 'package:flutter_secentry/Pages/guard/guard_estate_dashboard.dart';
+import 'package:flutter_secentry/Pages/guard/visitor_entry.dart';
 
 final route = {
   '/nofacility': (context) => const Nofacility(),
@@ -34,4 +36,6 @@ final route = {
   '/emergency': (context) => const EmergencyContact(),
   '/news': (context) => const News(),
   '/messages': (context) => const Messages(),
+  '/guard_dashboard': (context) => const GuardEstateDashboard(),
+  '/visitor_entry': (context) => const VisitorEntryApproval(),
 };

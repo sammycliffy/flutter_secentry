@@ -82,6 +82,7 @@ class _GuestEntryState extends State<GuestEntry> {
 
   noInvitedGuest() => Column(
         children: [
+          heightSpace(100),
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/invite_guest'),
             child: Center(

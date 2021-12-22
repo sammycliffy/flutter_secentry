@@ -82,6 +82,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
 
   noInvitedGuest() => Column(
         children: [
+          heightSpace(100),
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/invite_guest'),
             child: Center(
@@ -91,7 +92,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
           heightSpace(20),
           const Center(
             child: Text(
-              'You haven\'t invited anyone yet.\n Tap icon to invite guest',
+              'No emergency contact yet.\n Ask your admin to add at least one',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18, color: kGray),
             ),

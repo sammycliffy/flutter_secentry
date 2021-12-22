@@ -55,10 +55,10 @@ class EstateServices {
     }
   }
 
-  getEstateDetail() async {
+  Future<bool> getEstateDetail() async {
+    bool result = false;
     _dioCacheManager = DioCacheManager(CacheConfig());
     UserModel userData = await SharedPreference().readAsModel('userData');
-    print(userData.phoneNumber);
     var client = http.Client();
     var url =
         "${Api.baseUrl}user-estate-detail/?estate_user_phone=${userData.phoneNumber}";
@@ -75,13 +75,11 @@ class EstateServices {
       _dio.interceptors.add(_dioCacheManager!.interceptor);
       Response response = await _dio.get(url, options: _cacheOptions);
       if (response.statusCode == 200) {
-        // final responseJson = json.decode(response.data);
-        // print(response.data);
         SharedPreference().save("estateDetails", response.data);
-        return EstateDetails.fromJson(json.decode(response.data));
+        result = true;
       } else {
-        print(response.data);
         ToastUtils.showRedToast(json.decode(response.data));
+        result = false;
       }
     } catch (e) {
       if (e is DioError) {
@@ -90,5 +88,6 @@ class EstateServices {
         print(e.toString());
       }
     }
+    return result;
   }
 }
