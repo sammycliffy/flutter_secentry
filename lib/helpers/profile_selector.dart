@@ -8,7 +8,29 @@ checkProfile(context) async {
   ProfileDataNotifier _profileNotifier =
       Provider.of<ProfileDataNotifier>(context, listen: false);
   UserModel userData = await SharedPreference().readAsModel("userData");
-  //check if user guard
+  if (userData.isEstateuser == true) {
+    //is estate user
+    if (userData.belongEstateId != "No Estate ID") {
+      Navigator.pushNamed(context, '/estate_dashboard');
+    } else {
+      Navigator.pushNamed(context, '/nofacility');
+    }
+  } else if (userData.isCompanyuser == true) {
+    //is company user
+    if (userData.belongCompanyId != "No Company ID") {
+      Navigator.pushNamed(context, '/company_dashboard');
+    } else {
+      Navigator.pushNamed(context, '/nofacility');
+    }
+  } else {
+    //guard
+    if (userData.belongToEstateidGuard != "No Estate joined yet") {
+      Navigator.pushNamed(context, '/guard_dashboard');
+    } else {
+      //doesn't belong to estate
+      Navigator.pushNamed(context, '/no_guard_facility');
+    }
+  }
 
   // if (userData.isGuard == true &&
   //     userData.belongToEstateidGuard == "No Estate joined yet") {

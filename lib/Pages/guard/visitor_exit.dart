@@ -8,14 +8,14 @@ import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
-class VisitorEntryApproval extends StatefulWidget {
-  const VisitorEntryApproval({Key? key}) : super(key: key);
+class VisitorExitApproval extends StatefulWidget {
+  const VisitorExitApproval({Key? key}) : super(key: key);
 
   @override
-  State<VisitorEntryApproval> createState() => _VisitorEntryApprovalState();
+  State<VisitorExitApproval> createState() => _VisitorExitApprovalState();
 }
 
-class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
+class _VisitorExitApprovalState extends State<VisitorExitApproval> {
   final code = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final EstateServices _estateServices = EstateServices();
@@ -38,12 +38,12 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           heightSpace(40),
-                          IconButton(
-                              onPressed: () => Navigator.pop(context),
+                          const IconButton(
+                              onPressed: null,
                               icon: Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
                           const Text(
-                            'Visitor entry',
+                            'Visitor exit',
                             style: TextStyle(fontSize: 40),
                           ),
                           heightSpace(80),
@@ -73,7 +73,7 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
           hintText: 'Visitor code'));
 
   validate() async {
-    Navigator.pushNamed(context, '/entry_info');
+    Navigator.pushNamed(context, '/guard_dashboard');
     // if (_formKey.currentState!.validate()) {
     //   _profileDataNotifier!.setLoading(true);
     //   dynamic result =

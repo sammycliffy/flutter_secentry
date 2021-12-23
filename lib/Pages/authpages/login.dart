@@ -4,8 +4,10 @@ import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/profile_helpers.dart';
+import 'package:flutter_secentry/helpers/profile_selector.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/services/auth_service.dart';
+import 'package:flutter_secentry/services/estate_service.dart';
 import 'package:flutter_secentry/widget/button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,7 @@ class _LoginState extends State<Login> {
   final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final AuthServices _authServices = AuthServices();
+  final EstateServices _estateServices = EstateServices();
   ProfileDataNotifier? _profileDataNotifier;
 
   @override
@@ -109,7 +112,13 @@ class _LoginState extends State<Login> {
       if (result) {
         saveUser(context);
         _profileDataNotifier!.setLoading(false);
-        Navigator.pushNamed(context, '/nofacility');
+        checkProfile(context);
+        // dynamic result = await _estateServices.getEstateDetail();
+        // if (result) {
+        //   saveEstate(context);
+        //   _profileDataNotifier!.setLoading(false);
+        //   checkProfile(context);
+        // }
       } else {
         _profileDataNotifier!.setLoading(false);
       }

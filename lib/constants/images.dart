@@ -19,6 +19,8 @@ class Images {
   static String message = 'assets/images/messages.png';
   static String news = 'assets/images/news.png';
   static String vendor = 'assets/images/vendor.png';
+  static String entry_approved = 'assets/images/entry_approve.svg';
+  static String exit_approved = 'assets/images/exit_approved.svg';
 }
 
 final noEstateImage =
@@ -33,6 +35,8 @@ final greenFacilityIcon = SvgPicture.asset(Images.estateIconGreen);
 final visitorentry = SvgPicture.asset(Images.entry);
 final searchIcon = SvgPicture.asset(Images.search);
 final guestListIcon = SvgPicture.asset(Images.guestEntry);
+final entryApproved = SvgPicture.asset(Images.entry_approved);
+final exitApproved = SvgPicture.asset(Images.exit_approved);
 final guestEntry = Image.asset(
   Images.entryicon,
   width: 100,

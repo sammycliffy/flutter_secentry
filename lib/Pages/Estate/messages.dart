@@ -109,13 +109,10 @@ class _MessagesState extends State<Messages> {
       if (value.count == 0) {
         noinvitations = true;
       } else {
-        setState(() {
-          value.results!.forEach((element) {
-            setState(() {
-              message.add(element.message);
-
-              time.add(formatDate(DateTime.parse(element.time!)));
-            });
+        value.results?.forEach((element) {
+          setState(() {
+            message.add(element.message);
+            time.add(formatDate(DateTime.parse(element.time!)));
           });
         });
       }

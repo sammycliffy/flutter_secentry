@@ -8,14 +8,14 @@ import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
-class VisitorEntryApproval extends StatefulWidget {
-  const VisitorEntryApproval({Key? key}) : super(key: key);
+class UserExit extends StatefulWidget {
+  const UserExit({Key? key}) : super(key: key);
 
   @override
-  State<VisitorEntryApproval> createState() => _VisitorEntryApprovalState();
+  State<UserExit> createState() => _UserExitState();
 }
 
-class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
+class _UserExitState extends State<UserExit> {
   final code = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final EstateServices _estateServices = EstateServices();
@@ -43,7 +43,7 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
                               icon: Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
                           const Text(
-                            'Visitor entry',
+                            'User Exit',
                             style: TextStyle(fontSize: 40),
                           ),
                           heightSpace(80),
@@ -73,7 +73,7 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
           hintText: 'Visitor code'));
 
   validate() async {
-    Navigator.pushNamed(context, '/entry_info');
+    Navigator.pushNamed(context, '/exit_approved');
     // if (_formKey.currentState!.validate()) {
     //   _profileDataNotifier!.setLoading(true);
     //   dynamic result =
@@ -84,7 +84,5 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
     //     SharedPreference().setPending(true);
     //   } else {
     //     _profileDataNotifier!.setLoading(false);
-    //   }
-    // }
   }
 }

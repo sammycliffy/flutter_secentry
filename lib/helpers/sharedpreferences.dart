@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_secentry/models/estate_details.dart';
 import 'package:flutter_secentry/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +9,13 @@ class SharedPreference {
     String? getString = prefs.getString(key);
 
     return UserModel.fromJson(json.decode('$getString'));
+  }
+
+  Future<EstateDetails> readEstateModel(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    String? getString = prefs.getString(key);
+
+    return EstateDetails.fromJson(json.decode('$getString'));
   }
 
   save(String key, value) async {

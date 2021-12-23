@@ -34,7 +34,7 @@ class GuestEntryServices {
               "estate_visitor_address": visitorAddress,
               "estate_visitor_phone": visitorPhone,
               "purpose_of_visit": purposeOfVisit,
-              "duration": duration.round(),
+              "duration": 3,
               "item_pass": itemPass.map((i) => i.toJson()).toList()
             }),
           )

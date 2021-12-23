@@ -55,17 +55,17 @@ class EstateServices {
     }
   }
 
-  Future<bool> getEstateDetail() async {
+  Future getEstateDetail() async {
     bool result = false;
     _dioCacheManager = DioCacheManager(CacheConfig());
     UserModel userData = await SharedPreference().readAsModel('userData');
     var client = http.Client();
     var url =
-        "${Api.baseUrl}user-estate-detail/?estate_user_phone=${userData.phoneNumber}";
+        "${Api.baseUrl}estate-user-search/?estate_user_phone=${userData.phoneNumber}";
     Options _cacheOptions = buildCacheOptions(
       const Duration(seconds: 120),
     );
-    _cacheOptions.headers!.addAll({
+    _cacheOptions.headers?.addAll({
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
       'Authorization': 'Token ${userData.key}',
@@ -75,6 +75,7 @@ class EstateServices {
       _dio.interceptors.add(_dioCacheManager!.interceptor);
       Response response = await _dio.get(url, options: _cacheOptions);
       if (response.statusCode == 200) {
+        print(response.data);
         SharedPreference().save("estateDetails", response.data);
         result = true;
       } else {

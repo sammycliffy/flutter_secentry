@@ -6,14 +6,14 @@ import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
-class EstateDashoard extends StatefulWidget {
-  const EstateDashoard({Key? key}) : super(key: key);
+class CompanyDashboard extends StatefulWidget {
+  const CompanyDashboard({Key? key}) : super(key: key);
 
   @override
-  State<EstateDashoard> createState() => _EstateDashoardState();
+  State<CompanyDashboard> createState() => _CompanyDashboardState();
 }
 
-class _EstateDashoardState extends State<EstateDashoard> {
+class _CompanyDashboardState extends State<CompanyDashboard> {
   final code = TextEditingController();
   final AuthServices _authServices = AuthServices();
   ProfileDataNotifier? _profileDataNotifier;
@@ -31,8 +31,8 @@ class _EstateDashoardState extends State<EstateDashoard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   heightSpace(70),
-                  Text(
-                    'Hi ${_profileDataNotifier!.userProfile!.fullName}',
+                  const Text(
+                    'Hi Samuel',
                     style: TextStyle(fontSize: 40),
                   ),
                   heightSpace(50),

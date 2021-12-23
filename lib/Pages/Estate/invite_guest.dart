@@ -3,10 +3,8 @@ import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
-import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/services/auth_service.dart';
+import 'package:flutter_secentry/helpers/providers/invitation.dart';
 import 'package:flutter_secentry/widget/button.dart';
-import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
 class InviteGuest extends StatefulWidget {
@@ -17,73 +15,73 @@ class InviteGuest extends StatefulWidget {
 }
 
 class _InviteGuestState extends State<InviteGuest> {
-  final fullname = TextEditingController();
+  final fullName = TextEditingController();
   final phone = TextEditingController();
-  String? duration = 'Days';
+  String? duration = ' Days';
   final _formKey = GlobalKey<FormState>();
   final visitingNumber = TextEditingController();
-  final AuthServices _authServices = AuthServices();
-  ProfileDataNotifier? _profileDataNotifier;
+  final purposeOfVisit = TextEditingController();
+
+  InvitationNotifier? _invitationNotifier;
 
   @override
   Widget build(BuildContext context) {
-    _profileDataNotifier = context.watch<ProfileDataNotifier>();
+    _invitationNotifier = context.watch<InvitationNotifier>();
     return Scaffold(
-      body: _profileDataNotifier!.loading
-          ? const LoadingScreen()
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          heightSpace(40),
-                          const IconButton(
-                              onPressed: null,
-                              icon: Icon(Icons.arrow_back_ios)),
-                          heightSpace(40),
-                          const Text(
-                            'Invite Guest',
-                            style: TextStyle(fontSize: 40),
-                          ),
-                          heightSpace(30),
-                          fullnameText(),
-                          heightSpace(30),
-                          phoneText(),
-                          heightSpace(30),
-                          durationWidget(),
-                          heightSpace(10),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: TextButton(
-                                onPressed: () => Navigator.pushNamed(
-                                    context, '/add_item_pass'),
-                                child: const Text('Add Item pass',
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        color: kPrimary,
-                                        fontWeight: FontWeight.bold))),
-                          ),
-                          heightSpace(20),
-                          CustomButton(text: 'Continue', validate: validate),
-                        ],
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    heightSpace(40),
+                    IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back_ios)),
+                    heightSpace(40),
+                    const Text(
+                      'Invite Guest',
+                      style: TextStyle(fontSize: 40),
                     ),
-                  ),
-                  Align(alignment: Alignment.bottomRight, child: background)
-                ],
+                    heightSpace(30),
+                    fullnameText(),
+                    heightSpace(20),
+                    phoneText(),
+                    heightSpace(20),
+                    purposeText(),
+                    heightSpace(20),
+                    durationWidget(),
+                    heightSpace(10),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: TextButton(
+                          onPressed: () => addItemPass(),
+                          child: const Text('Add Item pass',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: kPrimary,
+                                  fontWeight: FontWeight.bold))),
+                    ),
+                    heightSpace(20),
+                    CustomButton(text: 'Continue', validate: validate),
+                  ],
+                ),
               ),
             ),
+            Align(alignment: Alignment.bottomRight, child: background)
+          ],
+        ),
+      ),
     );
   }
 
   fullnameText() => TextFormField(
-      controller: fullname,
-      validator: (value) => FormValidation().stringValidation(fullname.text),
+      controller: fullName,
+      validator: (value) => FormValidation().stringValidation(fullName.text),
       decoration: const InputDecoration(
           fillColor: kGrayLight,
           filled: true,
@@ -91,8 +89,20 @@ class _InviteGuestState extends State<InviteGuest> {
           border: InputBorder.none,
           hintText: 'Full name'));
 
+  purposeText() => TextFormField(
+      controller: purposeOfVisit,
+      validator: (value) =>
+          FormValidation().stringValidation(purposeOfVisit.text),
+      decoration: const InputDecoration(
+          fillColor: kGrayLight,
+          filled: true,
+          contentPadding: EdgeInsets.all(12),
+          border: InputBorder.none,
+          hintText: 'Purpose of visit'));
+
   phoneText() => TextFormField(
       controller: phone,
+      keyboardType: TextInputType.number,
       validator: (value) => FormValidation().stringValidation(phone.text),
       decoration: const InputDecoration(
           fillColor: kGrayLight,
@@ -110,7 +120,8 @@ class _InviteGuestState extends State<InviteGuest> {
               keyboardType: TextInputType.number,
               controller: visitingNumber,
               onChanged: (value) {},
-              // validator: (value) => checkMaxDuration(value),
+              validator: (value) =>
+                  FormValidation().stringValidation(visitingNumber.text),
               decoration: const InputDecoration(
                   // filled: true,
                   // fillColor: kGrayLight,
@@ -138,9 +149,9 @@ class _InviteGuestState extends State<InviteGuest> {
               });
             },
             items: <String?>[
-              'Days',
-              'Weeks',
-              'Months',
+              ' Days',
+              ' Weeks',
+              ' Months',
             ].map<DropdownMenuItem<String?>>((String? value) {
               return DropdownMenuItem<String?>(
                 value: value,
@@ -155,15 +166,34 @@ class _InviteGuestState extends State<InviteGuest> {
     );
   }
 
-  validate() => Navigator.pushNamed(context, '/pending_request');
-  // validate() async {
-  //   Navigator.pushNamed(context, '/nofacility');
-  //   if (_formKey.currentState!.validate()) {
-  //     _profileDataNotifier!.setLoading(true);
+  addItemPass() {
+    if (_formKey.currentState!.validate()) {
+      _invitationNotifier!.setItemPass(
+          fullName.text,
+          phone.text,
+          '${visitingNumber.text} +  $duration',
+          [],
+          null,
+          null,
+          null,
+          purposeOfVisit.text);
+      Navigator.pushNamed(context, '/add_item_pass');
+    }
+  }
 
-  //     dynamic result =
-  //         await _authServices.loginUser(context, email.text, password.text);
-  //     if (result) {
-  //       Navigator.pushNamed(context, '/no_facility_invitation');
-  //     }
+  // validate() => Navigator.pushNamed(context, '/pending_request');
+  validate() async {
+    if (_formKey.currentState!.validate()) {
+      _invitationNotifier!.setItemPass(
+          fullName.text,
+          phone.text,
+          '${visitingNumber.text} +  $duration',
+          [],
+          null,
+          null,
+          null,
+          purposeOfVisit.text);
+      Navigator.pushNamed(context, '/visitor_info');
+    }
+  }
 }

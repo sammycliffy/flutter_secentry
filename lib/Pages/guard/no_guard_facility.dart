@@ -3,18 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
-import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/widget/button.dart';
-import 'package:provider/src/provider.dart';
 
-class Nofacility extends StatefulWidget {
-  const Nofacility({Key? key}) : super(key: key);
+class NoGuardFacility extends StatefulWidget {
+  const NoGuardFacility({Key? key}) : super(key: key);
 
   @override
-  State<Nofacility> createState() => _NofacilityState();
+  State<NoGuardFacility> createState() => _NoGuardFacilityState();
 }
 
-class _NofacilityState extends State<Nofacility> {
+class _NoGuardFacilityState extends State<NoGuardFacility> {
   List<ImageText> imageText = [
     ImageText(
         imageUrl: noEstateImage,
@@ -29,10 +27,8 @@ class _NofacilityState extends State<Nofacility> {
   final _totalDots = 2;
   double _currentPosition = 0.0;
   PageController _pageController = PageController(initialPage: 0);
-  ProfileDataNotifier? _profileDataNotifier;
   @override
   Widget build(BuildContext context) {
-    _profileDataNotifier = context.watch<ProfileDataNotifier>();
     return Scaffold(
       backgroundColor: kWhite,
       drawer: const Drawer(
@@ -53,8 +49,8 @@ class _NofacilityState extends State<Nofacility> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Hi ${_profileDataNotifier!.userProfile!.fullName},',
+                  const Text(
+                    'Hi Samuel,',
                     style: TextStyle(fontSize: 40),
                   ),
                   IconButton(

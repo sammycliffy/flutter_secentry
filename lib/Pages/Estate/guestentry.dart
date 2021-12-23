@@ -48,17 +48,26 @@ class _GuestEntryState extends State<GuestEntry> {
             heightSpace(70),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Guest List',
                   style: TextStyle(fontSize: 40),
                 ),
                 IconButton(
-                    onPressed: null,
-                    icon: Icon(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/invite_guest'),
+                    icon: const Icon(
                       Icons.search,
                       size: 40,
                       color: kBlack,
+                    )),
+                IconButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/invite_guest'),
+                    icon: const Icon(
+                      Icons.person_add,
+                      size: 40,
+                      color: kPrimary,
                     ))
               ],
             ),
@@ -185,26 +194,28 @@ class _GuestEntryState extends State<GuestEntry> {
       shrinkWrap: true,
       itemCount: visitorName.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                color: kPrimary, borderRadius: BorderRadius.circular(5)),
-            child: const Center(
-                child: Icon(
-              Icons.person,
-              color: kWhite,
-            )),
-          ),
-          title: Text(
-            visitorName[index],
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
-          ),
-          subtitle: Text(
-            time[index],
-            style: const TextStyle(color: kGray),
+        return Card(
+          child: ListTile(
+            leading: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                  color: kPrimary, borderRadius: BorderRadius.circular(5)),
+              child: const Center(
+                  child: Icon(
+                Icons.person,
+                color: kWhite,
+              )),
+            ),
+            title: Text(
+              visitorName[index],
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+            ),
+            subtitle: Text(
+              time[index],
+              style: const TextStyle(color: kGray),
+            ),
           ),
         );
       });
