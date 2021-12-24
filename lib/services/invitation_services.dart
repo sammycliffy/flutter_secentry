@@ -15,6 +15,8 @@ class GuestEntryServices {
       String visitorAddress,
       String visitorPhone,
       String purposeOfVisit,
+      String country,
+      String state,
       duration,
       itemPass) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
@@ -32,9 +34,11 @@ class GuestEntryServices {
             body: jsonEncode(<String, dynamic>{
               "estate_visitor_name": visitorName,
               "estate_visitor_address": visitorAddress,
+              "country": country,
+              "state": state,
               "estate_visitor_phone": visitorPhone,
               "purpose_of_visit": purposeOfVisit,
-              "duration": 3,
+              "duration": duration,
               "item_pass": itemPass.map((i) => i.toJson()).toList()
             }),
           )

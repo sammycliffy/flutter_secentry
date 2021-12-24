@@ -130,7 +130,7 @@ class _NoGuardFacilityState extends State<NoGuardFacility> {
   }
 
   validateEstate() {
-    Navigator.pushNamed(context, '/estate_code');
+    Navigator.pushNamed(context, '/guard_join_facility');
   }
 }
 

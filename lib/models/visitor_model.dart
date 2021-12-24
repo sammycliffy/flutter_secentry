@@ -1,7 +1,7 @@
 class VisitorModel {
   int? count;
-  String? next;
-  String? previous;
+  dynamic next;
+  dynamic previous;
   List<Results>? results;
 
   VisitorModel({this.count, this.next, this.previous, this.results});
@@ -13,7 +13,7 @@ class VisitorModel {
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
-        results!.add(Results.fromJson(v));
+        results!.add(new Results.fromJson(v));
       });
     }
   }
@@ -30,11 +30,14 @@ class Results {
   String? estateUserPhoneNumber;
   List<ItemPass>? itemPass;
   String? visitorId;
+  String? estateUserPhone;
   String? estateVisitorName;
   String? estateVisitorAddress;
+  String? country;
+  String? state;
   String? estateVisitorPhone;
   String? purposeOfVisit;
-  int? duration;
+  String? duration;
   bool? approved;
   bool? checkOut;
   String? dateJoined;
@@ -52,8 +55,11 @@ class Results {
       this.estateUserPhoneNumber,
       this.itemPass,
       this.visitorId,
+      this.estateUserPhone,
       this.estateVisitorName,
       this.estateVisitorAddress,
+      this.country,
+      this.state,
       this.estateVisitorPhone,
       this.purposeOfVisit,
       this.duration,
@@ -79,8 +85,11 @@ class Results {
       });
     }
     visitorId = json['visitor_id'];
+    estateUserPhone = json['estate_user_phone'];
     estateVisitorName = json['estate_visitor_name'];
     estateVisitorAddress = json['estate_visitor_address'];
+    country = json['country'];
+    state = json['state'];
     estateVisitorPhone = json['estate_visitor_phone'];
     purposeOfVisit = json['purpose_of_visit'];
     duration = json['duration'];

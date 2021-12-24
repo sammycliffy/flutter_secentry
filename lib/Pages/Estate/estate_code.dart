@@ -80,7 +80,7 @@ class _EstateCodeState extends State<EstateCode> {
           await _estateServices.estateRegistration(context, code.text);
       if (result) {
         _profileDataNotifier!.setLoading(false);
-        Navigator.pushNamed(context, '/no_facility_invitation');
+        Navigator.pushNamed(context, '/nofacility');
         SharedPreference().setPending(true);
       } else {
         _profileDataNotifier!.setLoading(false);

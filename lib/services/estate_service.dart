@@ -55,7 +55,7 @@ class EstateServices {
     }
   }
 
-  Future getEstateDetail() async {
+  Future getEstateDetails() async {
     bool result = false;
     _dioCacheManager = DioCacheManager(CacheConfig());
     UserModel userData = await SharedPreference().readAsModel('userData');
@@ -88,6 +88,37 @@ class EstateServices {
       } else {
         print(e.toString());
       }
+    }
+    return result;
+  }
+
+  getEstateDetail() async {
+    bool result = false;
+    UserModel userData = await SharedPreference().readAsModel('userData');
+    try {
+      var client = http.Client();
+      var url = Uri.parse(
+          "${Api.baseUrl}estate-user-search/?estate_user_phone=${userData.phoneNumber}");
+      print(url);
+      final http.Response response = await client.get(
+        url,
+        headers: <String, String>{
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Token ${userData.key}'
+        },
+      ).timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseJson = json.decode(response.body);
+        SharedPreference().save("estateDetails", responseJson);
+        result = true;
+      } else {
+        ToastUtils.showRedToast(response.body);
+        log("error login: ${response.body}");
+      }
+    } catch (e) {
+      print(e.toString());
     }
     return result;
   }

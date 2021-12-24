@@ -1,48 +1,70 @@
 class EstateDetails {
-  EstateDetails({
-    this.count,
-    this.next,
-    this.previous,
-    this.results,
-  });
-
   int? count;
   dynamic next;
   dynamic previous;
-  List<Result>? results;
+  List<Results>? results;
 
-  factory EstateDetails.fromJson(Map<String, dynamic> json) => EstateDetails(
-        count: json["count"],
-        next: json["next"],
-        previous: json["previous"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-      );
+  EstateDetails({this.count, this.next, this.previous, this.results});
+
+  EstateDetails.fromJson(Map<String, dynamic> json) {
+    count = json['count'];
+    next = json['next'];
+    previous = json['previous'];
+    if (json['results'] != null) {
+      results = <Results>[];
+      json['results'].forEach((v) {
+        results!.add(new Results.fromJson(v));
+      });
+    }
+  }
 }
 
-class Result {
-  Result({
-    this.estateAdminPhone,
-    this.estateUserPhone,
-    this.estateId,
-    this.estateName,
-    this.estateAddress,
-    this.estateDateCreated,
-  });
-
-  String? estateAdminPhone;
-  String? estateUserPhone;
+class Results {
+  int? id;
+  String? estateUser;
+  String? estateUserCode;
   String? estateId;
   String? estateName;
   String? estateAddress;
-  DateTime? estateDateCreated;
+  String? estateUserPhone;
+  String? estateUserFullName;
+  String? estateUserAddress;
+  String? estateAdminPhone;
+  String? estateDateCreated;
+  bool? accepted;
+  bool? exit;
+  String? dateJoined;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
-        estateAdminPhone: json["estate_admin_phone"],
-        estateUserPhone: json["estate_user_phone"],
-        estateId: json["estate_id"],
-        estateName: json["estate_name"],
-        estateAddress: json["estate_address"],
-        estateDateCreated: DateTime.parse(json["estate_date_created"]),
-      );
+  Results(
+      {this.id,
+      this.estateUser,
+      this.estateUserCode,
+      this.estateId,
+      this.estateName,
+      this.estateAddress,
+      this.estateUserPhone,
+      this.estateUserFullName,
+      this.estateUserAddress,
+      this.estateAdminPhone,
+      this.estateDateCreated,
+      this.accepted,
+      this.exit,
+      this.dateJoined});
+
+  Results.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    estateUser = json['estate_user'];
+    estateUserCode = json['estate_user_code'];
+    estateId = json['estate_id'];
+    estateName = json['estate_name'];
+    estateAddress = json['estate_address'];
+    estateUserPhone = json['estate_user_phone'];
+    estateUserFullName = json['estate_user_full_name'];
+    estateUserAddress = json['estate_user_address'];
+    estateAdminPhone = json['estate_admin_phone'];
+    estateDateCreated = json['estate_date_created'];
+    accepted = json['accepted'];
+    exit = json['exit'];
+    dateJoined = json['date_joined'];
+  }
 }

@@ -27,4 +27,11 @@ class SharedPreference {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('pending', pending);
   }
+
+  // Future<bool> readPendingStatus(String key) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   bool? getBool = prefs.getBool(key);
+
+  //   return getBool;
+  // }
 }

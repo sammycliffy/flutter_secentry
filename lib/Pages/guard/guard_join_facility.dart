@@ -3,8 +3,7 @@ import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/helpers/sharedpreferences.dart';
-import 'package:flutter_secentry/services/estate_service.dart';
+import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +18,7 @@ class GuardJoinFacility extends StatefulWidget {
 class _GuardJoinFacilityState extends State<GuardJoinFacility> {
   final code = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final EstateServices _estateServices = EstateServices();
+  final GuardServices _guardServices = GuardServices();
   ProfileDataNotifier? _profileDataNotifier;
 
   @override
@@ -74,18 +73,15 @@ class _GuardJoinFacilityState extends State<GuardJoinFacility> {
           hintText: 'Enter code'));
 
   validate() async {
-    Navigator.pushNamed(context, '/guard_dashboard');
-    // if (_formKey.currentState!.validate()) {
-    //   _profileDataNotifier!.setLoading(true);
-    //   dynamic result =
-    //       await _estateServices.estateRegistration(context, code.text);
-    //   if (result) {
-    //     _profileDataNotifier!.setLoading(false);
-    //     Navigator.pushNamed(context, '/no_facility_invitation');
-    //     SharedPreference().setPending(true);
-    //   } else {
-    //     _profileDataNotifier!.setLoading(false);
-    //   }
-    // }
+    if (_formKey.currentState!.validate()) {
+      _profileDataNotifier!.setLoading(true);
+      dynamic result = await _guardServices.joinEstate(context, code.text);
+      if (result == true) {
+        _profileDataNotifier!.setLoading(false);
+        Navigator.pushNamed(context, '/guard_dashboard');
+      } else {
+        _profileDataNotifier!.setLoading(false);
+      }
+    }
   }
 }

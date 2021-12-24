@@ -25,7 +25,7 @@ class EntryApproved extends StatelessWidget {
                 'You can go in',
                 style: TextStyle(fontSize: 20),
               ),
-              entryApproved,
+              SizedBox(width: 100, height: 100, child: entryApproved),
               CustomButton(text: 'Continue', validate: null),
               heightSpace(50),
             ],

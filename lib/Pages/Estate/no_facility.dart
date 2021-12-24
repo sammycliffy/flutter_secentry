@@ -4,6 +4,9 @@ import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/helpers/sharedpreferences.dart';
+import 'package:flutter_secentry/models/estate_details.dart';
+import 'package:flutter_secentry/services/estate_service.dart';
 import 'package:flutter_secentry/widget/button.dart';
 import 'package:provider/src/provider.dart';
 
@@ -15,6 +18,7 @@ class Nofacility extends StatefulWidget {
 }
 
 class _NofacilityState extends State<Nofacility> {
+  final EstateServices _estateServices = EstateServices();
   List<ImageText> imageText = [
     ImageText(
         imageUrl: noEstateImage,
@@ -125,6 +129,17 @@ class _NofacilityState extends State<Nofacility> {
         ),
       ),
     );
+  }
+
+  checkAcceptedStatus() async {
+    dynamic result = await _estateServices.getEstateDetail();
+    if (result) {
+      EstateDetails estateDetails =
+          await SharedPreference().readEstateModel('estateDetails');
+      if (estateDetails.results?[0].accepted == true) {
+        Navigator.pushNamed(context, '/estate_dashboard');
+      }
+    }
   }
 
   void pageChange(int index) {

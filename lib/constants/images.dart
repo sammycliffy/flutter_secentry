@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Images {
@@ -21,6 +20,7 @@ class Images {
   static String vendor = 'assets/images/vendor.png';
   static String entry_approved = 'assets/images/entry_approve.svg';
   static String exit_approved = 'assets/images/exit_approved.svg';
+  static String secentryLogo = 'assets/images/secentry_logo.png';
 }
 
 final noEstateImage =

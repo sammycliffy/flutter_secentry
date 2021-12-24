@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secentry/Pages/Estate/message_details.dart';
+import 'package:flutter_secentry/Pages/Estate/news_details.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/format_date.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/models/visitor_model.dart';
-import 'package:flutter_secentry/services/invitation_services.dart';
+import 'package:flutter_secentry/models/estate_news_model.dart';
+import 'package:flutter_secentry/models/estatemessage_model.dart';
+
+import 'package:flutter_secentry/services/message_service.dart';
+import 'package:flutter_secentry/services/news_services.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,13 +26,13 @@ class News extends StatefulWidget {
 class _NewsState extends State<News> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  final GuestEntryServices _guestEntryServices = GuestEntryServices();
+  final NewsServices _newsServices = NewsServices();
   bool loading = true;
   bool noinvitations = false;
-  Future<VisitorModel>? _visitorModel;
+  late Future<EstateNews> _estateNews;
   ProfileDataNotifier? _profileDataNotifier;
-  List<String> visitorName = [];
-  List<String> visitorPhone = [];
+  List body = [];
+  List subject = [];
   List time = [];
   int pageNumber = 1;
   @override
@@ -50,7 +55,7 @@ class _NewsState extends State<News> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
                 Text(
-                  'Guest List',
+                  'News',
                   style: TextStyle(fontSize: 40),
                 ),
                 IconButton(
@@ -82,6 +87,7 @@ class _NewsState extends State<News> {
 
   noInvitedGuest() => Column(
         children: [
+          heightSpace(100),
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, '/invite_guest'),
             child: Center(
@@ -91,7 +97,7 @@ class _NewsState extends State<News> {
           heightSpace(20),
           const Center(
             child: Text(
-              'You haven\'t invited anyone yet.\n Tap icon to invite guest',
+              'You don\'t have any news yet.\n Admin will add soon',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18, color: kGray),
             ),
@@ -100,21 +106,19 @@ class _NewsState extends State<News> {
       );
 
   firstTimeLoad() {
-    _visitorModel = _guestEntryServices.getInvitation(context);
-    _visitorModel!.then((value) {
+    _estateNews = _newsServices.getAllNews();
+    _estateNews.then((value) {
       setState(() {
         loading = false;
       });
       if (value.count == 0) {
         noinvitations = true;
       } else {
-        setState(() {
-          value.results!.forEach((element) {
-            setState(() {
-              visitorName.add(element.estateVisitorName!);
-              visitorPhone.add(element.estateVisitorPhone!);
-              time.add(formatDate(DateTime.parse(element.dateJoined!)));
-            });
+        value.results?.forEach((element) {
+          setState(() {
+            subject.add(element.subject);
+            body.add(element.body);
+            time.add(formatDate(element.dateAdded!));
           });
         });
       }
@@ -123,18 +127,22 @@ class _NewsState extends State<News> {
 
   //reload data
   Future _loadData() async {
-    _visitorModel =
-        _guestEntryServices.getInvitationByNumber(context, pageNumber);
-    _visitorModel!.then((value) {
+    _estateNews = _newsServices.getAllNewsByPageNumber(pageNumber);
+    _estateNews.then((value) {
       setState(() {
-        value.results!.forEach((element) {
+        loading = false;
+      });
+      if (value.count == 0) {
+        noinvitations = true;
+      } else {
+        value.results?.forEach((element) {
           setState(() {
-            visitorName.add(element.estateVisitorName!);
-            visitorPhone.add(element.estateVisitorPhone!);
-            time.add(formatDate(DateTime.parse(element.dateJoined!)));
+            subject.add(element.subject);
+            body.add(element.body);
+            time.add(formatDate(element.dateAdded!));
           });
         });
-      });
+      }
     }).whenComplete(() {
       return _refreshController.loadComplete();
     }).catchError((e) {
@@ -182,29 +190,47 @@ class _NewsState extends State<News> {
   listView() => ListView.builder(
       primary: true,
       shrinkWrap: true,
-      itemCount: visitorName.length,
+      itemCount: subject.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                color: kPrimary, borderRadius: BorderRadius.circular(5)),
-            child: const Center(
-                child: Icon(
-              Icons.person,
-              color: kWhite,
-            )),
-          ),
-          title: Text(
-            visitorName[index],
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
-          ),
-          subtitle: Text(
-            time[index],
-            style: const TextStyle(color: kGray),
+        return GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NewsDetails(
+                        subject: subject[index],
+                        body: body[index],
+                        time: time[index],
+                      ))),
+          child: Card(
+            child: ListTile(
+              leading: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: kPrimary, borderRadius: BorderRadius.circular(25)),
+                child: const Center(
+                    child: Icon(
+                  Icons.notifications,
+                  color: kWhite,
+                )),
+              ),
+              title: Text(
+                truncateWithEllipsis(12, subject[index]),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+              ),
+              subtitle: Text(
+                truncateWithEllipsis(12, body[index]),
+                style: const TextStyle(color: kGray),
+              ),
+            ),
           ),
         );
       });
+}
+
+String truncateWithEllipsis(int cutoff, String myString) {
+  return (myString.length <= cutoff)
+      ? myString
+      : '${myString.substring(0, cutoff)}...';
 }

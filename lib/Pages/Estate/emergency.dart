@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
-import 'package:flutter_secentry/helpers/format_date.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/models/visitor_model.dart';
-import 'package:flutter_secentry/services/invitation_services.dart';
+import 'package:flutter_secentry/models/emergency_model.dart';
+import 'package:flutter_secentry/services/emergency_services.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,14 +21,14 @@ class EmergencyContact extends StatefulWidget {
 class _EmergencyContactState extends State<EmergencyContact> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  final GuestEntryServices _guestEntryServices = GuestEntryServices();
+  final EmergencyServices _emergencyServices = EmergencyServices();
   bool loading = true;
   bool noinvitations = false;
-  Future<VisitorModel>? _visitorModel;
+  Future<EmergencyModel>? _emergencyModel;
   ProfileDataNotifier? _profileDataNotifier;
-  List<String> visitorName = [];
-  List<String> visitorPhone = [];
-  List time = [];
+  List<String> contactName = [];
+  List<String> contactPhone = [];
+  List designation = [];
   int pageNumber = 1;
   @override
   void initState() {
@@ -101,8 +101,8 @@ class _EmergencyContactState extends State<EmergencyContact> {
       );
 
   firstTimeLoad() {
-    _visitorModel = _guestEntryServices.getInvitation(context);
-    _visitorModel!.then((value) {
+    _emergencyModel = _emergencyServices.getAllContact();
+    _emergencyModel!.then((value) {
       setState(() {
         loading = false;
       });
@@ -112,9 +112,9 @@ class _EmergencyContactState extends State<EmergencyContact> {
         setState(() {
           value.results!.forEach((element) {
             setState(() {
-              visitorName.add(element.estateVisitorName!);
-              visitorPhone.add(element.estateVisitorPhone!);
-              time.add(formatDate(DateTime.parse(element.dateJoined!)));
+              contactName.add(element.contactName!);
+              contactPhone.add(element.contactPhone!);
+              designation.add(element.contactDesignation);
             });
           });
         });
@@ -124,18 +124,24 @@ class _EmergencyContactState extends State<EmergencyContact> {
 
   //reload data
   Future _loadData() async {
-    _visitorModel =
-        _guestEntryServices.getInvitationByNumber(context, pageNumber);
-    _visitorModel!.then((value) {
+    _emergencyModel = _emergencyServices.getAllContactByPagenumber(pageNumber);
+    _emergencyModel!.then((value) {
       setState(() {
-        value.results!.forEach((element) {
-          setState(() {
-            visitorName.add(element.estateVisitorName!);
-            visitorPhone.add(element.estateVisitorPhone!);
-            time.add(formatDate(DateTime.parse(element.dateJoined!)));
+        loading = false;
+      });
+      if (value.count == 0) {
+        noinvitations = true;
+      } else {
+        setState(() {
+          value.results!.forEach((element) {
+            setState(() {
+              contactName.add(element.contactName!);
+              contactPhone.add(element.contactPhone!);
+              designation.add(element.contactDesignation);
+            });
           });
         });
-      });
+      }
     }).whenComplete(() {
       return _refreshController.loadComplete();
     }).catchError((e) {
@@ -183,29 +189,41 @@ class _EmergencyContactState extends State<EmergencyContact> {
   listView() => ListView.builder(
       primary: true,
       shrinkWrap: true,
-      itemCount: visitorName.length,
+      itemCount: contactName.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                color: kPrimary, borderRadius: BorderRadius.circular(5)),
-            child: const Center(
-                child: Icon(
-              Icons.person,
-              color: kWhite,
-            )),
-          ),
-          title: Text(
-            visitorName[index],
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
-          ),
-          subtitle: Text(
-            time[index],
-            style: const TextStyle(color: kGray),
+        return Card(
+          child: ListTile(
+            trailing: IconButton(
+                icon: const Icon(
+                  Icons.phone,
+                  color: kPrimary,
+                ),
+                onPressed: () => callNumber(contactPhone[index])),
+            leading: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                  color: kPrimary, borderRadius: BorderRadius.circular(5)),
+              child: const Center(
+                  child: Icon(
+                Icons.person,
+                color: kWhite,
+              )),
+            ),
+            title: Text(
+              contactName[index],
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+            ),
+            subtitle: Text(
+              designation[index],
+              style: const TextStyle(color: kGray),
+            ),
           ),
         );
       });
+
+  callNumber(number) async {
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
 }

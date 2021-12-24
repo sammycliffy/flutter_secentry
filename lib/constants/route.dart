@@ -21,6 +21,7 @@ import 'package:flutter_secentry/Pages/guard/entry_approved_page.dart';
 import 'package:flutter_secentry/Pages/guard/entry_info.dart';
 import 'package:flutter_secentry/Pages/guard/exit_approved_page.dart';
 import 'package:flutter_secentry/Pages/guard/guard_estate_dashboard.dart';
+import 'package:flutter_secentry/Pages/guard/guard_join_facility.dart';
 import 'package:flutter_secentry/Pages/guard/no_guard_facility.dart';
 import 'package:flutter_secentry/Pages/guard/user_entry.dart';
 import 'package:flutter_secentry/Pages/guard/user_exit.dart';
@@ -47,15 +48,16 @@ final route = {
   '/emergency': (context) => const EmergencyContact(),
   '/news': (context) => const News(),
   '/messages': (context) => const Messages(),
-  '/guard_dashboard': (context) => const GuardEstateDashboard(),
 
-  '/entry_info': (context) => const EntryInfo(),
+  '/entry_info': (context) => EntryInfo(),
   '/visitor_info': (context) => const VisitorInfo(),
 
   //company
   '/company_dashboard': (context) => const CompanyDashboard(),
 
   //guard
+  '/guard_join_facility': (context) => const GuardJoinFacility(),
+  '/guard_dashboard': (context) => const GuardEstateDashboard(),
   '/no_guard_facility': (context) => const NoGuardFacility(),
   '/user_entry': (context) => const UserEntry(),
   '/user_exit': (context) => const UserExit(),

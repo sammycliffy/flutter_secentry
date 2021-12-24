@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secentry/Pages/Estate/message_details.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
@@ -188,27 +189,43 @@ class _MessagesState extends State<Messages> {
       shrinkWrap: true,
       itemCount: message.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                color: kPrimary, borderRadius: BorderRadius.circular(5)),
-            child: const Center(
-                child: Icon(
-              Icons.person,
-              color: kWhite,
-            )),
-          ),
-          title: Text(
-            message[index],
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
-          ),
-          subtitle: Text(
-            time[index],
-            style: const TextStyle(color: kGray),
+        return GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MessageDetails(
+                        message: message[index],
+                      ))),
+          child: Card(
+            child: ListTile(
+              leading: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: kPrimary, borderRadius: BorderRadius.circular(25)),
+                child: const Center(
+                    child: Icon(
+                  Icons.message,
+                  color: kWhite,
+                )),
+              ),
+              title: Text(
+                truncateWithEllipsis(12, message[index]),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+              ),
+              subtitle: Text(
+                time[index],
+                style: const TextStyle(color: kGray),
+              ),
+            ),
           ),
         );
       });
+}
+
+String truncateWithEllipsis(int cutoff, String myString) {
+  return (myString.length <= cutoff)
+      ? myString
+      : '${myString.substring(0, cutoff)}...';
 }

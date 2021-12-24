@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
 import 'package:flutter_secentry/models/estatemessage_model.dart';
 import 'package:flutter_secentry/models/user_model.dart';
 import 'package:flutter_secentry/widget/toast.dart';
-
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
 
 import 'api.dart';
 
@@ -17,7 +14,7 @@ class MessageServices {
     try {
       var client = http.Client();
       var url = Uri.parse(
-          "${Api.baseUrl}estate-user-guest/?estate_user_phone=${userData.phoneNumber}");
+          "${Api.baseUrl}estate-admin-message/?estate_user_phone=${userData.phoneNumber}");
       print(url);
       final http.Response response = await client.get(
         url,
@@ -26,7 +23,7 @@ class MessageServices {
           'Accept': 'application/json',
           'Authorization': 'Token ${userData.key}'
         },
-      ).timeout(Duration(seconds: 15));
+      ).timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseJson = json.decode(response.body);

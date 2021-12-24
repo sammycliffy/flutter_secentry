@@ -110,15 +110,11 @@ class _LoginState extends State<Login> {
       dynamic result =
           await _authServices.loginUser(context, email.text, password.text);
       if (result) {
-        saveUser(context);
         _profileDataNotifier!.setLoading(false);
+        dynamic result = await _estateServices.getEstateDetail();
+        saveUser(context);
+        saveEstate(context);
         checkProfile(context);
-        // dynamic result = await _estateServices.getEstateDetail();
-        // if (result) {
-        //   saveEstate(context);
-        //   _profileDataNotifier!.setLoading(false);
-        //   checkProfile(context);
-        // }
       } else {
         _profileDataNotifier!.setLoading(false);
       }

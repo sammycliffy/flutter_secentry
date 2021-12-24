@@ -113,6 +113,8 @@ class _VisitorInfoState extends State<VisitorInfo> {
         address.text,
         _invitationNotifier!.phoneNumber!,
         _invitationNotifier!.purposeOfVisit!,
+        country.text,
+        state.text,
         _invitationNotifier!.duration,
         _invitationNotifier!.items);
     if (result != false) {
@@ -144,10 +146,13 @@ class _VisitorInfoState extends State<VisitorInfo> {
           address.text,
           _invitationNotifier!.phoneNumber!,
           _invitationNotifier!.purposeOfVisit!,
-          _invitationNotifier!.purposeOfVisit,
+          country.text,
+          state.text,
+          _invitationNotifier!.duration,
           _invitationNotifier!.items);
       if (result != false) {
         _invitationNotifier!.setLoading(false);
+        print(result);
         Navigator.push(
             context,
             MaterialPageRoute(

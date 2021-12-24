@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
+import 'package:flutter_secentry/models/estate_details.dart';
 import 'package:flutter_secentry/models/user_model.dart';
 import 'package:provider/provider.dart';
 
@@ -8,10 +9,16 @@ checkProfile(context) async {
   ProfileDataNotifier _profileNotifier =
       Provider.of<ProfileDataNotifier>(context, listen: false);
   UserModel userData = await SharedPreference().readAsModel("userData");
+  EstateDetails estateDetails =
+      await SharedPreference().readEstateModel('estateDetails');
   if (userData.isEstateuser == true) {
     //is estate user
     if (userData.belongEstateId != "No Estate ID") {
-      Navigator.pushNamed(context, '/estate_dashboard');
+      if (estateDetails.results?[0].accepted != true) {
+        Navigator.pushNamed(context, '/nofacility');
+      } else {
+        Navigator.pushNamed(context, '/estate_dashboard');
+      }
     } else {
       Navigator.pushNamed(context, '/nofacility');
     }
