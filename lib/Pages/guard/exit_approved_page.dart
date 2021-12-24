@@ -24,8 +24,15 @@ class ExitApproved extends StatelessWidget {
                 'You can go out',
                 style: TextStyle(fontSize: 20),
               ),
-              exitApproved,
-              CustomButton(text: 'Continue', validate: null),
+              heightSpace(50),
+              Center(
+                child: SizedBox(width: 300, height: 400, child: exitApproved),
+              ),
+              heightSpace(50),
+              CustomButton(
+                  text: 'Continue',
+                  validate: () =>
+                      Navigator.pushNamed(context, '/guard_dashboard')),
               heightSpace(50),
             ],
           ),

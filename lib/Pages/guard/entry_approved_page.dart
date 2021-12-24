@@ -25,8 +25,13 @@ class EntryApproved extends StatelessWidget {
                 'You can go in',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(width: 100, height: 100, child: entryApproved),
-              CustomButton(text: 'Continue', validate: null),
+              Center(
+                  child:
+                      SizedBox(width: 300, height: 400, child: entryApproved)),
+              CustomButton(
+                  text: 'Continue',
+                  validate: () =>
+                      Navigator.pushNamed(context, '/guard_dashboard')),
               heightSpace(50),
             ],
           ),

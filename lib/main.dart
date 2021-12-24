@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secentry/Pages/Estate/emergency.dart';
+import 'package:flutter_secentry/Pages/Estate/estate_dashboard.dart';
 import 'package:flutter_secentry/Pages/Estate/guestentry.dart';
 import 'package:flutter_secentry/Pages/Estate/messages.dart';
 import 'package:flutter_secentry/Pages/Estate/news.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
         ),
-        home: const Login(),
+        home: const EstateDashoard(),
       ),
     );
   }

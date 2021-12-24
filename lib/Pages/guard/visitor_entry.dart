@@ -4,7 +4,6 @@ import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/services/estate_service.dart';
 import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
+import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:provider/src/provider.dart';
 
 class GuardEstateDashboard extends StatefulWidget {
   const GuardEstateDashboard({Key? key}) : super(key: key);
@@ -11,8 +13,10 @@ class GuardEstateDashboard extends StatefulWidget {
 }
 
 class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
+  ProfileDataNotifier? _profileDataNotifier;
   @override
   Widget build(BuildContext context) {
+    _profileDataNotifier = context.watch<ProfileDataNotifier>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -26,8 +30,8 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                   const IconButton(
                       onPressed: null, icon: Icon(Icons.arrow_back_ios)),
                   heightSpace(30),
-                  const Text(
-                    'Hi Samuel',
+                  Text(
+                    '${_profileDataNotifier!.userProfile!.fullName}',
                     style: TextStyle(fontSize: 40),
                   ),
                   heightSpace(30),
