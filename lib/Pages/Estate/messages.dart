@@ -7,7 +7,6 @@ import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/format_date.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/models/estatemessage_model.dart';
-
 import 'package:flutter_secentry/services/message_service.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:provider/provider.dart';
@@ -46,21 +45,36 @@ class _MessagesState extends State<Messages> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            heightSpace(70),
+            heightSpace(30),
+            IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.arrow_back_ios)),
+            heightSpace(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                heightSpace(50),
+                const Text(
                   'Messages',
                   style: TextStyle(fontSize: 40),
                 ),
-                IconButton(
+                const IconButton(
                     onPressed: null,
                     icon: Icon(
                       Icons.search,
                       size: 40,
                       color: kBlack,
-                    ))
+                    )),
+                IconButton(
+                  icon: const Icon(
+                    Icons.email,
+                    size: 35,
+                    color: kPrimary,
+                  ),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, '/compose_message'),
+                )
               ],
             ),
             heightSpace(20),

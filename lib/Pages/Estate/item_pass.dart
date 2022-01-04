@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secentry/Pages/Estate/item_list.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
@@ -40,29 +41,85 @@ class _AddItemPassState extends State<AddItemPass> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     heightSpace(40),
-                    const IconButton(
-                        onPressed: null, icon: Icon(Icons.arrow_back_ios)),
-                    heightSpace(40),
-                    Align(
-                        alignment: Alignment.bottomRight,
-                        child: Container(
-                          width: 80,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              color: kGreen,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Center(
-                            child: Text(
-                              '${_listofItems.length}',
-                              style: TextStyle(color: kWhite),
+                    IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back_ios)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Item Pass',
+                          style: TextStyle(fontSize: 40),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ItemList(
+                                        listofItems: _listofItems,
+                                      ))),
+                          child: Container(
+                            width: 80,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: kGreen,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Center(
+                              child: Text(
+                                '${_listofItems.length}',
+                                style: TextStyle(color: kWhite),
+                              ),
                             ),
                           ),
-                        )),
-                    const Text(
-                      'Item Pass',
-                      style: TextStyle(fontSize: 40),
+                        )
+                      ],
                     ),
-                    heightSpace(50),
+                    heightSpace(23),
+                    SizedBox(
+                        height: 40,
+                        width: 500,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _listofItems.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 6),
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                    bottom: 6,
+                                    left: 5,
+                                  ),
+                                  width: 70,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                      color: kPrimary,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${_listofItems.indexOf(_listofItems[index])}',
+                                        style: const TextStyle(
+                                            color: kWhite, fontSize: 18),
+                                      ),
+                                      IconButton(
+                                          onPressed: () => setState(() {
+                                                _listofItems.removeAt(index);
+                                              }),
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: kWhite,
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              );
+                            })),
+                    heightSpace(23),
                     titleText(),
                     heightSpace(20),
                     quantityText(),

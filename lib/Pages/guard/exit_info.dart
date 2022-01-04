@@ -6,11 +6,12 @@ import 'package:flutter_secentry/models/visitor_model.dart';
 import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
+import 'package:flutter_secentry/widget/toast.dart';
 import 'package:provider/src/provider.dart';
 
 class ExitInfo extends StatefulWidget {
-  VisitorModel? visitorModel;
-  ExitInfo({Key? key, this.visitorModel}) : super(key: key);
+  final VisitorModel? visitorModel;
+  const ExitInfo({Key? key, this.visitorModel}) : super(key: key);
 
   @override
   _ExitInfoState createState() => _ExitInfoState();
@@ -19,6 +20,16 @@ class ExitInfo extends StatefulWidget {
 class _ExitInfoState extends State<ExitInfo> {
   final GuardServices _guardServices = GuardServices();
   ProfileDataNotifier? _profileDataNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.visitorModel!.count == 0) {
+      ToastUtils.showRedToast('Code not found');
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _profileDataNotifier = context.watch<ProfileDataNotifier>();
@@ -83,6 +94,24 @@ class _ExitInfoState extends State<ExitInfo> {
                               '${widget.visitorModel!.results?[0].duration}'),
                           Divider(),
                           heightSpace(50),
+                          SizedBox(
+                            height: 400,
+                            width: 200,
+                            child: ListView.builder(
+                                itemCount: widget
+                                    .visitorModel!.results?[0].itemPass!.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    leading: const Icon(Icons.list),
+                                    title: Text(
+                                        '${widget.visitorModel!.results?[0].itemPass?[index].itemName}'),
+                                    subtitle: Text(
+                                        '${widget.visitorModel!.results?[0].itemPass?[index].description}'),
+                                    trailing: Text(
+                                        '${widget.visitorModel!.results?[0].itemPass?[index].quantity}'),
+                                  );
+                                }),
+                          ),
                           CustomButton(text: 'Checkout', validate: validate),
                           heightSpace(50),
                         ],

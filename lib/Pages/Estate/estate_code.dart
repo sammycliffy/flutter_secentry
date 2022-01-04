@@ -39,8 +39,8 @@ class _EstateCodeState extends State<EstateCode> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           heightSpace(40),
-                          const IconButton(
-                              onPressed: null,
+                          IconButton(
+                              onPressed: () => Navigator.pop(context),
                               icon: Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
                           const Text(
@@ -80,7 +80,7 @@ class _EstateCodeState extends State<EstateCode> {
           await _estateServices.estateRegistration(context, code.text);
       if (result) {
         _profileDataNotifier!.setLoading(false);
-        Navigator.pushNamed(context, '/nofacility');
+        Navigator.pushNamed(context, '/estate_pending');
         SharedPreference().setPending(true);
       } else {
         _profileDataNotifier!.setLoading(false);

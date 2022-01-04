@@ -11,11 +11,19 @@ checkProfile(context) async {
   UserModel userData = await SharedPreference().readAsModel("userData");
   EstateDetails estateDetails =
       await SharedPreference().readEstateModel('estateDetails');
-  if (userData.isEstateuser == true) {
+  if (userData.verified == "False") {
+    Navigator.pushNamed(context, '/email_verification');
+  } else if (userData.isEstateuser == true) {
     //is estate user
     if (userData.belongEstateId != "No Estate ID") {
+      print(estateDetails.results?[0].accepted);
       if (estateDetails.results?[0].accepted != true) {
-        Navigator.pushNamed(context, '/nofacility');
+        bool? result = await SharedPreference().readPendingStatus('pending');
+        if (result == true || result == null) {
+          Navigator.pushNamed(context, '/estate_pending');
+        } else {
+          Navigator.pushNamed(context, '/nofacility');
+        }
       } else {
         Navigator.pushNamed(context, '/estate_dashboard');
       }

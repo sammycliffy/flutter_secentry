@@ -185,10 +185,10 @@ class AuthServices {
     return result;
   }
 
-  Future<bool> newPassword(context, String token, String password) async {
+  Future<bool> emailVerification(context, String token) async {
     bool result = false;
     try {
-      var url = Uri.parse("${Api.baseUrl}auth/password-reset/validate_token/");
+      var url = Uri.parse("${Api.baseUrl}auth/registration/verify-email/");
       print(url);
       final http.Response response = await http
           .post(
@@ -197,8 +197,47 @@ class AuthServices {
               'Content-type': 'application/json',
               'Accept': 'application/json',
             },
-            body: jsonEncode(
-                <String, dynamic>{"password": password, "token": token}),
+            body: jsonEncode(<String, dynamic>{"key": token}),
+          )
+          .timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseJson = json.decode(response.body);
+        print(responseJson);
+        result = true;
+      } else {
+        ToastUtils.showRedToast(response.body);
+        log("error login: ${response.body}");
+        result = false;
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        ToastUtils.showRedToast('Poor network connection');
+      } else if (e is TimeoutException) {
+        ToastUtils.showRedToast('Network problem. Please try again');
+      } else {
+        print(e.toString());
+      }
+    }
+    return result;
+  }
+
+  Future<bool> newPassword(context, String password1, String password2) async {
+    bool result = false;
+    try {
+      var url = Uri.parse("${Api.baseUrl}/auth/password/change/");
+      print(url);
+      final http.Response response = await http
+          .post(
+            url,
+            headers: <String, String>{
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: jsonEncode(<String, dynamic>{
+              "new_password1": password1,
+              "new_password2": password2
+            }),
           )
           .timeout(const Duration(seconds: 15));
 

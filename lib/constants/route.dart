@@ -1,6 +1,9 @@
+import 'package:flutter_secentry/Pages/Estate/badge.dart';
+import 'package:flutter_secentry/Pages/Estate/compose_message.dart';
 import 'package:flutter_secentry/Pages/Estate/emergency.dart';
 import 'package:flutter_secentry/Pages/Estate/estate_code.dart';
 import 'package:flutter_secentry/Pages/Estate/estate_dashboard.dart';
+import 'package:flutter_secentry/Pages/Estate/estate_pending.dart';
 import 'package:flutter_secentry/Pages/Estate/guestentry.dart';
 import 'package:flutter_secentry/Pages/Estate/invite_guest.dart';
 import 'package:flutter_secentry/Pages/Estate/item_pass.dart';
@@ -9,6 +12,7 @@ import 'package:flutter_secentry/Pages/Estate/my_invitations.dart';
 import 'package:flutter_secentry/Pages/Estate/news.dart';
 import 'package:flutter_secentry/Pages/Estate/pending_request.dart';
 import 'package:flutter_secentry/Pages/Estate/visitor_information.dart';
+import 'package:flutter_secentry/Pages/authpages/email_verification.dart';
 import 'package:flutter_secentry/Pages/authpages/login.dart';
 import 'package:flutter_secentry/Pages/authpages/new_password.dart';
 import 'package:flutter_secentry/Pages/authpages/otp_page.dart';
@@ -27,6 +31,7 @@ import 'package:flutter_secentry/Pages/guard/user_entry.dart';
 import 'package:flutter_secentry/Pages/guard/user_exit.dart';
 import 'package:flutter_secentry/Pages/guard/visitor_entry.dart';
 import 'package:flutter_secentry/Pages/guard/visitor_exit.dart';
+import 'package:flutter_secentry/Pages/settings/account_page.dart';
 
 final route = {
   '/nofacility': (context) => const Nofacility(),
@@ -36,7 +41,7 @@ final route = {
   '/login': (context) => const Login(),
   '/estate_code': (context) => const EstateCode(),
   '/pending_request': (context) => const PendingRequest(),
-
+  '/my_account': (context) => const MyAccount(),
   //estate
   '/estate_dashboard': (context) => const EstateDashoard(),
   '/guest_entry': (context) => const GuestEntry(),
@@ -48,9 +53,12 @@ final route = {
   '/emergency': (context) => const EmergencyContact(),
   '/news': (context) => const News(),
   '/messages': (context) => const Messages(),
-
+  '/compose_message': (context) => const ComposeMessage(),
+  '/user_badge': (context) => const UserBadge(),
+  '/email_verification': (context) => const EmailVerification(),
   '/entry_info': (context) => EntryInfo(),
   '/visitor_info': (context) => const VisitorInfo(),
+  '/estate_pending': (context) => const EstatePending(),
 
   //company
   '/company_dashboard': (context) => const CompanyDashboard(),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/services/estate_service.dart';
+import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +21,21 @@ class UserExit extends StatefulWidget {
 class _UserExitState extends State<UserExit> {
   final code = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final EstateServices _estateServices = EstateServices();
+  final GuardServices _guardServices = GuardServices();
   ProfileDataNotifier? _profileDataNotifier;
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancel", true, ScanMode.BARCODE);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+    if (!mounted) return;
+    setState(() {
+      code.text = barcodeScanRes;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +56,7 @@ class _UserExitState extends State<UserExit> {
                           heightSpace(40),
                           IconButton(
                               onPressed: () => Navigator.pop(context),
-                              icon: Icon(Icons.arrow_back_ios)),
+                              icon: const Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
                           const Text(
                             'User Exit',
@@ -65,24 +81,26 @@ class _UserExitState extends State<UserExit> {
   visitorCode() => TextFormField(
       controller: code,
       validator: (value) => FormValidation().stringValidation(code.text),
-      decoration: const InputDecoration(
-          contentPadding: EdgeInsets.all(12),
-          border: OutlineInputBorder(
+      decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(12),
+          border: const OutlineInputBorder(
             borderSide: BorderSide(width: 5.0),
           ),
+          suffixIcon: IconButton(
+              onPressed: () => scanBarcodeNormal(),
+              icon: const Icon(Icons.qr_code)),
           hintText: 'Visitor code'));
 
   validate() async {
-    Navigator.pushNamed(context, '/exit_approved');
-    // if (_formKey.currentState!.validate()) {
-    //   _profileDataNotifier!.setLoading(true);
-    //   dynamic result =
-    //       await _estateServices.estateRegistration(context, code.text);
-    //   if (result) {
-    //     _profileDataNotifier!.setLoading(false);
-    //     Navigator.pushNamed(context, '/no_facility_invitation');
-    //     SharedPreference().setPending(true);
-    //   } else {
-    //     _profileDataNotifier!.setLoading(false);
+    if (_formKey.currentState!.validate()) {
+      _profileDataNotifier!.setLoading(true);
+      dynamic result = await _guardServices.exitUser(context, code.text);
+      if (result) {
+        _profileDataNotifier!.setLoading(false);
+        Navigator.pushNamed(context, '/no_facility_invitation');
+      } else {
+        _profileDataNotifier!.setLoading(false);
+      }
+    }
   }
 }

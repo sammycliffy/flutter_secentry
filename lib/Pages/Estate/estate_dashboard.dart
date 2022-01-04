@@ -30,10 +30,29 @@ class _EstateDashoardState extends State<EstateDashoard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  heightSpace(70),
-                  Text(
-                    'Hi ${_profileDataNotifier!.userProfile!.fullName}',
-                    style: TextStyle(fontSize: 40),
+                  heightSpace(40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        name(_profileDataNotifier!.userProfile!.fullName),
+                        style: const TextStyle(fontSize: 30),
+                      ),
+                      GestureDetector(
+                        onTap: () =>
+                            Navigator.pushNamed(context, '/my_account'),
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: kPrimary,
+                          ),
+                          child:
+                              const Icon(Icons.person, color: kWhite, size: 30),
+                        ),
+                      ),
+                    ],
                   ),
                   heightSpace(50),
                   GestureDetector(
@@ -53,9 +72,9 @@ class _EstateDashoardState extends State<EstateDashoard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               heightSpace(30),
-                              const Text(
-                                'Golf Estate',
-                                style: TextStyle(
+                              Text(
+                                '${_profileDataNotifier!.estateDetails!.results?[0].estateName}',
+                                style: const TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
                                     color: kWhite),
@@ -85,7 +104,7 @@ class _EstateDashoardState extends State<EstateDashoard> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       cellIcon(newsIcon, 'News', '/news'),
-                      cellIcon(vendorIcon, 'Vendors', null),
+                      cellIcon(badgeIcon, 'Badge', '/user_badge'),
                       cellIcon(messageIcon, 'Messages', '/messages')
                     ],
                   ),
@@ -118,4 +137,6 @@ class _EstateDashoardState extends State<EstateDashoard> {
           )
         ],
       );
+
+  name(name) => 'Hi, ' + name.replaceAll(' ', '\n');
 }

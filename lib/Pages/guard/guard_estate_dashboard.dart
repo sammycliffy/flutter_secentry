@@ -27,8 +27,18 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   heightSpace(30),
-                  const IconButton(
-                      onPressed: null, icon: Icon(Icons.arrow_back_ios)),
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/my_account'),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kPrimary,
+                      ),
+                      child: const Icon(Icons.person, color: kWhite, size: 30),
+                    ),
+                  ),
                   heightSpace(30),
                   Text(
                     '${_profileDataNotifier!.userProfile!.fullName}',

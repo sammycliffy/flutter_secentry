@@ -55,7 +55,7 @@ class EstateServices {
     }
   }
 
-  Future getEstateDetails() async {
+  Future<bool> getEstateDetails() async {
     bool result = false;
     _dioCacheManager = DioCacheManager(CacheConfig());
     UserModel userData = await SharedPreference().readAsModel('userData');
@@ -92,8 +92,8 @@ class EstateServices {
     return result;
   }
 
-  getEstateDetail() async {
-    bool result = false;
+  Future<EstateDetails> getEstateDetail() async {
+    EstateDetails _estateDetails = EstateDetails();
     UserModel userData = await SharedPreference().readAsModel('userData');
     try {
       var client = http.Client();
@@ -112,7 +112,7 @@ class EstateServices {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseJson = json.decode(response.body);
         SharedPreference().save("estateDetails", responseJson);
-        result = true;
+        _estateDetails = EstateDetails.fromJson(responseJson);
       } else {
         ToastUtils.showRedToast(response.body);
         log("error login: ${response.body}");
@@ -120,6 +120,6 @@ class EstateServices {
     } catch (e) {
       print(e.toString());
     }
-    return result;
+    return _estateDetails;
   }
 }

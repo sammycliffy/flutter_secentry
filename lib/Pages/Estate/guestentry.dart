@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secentry/Pages/Estate/guest_info.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
@@ -25,6 +26,7 @@ class _GuestEntryState extends State<GuestEntry> {
   bool loading = true;
   bool noinvitations = false;
   Future<VisitorModel>? _visitorModel;
+  VisitorModel? visitorModel;
   ProfileDataNotifier? _profileDataNotifier;
   List<String> visitorName = [];
   List<String> visitorPhone = [];
@@ -45,7 +47,12 @@ class _GuestEntryState extends State<GuestEntry> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            heightSpace(70),
+            heightSpace(30),
+            IconButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, '/estate_dashboard'),
+                icon: const Icon(Icons.arrow_back_ios)),
+            heightSpace(30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -115,6 +122,7 @@ class _GuestEntryState extends State<GuestEntry> {
       setState(() {
         loading = false;
       });
+      visitorModel = value;
       if (value.count == 0) {
         noinvitations = true;
       } else {
@@ -137,6 +145,7 @@ class _GuestEntryState extends State<GuestEntry> {
         _guestEntryServices.getInvitationByNumber(context, pageNumber);
     _visitorModel!.then((value) {
       setState(() {
+        visitorModel = value;
         value.results!.forEach((element) {
           setState(() {
             visitorName.add(element.estateVisitorName!);
@@ -194,27 +203,36 @@ class _GuestEntryState extends State<GuestEntry> {
       shrinkWrap: true,
       itemCount: visitorName.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            leading: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                  color: kPrimary, borderRadius: BorderRadius.circular(5)),
-              child: const Center(
-                  child: Icon(
-                Icons.person,
-                color: kWhite,
-              )),
-            ),
-            title: Text(
-              visitorName[index],
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
-            ),
-            subtitle: Text(
-              time[index],
-              style: const TextStyle(color: kGray),
+        return GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GuestInfo(
+                        visitorModel: visitorModel,
+                        index: index,
+                      ))),
+          child: Card(
+            child: ListTile(
+              leading: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: kPrimary, borderRadius: BorderRadius.circular(5)),
+                child: const Center(
+                    child: Icon(
+                  Icons.person,
+                  color: kWhite,
+                )),
+              ),
+              title: Text(
+                visitorName[index],
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+              ),
+              subtitle: Text(
+                time[index],
+                style: const TextStyle(color: kGray),
+              ),
             ),
           ),
         );

@@ -194,5 +194,5 @@ class _VisitorInfoState extends State<VisitorInfo> {
           filled: true,
           contentPadding: EdgeInsets.all(12),
           border: InputBorder.none,
-          hintText: 'Description'));
+          hintText: 'Address'));
 }

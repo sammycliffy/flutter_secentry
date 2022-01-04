@@ -28,37 +28,40 @@ class UserModel {
   String? belongToEstateaddressGuard;
   String? belongToEstateadminphoneGuard;
   String? activeSubscription;
+  String? verified;
 
-  UserModel(
-      {required this.key,
-      required this.status,
-      required this.userId,
-      required this.email,
-      required this.fullName,
-      required this.phoneNumber,
-      required this.address,
-      required this.gender,
-      required this.role,
-      required this.isEstateuser,
-      required this.isCompanyuser,
-      required this.isGuard,
-      required this.belongEstateId,
-      required this.belongEstateName,
-      required this.belongCompanyId,
-      required this.belongCompanyName,
-      required this.belongCompanyEstateId,
-      required this.createdFacilityId,
-      required this.createdFacilityName,
-      required this.createdCompanyId,
-      required this.createdCompanyName,
-      required this.createdCompanyEstateId,
-      required this.createdFacility,
-      required this.belongToEstate,
-      required this.belongToEstateidGuard,
-      required this.belongToEstatenameGuard,
-      required this.belongToEstateaddressGuard,
-      required this.belongToEstateadminphoneGuard,
-      required this.activeSubscription});
+  UserModel({
+    required this.key,
+    required this.status,
+    required this.userId,
+    required this.email,
+    required this.fullName,
+    required this.phoneNumber,
+    required this.address,
+    required this.gender,
+    required this.role,
+    required this.isEstateuser,
+    required this.isCompanyuser,
+    required this.isGuard,
+    required this.belongEstateId,
+    required this.belongEstateName,
+    required this.belongCompanyId,
+    required this.belongCompanyName,
+    required this.belongCompanyEstateId,
+    required this.createdFacilityId,
+    required this.createdFacilityName,
+    required this.createdCompanyId,
+    required this.createdCompanyName,
+    required this.createdCompanyEstateId,
+    required this.createdFacility,
+    required this.belongToEstate,
+    required this.belongToEstateidGuard,
+    required this.belongToEstatenameGuard,
+    required this.belongToEstateaddressGuard,
+    required this.belongToEstateadminphoneGuard,
+    required this.activeSubscription,
+    required this.verified,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     key = json['key'];
@@ -90,5 +93,6 @@ class UserModel {
     belongToEstateaddressGuard = json['belong_to_estateaddress_guard'];
     belongToEstateadminphoneGuard = json['belong_to_estateadminphone_guard'];
     activeSubscription = json['active_subscription'];
+    verified = json['verified'];
   }
 }

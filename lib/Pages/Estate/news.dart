@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secentry/Pages/Estate/message_details.dart';
 import 'package:flutter_secentry/Pages/Estate/news_details.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
@@ -8,9 +7,6 @@ import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/format_date.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/models/estate_news_model.dart';
-import 'package:flutter_secentry/models/estatemessage_model.dart';
-
-import 'package:flutter_secentry/services/message_service.dart';
 import 'package:flutter_secentry/services/news_services.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:provider/provider.dart';

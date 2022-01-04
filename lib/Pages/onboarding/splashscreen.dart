@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = sharedPreferences.getString("token");
     print(token);
     if (token != null) {
-      dynamic result = await _estateServices.getEstateDetail();
+      dynamic result = await _estateServices.getEstateDetails();
       saveUser(context);
       saveEstate(context);
       checkProfile(context);

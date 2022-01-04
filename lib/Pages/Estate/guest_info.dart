@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
@@ -7,29 +6,20 @@ import 'package:flutter_secentry/models/visitor_model.dart';
 import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
-import 'package:flutter_secentry/widget/toast.dart';
 import 'package:provider/src/provider.dart';
 
-class EntryInfo extends StatefulWidget {
-  VisitorModel? visitorModel;
-  EntryInfo({Key? key, this.visitorModel}) : super(key: key);
+class GuestInfo extends StatefulWidget {
+  final VisitorModel? visitorModel;
+  final int? index;
+  const GuestInfo({Key? key, this.visitorModel, this.index}) : super(key: key);
 
   @override
-  _EntryInfoState createState() => _EntryInfoState();
+  _GuestInfoState createState() => _GuestInfoState();
 }
 
-class _EntryInfoState extends State<EntryInfo> {
+class _GuestInfoState extends State<GuestInfo> {
   final GuardServices _guardServices = GuardServices();
   ProfileDataNotifier? _profileDataNotifier;
-  @override
-  void initState() {
-    super.initState();
-    if (widget.visitorModel!.count == 0) {
-      ToastUtils.showRedToast('Code not found');
-      Navigator.pop(context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     _profileDataNotifier = context.watch<ProfileDataNotifier>();
@@ -55,68 +45,48 @@ class _EntryInfoState extends State<EntryInfo> {
                           ),
                           heightSpace(10),
                           Text(
-                            '${widget.visitorModel!.results?[0].estateVisitorName}',
+                            '${widget.visitorModel!.results?[widget.index!].estateVisitorName}',
                             style: TextStyle(fontSize: 20),
                           ),
                           heightSpace(30),
                           text('Host name',
-                              '${widget.visitorModel!.results?[0].estateUserFullname}'),
+                              '${widget.visitorModel!.results?[widget.index!].estateUserFullname}'),
                           const Divider(),
                           heightSpace(20),
                           text('Host phone',
-                              '${widget.visitorModel!.results?[0].estateUserPhoneNumber}'),
+                              '${widget.visitorModel!.results?[widget.index!].estateUserPhoneNumber}'),
                           const Divider(),
                           heightSpace(20),
                           text('Country',
-                              '${widget.visitorModel!.results?[0].country}'),
+                              '${widget.visitorModel!.results?[widget.index!].country}'),
                           const Divider(),
                           heightSpace(20),
                           text('State',
-                              '${widget.visitorModel!.results?[0].state}'),
+                              '${widget.visitorModel!.results?[widget.index!].state}'),
                           const Divider(),
                           heightSpace(20),
                           text('Visitor Address',
-                              '${widget.visitorModel!.results?[0].estateVisitorAddress}'),
+                              '${widget.visitorModel!.results?[widget.index!].estateVisitorAddress}'),
                           const Divider(),
                           heightSpace(20),
                           text('Phone Number',
-                              '${widget.visitorModel!.results?[0].estateVisitorPhone}'),
+                              '${widget.visitorModel!.results?[widget.index!].estateVisitorPhone}'),
                           const Divider(),
                           heightSpace(20),
                           text('Purpose of visit',
-                              '${widget.visitorModel!.results?[0].purposeOfVisit}'),
+                              '${widget.visitorModel!.results?[widget.index!].purposeOfVisit}'),
                           Divider(),
                           // heightSpace(20),
                           // text('Gender', '${widget.visitorModel!.results?[0].}'),
                           // Divider(),
                           heightSpace(20),
                           text('Time',
-                              '${widget.visitorModel!.results?[0].duration}'),
+                              '${widget.visitorModel!.results?[widget.index!].duration}'),
                           Divider(),
-
-                          if (widget
-                                  .visitorModel!.results?[0].itemPass!.length ==
-                              0)
-                            Container()
-                          else
-                            SizedBox(
-                              height: 200,
-                              width: 200,
-                              child: ListView.builder(
-                                  itemCount: widget.visitorModel!.results?[0]
-                                      .itemPass!.length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      leading: const Icon(Icons.list),
-                                      title: Text(
-                                          '${widget.visitorModel!.results?[0].itemPass?[index].itemName}'),
-                                      subtitle: Text(
-                                          '${widget.visitorModel!.results?[0].itemPass?[index].description}'),
-                                      trailing: Text(
-                                          '${widget.visitorModel!.results?[0].itemPass?[index].quantity}'),
-                                    );
-                                  }),
-                            ),
+                          heightSpace(20),
+                          text('Visitor ID',
+                              '${widget.visitorModel!.results?[widget.index!].visitorId}'),
+                          Divider(),
                           heightSpace(50),
                           CustomButton(text: 'Approve', validate: validate),
                           heightSpace(50),

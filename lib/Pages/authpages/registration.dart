@@ -181,7 +181,7 @@ class _RegistrationState extends State<Registration> {
       if (result == true) {
         _profileDataNotifier!.setLoading(false);
         saveUser(context);
-        Navigator.pushNamed(context, '/nofacility');
+        Navigator.pushNamed(context, '/email_verification');
       } else {
         _profileDataNotifier!.setLoading(false);
       }

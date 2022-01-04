@@ -131,17 +131,6 @@ class _NofacilityState extends State<Nofacility> {
     );
   }
 
-  checkAcceptedStatus() async {
-    dynamic result = await _estateServices.getEstateDetail();
-    if (result) {
-      EstateDetails estateDetails =
-          await SharedPreference().readEstateModel('estateDetails');
-      if (estateDetails.results?[0].accepted == true) {
-        Navigator.pushNamed(context, '/estate_dashboard');
-      }
-    }
-  }
-
   void pageChange(int index) {
     setState(() {
       _currentPosition = index.toDouble();
