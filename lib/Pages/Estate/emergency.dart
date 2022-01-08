@@ -51,7 +51,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
               children: const [
                 Text(
                   'Emergency',
-                  style: TextStyle(fontSize: 40),
+                  style: TextStyle(fontSize: 25),
                 ),
                 IconButton(
                     onPressed: null,
@@ -213,11 +213,11 @@ class _EmergencyContactState extends State<EmergencyContact> {
             title: Text(
               contactName[index],
               style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+                  fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
             ),
             subtitle: Text(
               designation[index],
-              style: const TextStyle(color: kGray),
+              style: const TextStyle(color: kGray, fontSize: 12),
             ),
           ),
         );

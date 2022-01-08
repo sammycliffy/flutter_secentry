@@ -30,7 +30,7 @@ class _EstateDashoardState extends State<EstateDashoard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  heightSpace(40),
+                  heightSpace(80),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -75,7 +75,7 @@ class _EstateDashoardState extends State<EstateDashoard> {
                               Text(
                                 '${_profileDataNotifier!.estateDetails!.results?[0].estateName}',
                                 style: const TextStyle(
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: kWhite),
                               ),

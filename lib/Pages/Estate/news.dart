@@ -213,11 +213,11 @@ class _NewsState extends State<News> {
               title: Text(
                 truncateWithEllipsis(12, subject[index]),
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
               ),
               subtitle: Text(
                 truncateWithEllipsis(12, body[index]),
-                style: const TextStyle(color: kGray),
+                style: const TextStyle(color: kGray, fontSize: 12),
               ),
             ),
           ),

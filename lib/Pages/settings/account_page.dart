@@ -27,7 +27,7 @@ class _MyAccountState extends State<MyAccount> {
                       icon: const Icon(Icons.arrow_back_ios)),
                   const Text(
                     'Account page',
-                    style: TextStyle(fontSize: 40),
+                    style: TextStyle(fontSize: 25),
                   ),
                   heightSpace(20),
                   listItem('Profile', Icons.person, null),

@@ -47,8 +47,9 @@ class _EstatePendingState extends State<EstatePending> {
                       children: [
                         Text(
                           'Hi ${_profileDataNotifier!.userProfile!.fullName},',
-                          style: TextStyle(fontSize: 40),
+                          style: TextStyle(fontSize: 25),
                         ),
+                        widthSpace(40),
                         IconButton(
                           icon: const Icon(
                             Icons.notifications,
@@ -57,12 +58,21 @@ class _EstatePendingState extends State<EstatePending> {
                           ),
                           onPressed: () =>
                               Navigator.pushNamed(context, '/my_invitations'),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.message,
+                            color: kPrimary,
+                            size: 30,
+                          ),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/messages'),
                         )
                       ],
                     ),
                     const Text(
                       'Your request is pending.',
-                      style: TextStyle(fontSize: 17, color: kGray),
+                      style: TextStyle(fontSize: 14, color: kGray),
                     ),
                     heightSpace(100),
                     tapToRefresh(),

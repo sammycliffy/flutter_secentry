@@ -58,16 +58,19 @@ class _GuestEntryState extends State<GuestEntry> {
               children: [
                 const Text(
                   'Guest List',
-                  style: TextStyle(fontSize: 40),
+                  style: TextStyle(fontSize: 25),
                 ),
-                IconButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/invite_guest'),
-                    icon: const Icon(
-                      Icons.search,
-                      size: 40,
-                      color: kBlack,
-                    )),
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: IconButton(
+                //       onPressed: () =>
+                //           Navigator.pushNamed(context, '/invite_guest'),
+                //       icon: const Icon(
+                //         Icons.search,
+                //         size: 40,
+                //         color: kBlack,
+                //       )),
+                // ),
                 IconButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, '/invite_guest'),
@@ -227,11 +230,11 @@ class _GuestEntryState extends State<GuestEntry> {
               title: Text(
                 visitorName[index],
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
               ),
               subtitle: Text(
                 time[index],
-                style: const TextStyle(color: kGray),
+                style: const TextStyle(color: kGray, fontSize: 12),
               ),
             ),
           ),

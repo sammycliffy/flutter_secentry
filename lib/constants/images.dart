@@ -21,7 +21,7 @@ class Images {
   static String entry_approved = 'assets/images/entry_approve.svg';
   static String exit_approved = 'assets/images/exit_approved.svg';
   static String secentryLogo = 'assets/images/secentry_logo.png';
-  static String _badgeIcon = 'assets/images/badge.png';
+  static String badge_icon = 'assets/images/badge.png';
 }
 
 final noEstateImage =
@@ -38,7 +38,6 @@ final searchIcon = SvgPicture.asset(Images.search);
 final guestListIcon = SvgPicture.asset(Images.guestEntry);
 final entryApproved = SvgPicture.asset(Images.entry_approved);
 final exitApproved = SvgPicture.asset(Images.exit_approved);
-final badgeIcon = SvgPicture.asset(Images._badgeIcon);
 final guestEntry = Image.asset(
   Images.entryicon,
   width: 100,
@@ -68,6 +67,12 @@ final vendorIcon = Image.asset(
 );
 final newsIcon = Image.asset(
   Images.news,
+  width: 100,
+  height: 100,
+);
+
+final badgeIcon = Image.asset(
+  Images.badge_icon,
   width: 100,
   height: 100,
 );

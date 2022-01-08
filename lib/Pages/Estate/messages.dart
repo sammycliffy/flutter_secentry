@@ -52,20 +52,20 @@ class _MessagesState extends State<Messages> {
             heightSpace(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 heightSpace(50),
                 const Text(
                   'Messages',
-                  style: TextStyle(fontSize: 40),
+                  style: TextStyle(fontSize: 25),
                 ),
-                const IconButton(
-                    onPressed: null,
-                    icon: Icon(
-                      Icons.search,
-                      size: 40,
-                      color: kBlack,
-                    )),
+                widthSpace(60),
+                // const IconButton(
+                //     onPressed: null,
+                //     icon: Icon(
+                //       Icons.search,
+                //       size: 40,
+                //       color: kBlack,
+                //     )),
                 IconButton(
                   icon: const Icon(
                     Icons.email,
@@ -226,11 +226,11 @@ class _MessagesState extends State<Messages> {
               title: Text(
                 truncateWithEllipsis(12, message[index]),
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 18),
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
               ),
               subtitle: Text(
                 time[index],
-                style: const TextStyle(color: kGray),
+                style: const TextStyle(color: kGray, fontSize: 12),
               ),
             ),
           ),

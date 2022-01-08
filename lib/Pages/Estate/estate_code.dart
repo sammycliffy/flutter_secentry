@@ -43,8 +43,8 @@ class _EstateCodeState extends State<EstateCode> {
                               onPressed: () => Navigator.pop(context),
                               icon: Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
-                          const Text(
-                            'Hi Samuel',
+                          Text(
+                            '${_profileDataNotifier!.userProfile!.fullName}',
                             style: TextStyle(fontSize: 40),
                           ),
                           heightSpace(80),

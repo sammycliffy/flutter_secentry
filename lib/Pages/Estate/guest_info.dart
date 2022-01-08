@@ -88,7 +88,7 @@ class _GuestInfoState extends State<GuestInfo> {
                               '${widget.visitorModel!.results?[widget.index!].visitorId}'),
                           Divider(),
                           heightSpace(50),
-                          CustomButton(text: 'Approve', validate: validate),
+                          // CustomButton(text: 'Approve', validate: validate),
                           heightSpace(50),
                         ],
                       ),
