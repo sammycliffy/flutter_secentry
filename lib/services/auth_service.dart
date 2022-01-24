@@ -186,9 +186,10 @@ class AuthServices {
   }
 
   Future<bool> emailVerification(context, String token) async {
+    print(token + 'this is token');
     bool result = false;
     try {
-      var url = Uri.parse("${Api.baseUrl}auth/registration/verify-email/");
+      var url = Uri.parse("${Api.baseUrl}auth/verify-user-new/");
       print(url);
       final http.Response response = await http
           .post(
@@ -225,7 +226,7 @@ class AuthServices {
   Future<bool> newPassword(context, String password1, String password2) async {
     bool result = false;
     try {
-      var url = Uri.parse("${Api.baseUrl}/auth/password/change/");
+      var url = Uri.parse("${Api.baseUrl}auth/password/change/");
       print(url);
       final http.Response response = await http
           .post(

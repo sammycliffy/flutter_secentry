@@ -35,6 +35,19 @@ class _GuestInfoState extends State<GuestInfo> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           heightSpace(40),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    icon: Icon(Icons.arrow_back_ios)),
+                                heightSpace(50),
+                                const Text(
+                                  'Guest Info',
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                                widthSpace(60),
+                              ]),
                           IconButton(
                               onPressed: () => Navigator.pop(context),
                               icon: Icon(Icons.arrow_back_ios)),

@@ -5,26 +5,29 @@ import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/models/company/company_emergency_model.dart';
 import 'package:flutter_secentry/models/emergency_model.dart';
-import 'package:flutter_secentry/services/emergency_services.dart';
+import 'package:flutter_secentry/services/company/emergency_services.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class EmergencyContact extends StatefulWidget {
-  const EmergencyContact({Key? key}) : super(key: key);
+class CompanyEmergencyContact extends StatefulWidget {
+  const CompanyEmergencyContact({Key? key}) : super(key: key);
 
   @override
-  State<EmergencyContact> createState() => _EmergencyContactState();
+  State<CompanyEmergencyContact> createState() =>
+      _CompanyEmergencyContactState();
 }
 
-class _EmergencyContactState extends State<EmergencyContact> {
+class _CompanyEmergencyContactState extends State<CompanyEmergencyContact> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  final EmergencyServices _emergencyServices = EmergencyServices();
+  final CompanyEmergencyServices _emergencyServices =
+      CompanyEmergencyServices();
   bool loading = true;
   bool noinvitations = false;
-  Future<EmergencyModel>? _emergencyModel;
+  Future<CompanyEmergencyModel>? _emergencyModel;
   ProfileDataNotifier? _profileDataNotifier;
   List<String> contactName = [];
   List<String> contactPhone = [];

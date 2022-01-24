@@ -3,6 +3,7 @@ import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/helpers/sharedpreferences.dart';
 import 'package:flutter_secentry/services/company/company_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
@@ -38,12 +39,12 @@ class _CompanyCodeState extends State<CompanyCode> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           heightSpace(40),
-                          const IconButton(
-                              onPressed: null,
+                          IconButton(
+                              onPressed: () => Navigator.pop(context),
                               icon: Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
-                          const Text(
-                            'Hi Samuel',
+                          Text(
+                            '${_profileDataNotifier!.userProfile!.fullName}',
                             style: TextStyle(fontSize: 40),
                           ),
                           heightSpace(80),
@@ -64,7 +65,7 @@ class _CompanyCodeState extends State<CompanyCode> {
 
   companyCode() => TextFormField(
       controller: code,
-      validator: (value) => FormValidation().emailValidation(code.text),
+      validator: (value) => FormValidation().stringValidation(code.text),
       decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(12),
           border: OutlineInputBorder(
@@ -73,16 +74,16 @@ class _CompanyCodeState extends State<CompanyCode> {
           hintText: 'Enter code'));
 
   validate() async {
-    Navigator.pushNamed(context, '/nofacility');
     if (_formKey.currentState!.validate()) {
       _profileDataNotifier!.setLoading(true);
       dynamic result =
           await _companyServices.companyRegistration(context, code.text);
       if (result) {
-        _profileDataNotifier!.setLoading(true);
-        Navigator.pushNamed(context, '/no_facility_invitation');
+        _profileDataNotifier!.setLoading(false);
+        Navigator.pushNamed(context, '/company_pending');
+        SharedPreference().setPending(true);
       } else {
-        _profileDataNotifier!.setLoading(true);
+        _profileDataNotifier!.setLoading(false);
       }
     }
   }

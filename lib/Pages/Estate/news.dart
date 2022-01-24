@@ -49,18 +49,22 @@ class _NewsState extends State<News> {
             heightSpace(70),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'News',
-                  style: TextStyle(fontSize: 40),
-                ),
+              children: [
                 IconButton(
-                    onPressed: null,
-                    icon: Icon(
-                      Icons.search,
-                      size: 40,
-                      color: kBlack,
-                    ))
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back_ios)),
+                const Text(
+                  'News',
+                  style: TextStyle(fontSize: 25),
+                ),
+                widthSpace(40)
+                // IconButton(
+                //     onPressed: null,
+                //     icon: Icon(
+                //       Icons.search,
+                //       size: 40,
+                //       color: kBlack,
+                //     ))
               ],
             ),
             heightSpace(20),

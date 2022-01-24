@@ -36,27 +36,42 @@ class _EstateDashoardState extends State<EstateDashoard> {
                     children: [
                       Text(
                         name(_profileDataNotifier!.userProfile!.fullName),
-                        style: const TextStyle(fontSize: 30),
+                        style: const TextStyle(fontSize: 25),
                       ),
-                      GestureDetector(
-                        onTap: () =>
-                            Navigator.pushNamed(context, '/my_account'),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: kPrimary,
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.notifications,
+                              color: kPrimary,
+                              size: 40,
+                            ),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/my_invitations'),
                           ),
-                          child:
-                              const Icon(Icons.person, color: kWhite, size: 30),
-                        ),
+                          widthSpace(40),
+                          GestureDetector(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/my_account'),
+                            child: Container(
+                              width: 35,
+                              height: 35,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: kPrimary,
+                              ),
+                              child: const Icon(Icons.person,
+                                  color: kWhite, size: 20),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   heightSpace(50),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/guest_entry'),
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/estate_information'),
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       width: double.infinity,
@@ -138,5 +153,5 @@ class _EstateDashoardState extends State<EstateDashoard> {
         ],
       );
 
-  name(name) => 'Hi, ' + name.replaceAll(' ', '\n');
+  name(name) => 'Hi, ' + name.substring(0, name.indexOf(' '));
 }

@@ -25,7 +25,9 @@ class _AddItemPassState extends State<AddItemPass> {
   final _formKey = GlobalKey<FormState>();
   final AuthServices _authServices = AuthServices();
   InvitationNotifier? _invitationNotifier;
-  List<Item> _listofItems = [];
+  List<Item> listofItems = [
+    Item(description: 'first item', quantity: 0, itemName: 'no title')
+  ];
   @override
   Widget build(BuildContext context) {
     _invitationNotifier = context.watch<InvitationNotifier>();
@@ -40,24 +42,28 @@ class _AddItemPassState extends State<AddItemPass> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    heightSpace(40),
-                    IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back_ios)),
+                    heightSpace(60),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(Icons.arrow_back_ios)),
+                        widthSpace(40),
                         const Text(
-                          'Item Pass',
-                          style: TextStyle(fontSize: 40),
+                          'Item pass',
+                          style: TextStyle(fontSize: 25),
                         ),
+                        widthSpace(40),
                         GestureDetector(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ItemList(
-                                        listofItems: _listofItems,
-                                      ))),
+                          onTap: () {
+                            listofItems.removeAt(0);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ItemList(
+                                          listofItems: listofItems,
+                                        )));
+                          },
                           child: Container(
                             width: 80,
                             height: 30,
@@ -66,7 +72,7 @@ class _AddItemPassState extends State<AddItemPass> {
                                 borderRadius: BorderRadius.circular(5)),
                             child: Center(
                               child: Text(
-                                '${_listofItems.length}',
+                                (listofItems.length - 1).toString(),
                                 style: TextStyle(color: kWhite),
                               ),
                             ),
@@ -80,44 +86,48 @@ class _AddItemPassState extends State<AddItemPass> {
                         width: 500,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: _listofItems.length,
+                            itemCount: listofItems.length,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 6),
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 6,
-                                    left: 5,
-                                  ),
-                                  width: 70,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      color: kPrimary,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        '${_listofItems.indexOf(_listofItems[index])}',
-                                        style: const TextStyle(
-                                            color: kWhite, fontSize: 18),
+                              return index == 0
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 6),
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 6,
+                                          left: 5,
+                                        ),
+                                        width: 70,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            color: kPrimary,
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '${listofItems.indexOf(listofItems[index])}',
+                                              style: const TextStyle(
+                                                  color: kWhite, fontSize: 18),
+                                            ),
+                                            IconButton(
+                                                onPressed: () => setState(() {
+                                                      listofItems
+                                                          .removeAt(index);
+                                                    }),
+                                                icon: const Icon(
+                                                  Icons.delete,
+                                                  color: kWhite,
+                                                ))
+                                          ],
+                                        ),
                                       ),
-                                      IconButton(
-                                          onPressed: () => setState(() {
-                                                _listofItems.removeAt(index);
-                                              }),
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            color: kWhite,
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              );
+                                    );
                             })),
                     heightSpace(23),
                     titleText(),
@@ -144,11 +154,14 @@ class _AddItemPassState extends State<AddItemPass> {
   addItem() {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _listofItems.add(Item(
+        listofItems.add(Item(
             itemName: title.text,
             quantity: int.parse(quantity.text),
             description: description.text));
       });
+      title.clear();
+      quantity.clear();
+      description.clear();
     }
   }
 
@@ -218,18 +231,17 @@ class _AddItemPassState extends State<AddItemPass> {
           border: InputBorder.none,
           hintText: 'Description'));
   validate() async {
-    if (_formKey.currentState!.validate()) {
-      _invitationNotifier!.setItemPass(
-          _invitationNotifier!.fullName,
-          _invitationNotifier!.phoneNumber,
-          _invitationNotifier!.duration,
-          _listofItems,
-          null,
-          null,
-          null,
-          _invitationNotifier!.purposeOfVisit);
-      Navigator.pushNamed(context, '/visitor_info');
-    }
+    listofItems.removeAt(0);
+    _invitationNotifier!.setItemPass(
+        _invitationNotifier!.fullName,
+        _invitationNotifier!.phoneNumber,
+        _invitationNotifier!.duration,
+        listofItems,
+        null,
+        null,
+        null,
+        _invitationNotifier!.purposeOfVisit);
+    Navigator.pushNamed(context, '/visitor_info');
   }
 }
 

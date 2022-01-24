@@ -48,29 +48,18 @@ class _GuestEntryState extends State<GuestEntry> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             heightSpace(30),
-            IconButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, '/estate_dashboard'),
-                icon: const Icon(Icons.arrow_back_ios)),
             heightSpace(30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/estate_dashboard'),
+                    icon: const Icon(Icons.arrow_back_ios)),
                 const Text(
                   'Guest List',
                   style: TextStyle(fontSize: 25),
                 ),
-                // Align(
-                //   alignment: Alignment.topLeft,
-                //   child: IconButton(
-                //       onPressed: () =>
-                //           Navigator.pushNamed(context, '/invite_guest'),
-                //       icon: const Icon(
-                //         Icons.search,
-                //         size: 40,
-                //         color: kBlack,
-                //       )),
-                // ),
                 IconButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, '/invite_guest'),

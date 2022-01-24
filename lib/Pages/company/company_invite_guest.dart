@@ -7,14 +7,14 @@ import 'package:flutter_secentry/helpers/providers/invitation.dart';
 import 'package:flutter_secentry/widget/button.dart';
 import 'package:provider/provider.dart';
 
-class InviteGuest extends StatefulWidget {
-  const InviteGuest({Key? key}) : super(key: key);
+class CompanyInviteGuest extends StatefulWidget {
+  const CompanyInviteGuest({Key? key}) : super(key: key);
 
   @override
-  State<InviteGuest> createState() => _InviteGuestState();
+  State<CompanyInviteGuest> createState() => _CompanyInviteGuestState();
 }
 
-class _InviteGuestState extends State<InviteGuest> {
+class _CompanyInviteGuestState extends State<CompanyInviteGuest> {
   final fullName = TextEditingController();
   final phone = TextEditingController();
   String? duration = ' Days';

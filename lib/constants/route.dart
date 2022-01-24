@@ -3,6 +3,7 @@ import 'package:flutter_secentry/Pages/Estate/compose_message.dart';
 import 'package:flutter_secentry/Pages/Estate/emergency.dart';
 import 'package:flutter_secentry/Pages/Estate/estate_code.dart';
 import 'package:flutter_secentry/Pages/Estate/estate_dashboard.dart';
+import 'package:flutter_secentry/Pages/Estate/estate_info.dart';
 import 'package:flutter_secentry/Pages/Estate/estate_pending.dart';
 import 'package:flutter_secentry/Pages/Estate/guestentry.dart';
 import 'package:flutter_secentry/Pages/Estate/invite_guest.dart';
@@ -18,9 +19,17 @@ import 'package:flutter_secentry/Pages/authpages/new_password.dart';
 import 'package:flutter_secentry/Pages/authpages/otp_page.dart';
 import 'package:flutter_secentry/Pages/authpages/registration.dart';
 import 'package:flutter_secentry/Pages/authpages/resetpassword.dart';
-import 'package:flutter_secentry/Pages/Estate/no_facility.dart';
+import 'package:flutter_secentry/Pages/Estate/estate_join_facility.dart';
 import 'package:flutter_secentry/Pages/Estate/no_facility_invitation.dart';
+import 'package:flutter_secentry/Pages/company/company_badge.dart';
+import 'package:flutter_secentry/Pages/company/company_code.dart';
+import 'package:flutter_secentry/Pages/company/company_compose_message.dart';
 import 'package:flutter_secentry/Pages/company/company_dashboard.dart';
+import 'package:flutter_secentry/Pages/company/company_emergency.dart';
+import 'package:flutter_secentry/Pages/company/company_join_facility.dart';
+import 'package:flutter_secentry/Pages/company/company_message.dart';
+import 'package:flutter_secentry/Pages/company/company_news.dart';
+import 'package:flutter_secentry/Pages/company/company_pending.dart';
 import 'package:flutter_secentry/Pages/guard/entry_approved_page.dart';
 import 'package:flutter_secentry/Pages/guard/entry_info.dart';
 import 'package:flutter_secentry/Pages/guard/exit_approved_page.dart';
@@ -34,7 +43,8 @@ import 'package:flutter_secentry/Pages/guard/visitor_exit.dart';
 import 'package:flutter_secentry/Pages/settings/account_page.dart';
 
 final route = {
-  '/nofacility': (context) => const Nofacility(),
+  '/estatejoinfacility': (context) => const EsateJoinFacility(),
+  '/companyjoinfacility': (context) => const CompanyJoinFacility(),
   '/registration': (context) => const Registration(),
   '/no_facility_invitation': (context) => const NoFacilityInvitation(),
   '/reset_password': (context) => const ResetPassword(),
@@ -59,9 +69,17 @@ final route = {
   '/entry_info': (context) => EntryInfo(),
   '/visitor_info': (context) => const VisitorInfo(),
   '/estate_pending': (context) => const EstatePending(),
+  '/estate_information': (context) => const EstateInfo(),
 
   //company
-  '/company_dashboard': (context) => const CompanyDashboard(),
+  '/company_dashboard': (context) => const CompanyDashoard(),
+  '/company_pending': (context) => const CompanyPending(),
+  '/company_code': (context) => const CompanyCode(),
+  '/company_messages': (context) => const CompanyMessages(),
+  '/company_compose_message': (context) => const CompanyComposeMessage(),
+  '/company_news': (context) => const CompanyNews(),
+  '/company_badge': (context) => const CompanyUserBadge(),
+  '/company_emergency': (context) => const CompanyEmergencyContact(),
 
   //guard
   '/guard_join_facility': (context) => const GuardJoinFacility(),

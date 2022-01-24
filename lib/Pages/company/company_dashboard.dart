@@ -6,14 +6,14 @@ import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
-class CompanyDashboard extends StatefulWidget {
-  const CompanyDashboard({Key? key}) : super(key: key);
+class CompanyDashoard extends StatefulWidget {
+  const CompanyDashoard({Key? key}) : super(key: key);
 
   @override
-  State<CompanyDashboard> createState() => _CompanyDashboardState();
+  State<CompanyDashoard> createState() => _CompanyDashoardState();
 }
 
-class _CompanyDashboardState extends State<CompanyDashboard> {
+class _CompanyDashoardState extends State<CompanyDashoard> {
   final code = TextEditingController();
   final AuthServices _authServices = AuthServices();
   ProfileDataNotifier? _profileDataNotifier;
@@ -30,14 +30,48 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  heightSpace(70),
-                  const Text(
-                    'Hi Samuel',
-                    style: TextStyle(fontSize: 40),
+                  heightSpace(80),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        name(_profileDataNotifier!.userProfile!.fullName),
+                        style: const TextStyle(fontSize: 25),
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.notifications,
+                              color: kPrimary,
+                              size: 40,
+                            ),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/my_invitations'),
+                          ),
+                          widthSpace(40),
+                          GestureDetector(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/my_account'),
+                            child: Container(
+                              width: 35,
+                              height: 35,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: kPrimary,
+                              ),
+                              child: const Icon(Icons.person,
+                                  color: kWhite, size: 20),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   heightSpace(50),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/guest_entry'),
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/company_information'),
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       width: double.infinity,
@@ -53,16 +87,16 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               heightSpace(30),
-                              const Text(
-                                'Golf Estate',
-                                style: TextStyle(
-                                    fontSize: 25,
+                              Text(
+                                '${_profileDataNotifier!.companyDetails!.results?[0].companyName}',
+                                style: const TextStyle(
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: kWhite),
                               ),
                               heightSpace(5),
                               const Text(
-                                'Tap to view estate info',
+                                'Tap to view company info',
                                 style: TextStyle(fontSize: 16, color: kWhite),
                               )
                             ],
@@ -76,7 +110,8 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       cellIcon(guestEntry, 'Guest Entry', '/guest_entry'),
-                      cellIcon(emergencyIcon, 'Emergency', '/emergency'),
+                      cellIcon(
+                          emergencyIcon, 'Emergency', '/company_emergency'),
                       cellIcon(reportIcon, 'Report', null)
                     ],
                   ),
@@ -84,9 +119,9 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      cellIcon(newsIcon, 'News', '/news'),
-                      cellIcon(vendorIcon, 'Vendors', null),
-                      cellIcon(messageIcon, 'Messages', '/messages')
+                      cellIcon(newsIcon, 'News', '/company_news'),
+                      cellIcon(badgeIcon, 'Badge', '/company_user_badge'),
+                      cellIcon(messageIcon, 'Messages', '/company_messages')
                     ],
                   ),
                 ],
@@ -118,4 +153,6 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
           )
         ],
       );
+
+  name(name) => 'Hi, ' + name.substring(0, name.indexOf(' '));
 }

@@ -20,12 +20,18 @@ class NewsDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             heightSpace(40),
-            IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back_ios)),
-            Text(
-              subject!,
-              style: const TextStyle(fontSize: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back_ios)),
+                Text(
+                  subject!,
+                  style: const TextStyle(fontSize: 25),
+                ),
+                widthSpace(50)
+              ],
             ),
             heightSpace(20),
             Text(

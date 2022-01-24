@@ -1,34 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutter_secentry/Pages/Estate/news_details.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
+import 'package:flutter_secentry/helpers/format_date.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/models/emergency_model.dart';
-import 'package:flutter_secentry/services/emergency_services.dart';
+import 'package:flutter_secentry/models/company/company_news_model.dart';
+import 'package:flutter_secentry/services/company/news_services.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class EmergencyContact extends StatefulWidget {
-  const EmergencyContact({Key? key}) : super(key: key);
+class CompanyNews extends StatefulWidget {
+  const CompanyNews({Key? key}) : super(key: key);
 
   @override
-  State<EmergencyContact> createState() => _EmergencyContactState();
+  State<CompanyNews> createState() => _CompanyNewsState();
 }
 
-class _EmergencyContactState extends State<EmergencyContact> {
+class _CompanyNewsState extends State<CompanyNews> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  final EmergencyServices _emergencyServices = EmergencyServices();
+  final CompanyNewsServices _newsServices = CompanyNewsServices();
   bool loading = true;
   bool noinvitations = false;
-  Future<EmergencyModel>? _emergencyModel;
+  late Future<CompanyNewsModel> _companyNews;
   ProfileDataNotifier? _profileDataNotifier;
-  List<String> contactName = [];
-  List<String> contactPhone = [];
-  List designation = [];
+  List body = [];
+  List subject = [];
+  List time = [];
   int pageNumber = 1;
   @override
   void initState() {
@@ -51,13 +52,13 @@ class _EmergencyContactState extends State<EmergencyContact> {
               children: [
                 IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.arrow_back_ios)),
+                    icon: const Icon(Icons.arrow_back_ios)),
                 const Text(
-                  'Emergency',
+                  'News',
                   style: TextStyle(fontSize: 25),
                 ),
-                widthSpace(50),
-                // const IconButton(
+                widthSpace(40)
+                // IconButton(
                 //     onPressed: null,
                 //     icon: Icon(
                 //       Icons.search,
@@ -96,7 +97,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
           heightSpace(20),
           const Center(
             child: Text(
-              'No emergency contact yet.\n Ask your admin to add at least one',
+              'You don\'t have any news yet.\n Admin will add soon',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18, color: kGray),
             ),
@@ -105,21 +106,19 @@ class _EmergencyContactState extends State<EmergencyContact> {
       );
 
   firstTimeLoad() {
-    _emergencyModel = _emergencyServices.getAllContact();
-    _emergencyModel!.then((value) {
+    _companyNews = _newsServices.getAllNews();
+    _companyNews.then((value) {
       setState(() {
         loading = false;
       });
       if (value.count == 0) {
         noinvitations = true;
       } else {
-        setState(() {
-          value.results!.forEach((element) {
-            setState(() {
-              contactName.add(element.contactName!);
-              contactPhone.add(element.contactPhone!);
-              designation.add(element.contactDesignation);
-            });
+        value.results?.forEach((element) {
+          setState(() {
+            subject.add(element.subject);
+            body.add(element.body);
+            time.add(formatDate(element.dateAdded!));
           });
         });
       }
@@ -128,21 +127,19 @@ class _EmergencyContactState extends State<EmergencyContact> {
 
   //reload data
   Future _loadData() async {
-    _emergencyModel = _emergencyServices.getAllContactByPagenumber(pageNumber);
-    _emergencyModel!.then((value) {
+    _companyNews = _newsServices.getAllNewsByPageNumber(pageNumber);
+    _companyNews.then((value) {
       setState(() {
         loading = false;
       });
       if (value.count == 0) {
         noinvitations = true;
       } else {
-        setState(() {
-          value.results!.forEach((element) {
-            setState(() {
-              contactName.add(element.contactName!);
-              contactPhone.add(element.contactPhone!);
-              designation.add(element.contactDesignation);
-            });
+        value.results?.forEach((element) {
+          setState(() {
+            subject.add(element.subject);
+            body.add(element.body);
+            time.add(formatDate(element.dateAdded!));
           });
         });
       }
@@ -193,41 +190,47 @@ class _EmergencyContactState extends State<EmergencyContact> {
   listView() => ListView.builder(
       primary: true,
       shrinkWrap: true,
-      itemCount: contactName.length,
+      itemCount: subject.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            trailing: IconButton(
-                icon: const Icon(
-                  Icons.phone,
-                  color: kPrimary,
-                ),
-                onPressed: () => callNumber(contactPhone[index])),
-            leading: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                  color: kPrimary, borderRadius: BorderRadius.circular(5)),
-              child: const Center(
-                  child: Icon(
-                Icons.person,
-                color: kWhite,
-              )),
-            ),
-            title: Text(
-              contactName[index],
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
-            ),
-            subtitle: Text(
-              designation[index],
-              style: const TextStyle(color: kGray, fontSize: 12),
+        return GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NewsDetails(
+                        subject: subject[index],
+                        body: body[index],
+                        time: time[index],
+                      ))),
+          child: Card(
+            child: ListTile(
+              leading: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: kPrimary, borderRadius: BorderRadius.circular(25)),
+                child: const Center(
+                    child: Icon(
+                  Icons.notifications,
+                  color: kWhite,
+                )),
+              ),
+              title: Text(
+                truncateWithEllipsis(12, subject[index]),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
+              ),
+              subtitle: Text(
+                truncateWithEllipsis(12, body[index]),
+                style: const TextStyle(color: kGray, fontSize: 12),
+              ),
             ),
           ),
         );
       });
+}
 
-  callNumber(number) async {
-    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
-  }
+String truncateWithEllipsis(int cutoff, String myString) {
+  return (myString.length <= cutoff)
+      ? myString
+      : '${myString.substring(0, cutoff)}...';
 }

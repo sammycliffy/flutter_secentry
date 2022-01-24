@@ -40,22 +40,26 @@ class _VisitorInfoState extends State<VisitorInfo> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          heightSpace(40),
-                          IconButton(
-                              onPressed: () => Navigator.pop(context),
-                              icon: Icon(Icons.arrow_back_ios)),
-                          heightSpace(40),
-                          const Text(
-                            'Address info',
-                            style: TextStyle(fontSize: 40),
+                          heightSpace(60),
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  icon: const Icon(Icons.arrow_back_ios)),
+                              widthSpace(40),
+                              const Text(
+                                'Address info',
+                                style: TextStyle(fontSize: 25),
+                              ),
+                            ],
                           ),
-                          heightSpace(50),
+                          heightSpace(60),
                           titleText(),
-                          heightSpace(20),
-                          quantityText(),
-                          heightSpace(20),
-                          descriptionText(),
                           heightSpace(30),
+                          stateText(),
+                          heightSpace(30),
+                          descriptionText(),
+                          heightSpace(40),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [blueButton(), whiteButton()],
@@ -173,9 +177,9 @@ class _VisitorInfoState extends State<VisitorInfo> {
           border: InputBorder.none,
           hintText: 'Country'));
 
-  quantityText() => TextFormField(
+  stateText() => TextFormField(
       controller: state,
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.text,
       validator: (value) => FormValidation().stringValidation(state.text),
       decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(12),

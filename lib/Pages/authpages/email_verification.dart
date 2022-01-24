@@ -41,7 +41,11 @@ class _EmailVerificationState extends State<EmailVerification> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            heightSpace(100),
+                            heightSpace(50),
+                            IconButton(
+                                onPressed: () => Navigator.pop(context),
+                                icon: const Icon(Icons.arrow_back_ios)),
+                            heightSpace(50),
                             const Text(
                               'Verify Email',
                               style: TextStyle(fontSize: 40),
@@ -94,7 +98,6 @@ class _EmailVerificationState extends State<EmailVerification> {
   }
 
   validate(otp) async {
-    print(otp);
     if (_formKey.currentState!.validate()) {
       _profileDataNotifier!.setLoading(true);
       dynamic result = await _authServices.emailVerification(context, otp);

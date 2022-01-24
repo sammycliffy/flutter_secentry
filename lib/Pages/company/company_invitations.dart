@@ -9,14 +9,14 @@ import 'package:flutter_secentry/services/invitation_services.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class MyInvitations extends StatefulWidget {
-  const MyInvitations({Key? key}) : super(key: key);
+class CompanyInvitations extends StatefulWidget {
+  const CompanyInvitations({Key? key}) : super(key: key);
 
   @override
-  _MyInvitationsState createState() => _MyInvitationsState();
+  _CompanyInvitationsState createState() => _CompanyInvitationsState();
 }
 
-class _MyInvitationsState extends State<MyInvitations> {
+class _CompanyInvitationsState extends State<CompanyInvitations> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   bool loading = true;

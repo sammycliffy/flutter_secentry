@@ -3,23 +3,24 @@ import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/services/message_service.dart';
+import 'package:flutter_secentry/services/company/company_message_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/src/provider.dart';
 
-class ComposeMessage extends StatefulWidget {
-  const ComposeMessage({Key? key}) : super(key: key);
+class CompanyComposeMessage extends StatefulWidget {
+  const CompanyComposeMessage({Key? key}) : super(key: key);
 
   @override
-  State<ComposeMessage> createState() => _ComposeMessageState();
+  State<CompanyComposeMessage> createState() => _CompanyComposeMessageState();
 }
 
-class _ComposeMessageState extends State<ComposeMessage> {
+class _CompanyComposeMessageState extends State<CompanyComposeMessage> {
   static TextEditingController message = TextEditingController();
   static ProfileDataNotifier? _profileDataNotifier;
   static final _formkey = GlobalKey<FormState>();
-  static final MessageServices _messageServices = MessageServices();
+  static final CompanyMessageServices _messageServices =
+      CompanyMessageServices();
   @override
   Widget build(BuildContext context) {
     _profileDataNotifier = context.watch<ProfileDataNotifier>();

@@ -30,13 +30,11 @@ class _MyAccountState extends State<MyAccount> {
                     style: TextStyle(fontSize: 25),
                   ),
                   heightSpace(20),
-                  listItem('Profile', Icons.person, null),
+                  listItem('Profile', Icons.person, badge),
                   heightSpace(10),
                   listItem('Logout', Icons.logout, logout),
                   heightSpace(10),
                   listItem('Help', Icons.help, logout),
-                  heightSpace(10),
-                  listItem('Details', Icons.home, logout)
                 ],
               ),
             ),
@@ -48,6 +46,10 @@ class _MyAccountState extends State<MyAccount> {
 
   logout() {
     Navigator.pushNamed(context, '/login');
+  }
+
+  badge() {
+    Navigator.pushNamed(context, '/user_badge');
   }
 }
 

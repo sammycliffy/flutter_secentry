@@ -21,6 +21,7 @@ class _RegistrationState extends State<Registration> {
   final email = TextEditingController();
   final fullName = TextEditingController();
   final password = TextEditingController();
+  final confirmPassword = TextEditingController();
   final phone = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String dropdownValue = 'Company user';
@@ -64,6 +65,8 @@ class _RegistrationState extends State<Registration> {
                           heightSpace(20),
                           passwordText(),
                           heightSpace(20),
+                          confirmpasswordText(),
+                          heightSpace(20),
                           dropdown(),
                           heightSpace(20),
                           genderForm(),
@@ -101,7 +104,15 @@ class _RegistrationState extends State<Registration> {
 
   phoneText() => TextFormField(
       controller: phone,
-      validator: (value) => FormValidation().phoneValidation(phone.text),
+      validator: (value) {
+        if (value?[0] != '0') {
+          return 'Please enter a valid phone number';
+        } else if (value!.isEmpty) {
+          return 'Phone number can\'t be empty';
+        } else {
+          return null;
+        }
+      },
       decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(12),
           filled: true,
@@ -128,6 +139,25 @@ class _RegistrationState extends State<Registration> {
           fillColor: kGrayLight,
           border: InputBorder.none,
           hintText: 'Password'));
+
+  confirmpasswordText() => TextFormField(
+      obscureText: true,
+      controller: confirmPassword,
+      validator: (value) {
+        if (password.text != value) {
+          return 'Passwords do not match';
+        } else if (value!.isEmpty) {
+          return 'Field can\'t be empty';
+        } else {
+          return null;
+        }
+      },
+      decoration: const InputDecoration(
+          contentPadding: EdgeInsets.all(12),
+          filled: true,
+          fillColor: kGrayLight,
+          border: InputBorder.none,
+          hintText: 'Confirm password'));
   dropdown() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

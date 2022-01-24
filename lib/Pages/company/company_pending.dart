@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
-import 'package:flutter_secentry/helpers/profile_helpers.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/helpers/sharedpreferences.dart';
-import 'package:flutter_secentry/models/estate_details.dart';
-import 'package:flutter_secentry/services/estate_service.dart';
+import 'package:flutter_secentry/services/company/company_services.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:flutter_secentry/widget/toast.dart';
 import 'package:provider/src/provider.dart';
 
-class EstatePending extends StatefulWidget {
-  const EstatePending({Key? key}) : super(key: key);
+class CompanyPending extends StatefulWidget {
+  const CompanyPending({Key? key}) : super(key: key);
 
   @override
-  State<EstatePending> createState() => _EstatePendingState();
+  State<CompanyPending> createState() => _CompanyPendingState();
 }
 
-class _EstatePendingState extends State<EstatePending> {
-  final EstateServices _estateServices = EstateServices();
+class _CompanyPendingState extends State<CompanyPending> {
+  final CompanyServices _companyServices = CompanyServices();
 
   ProfileDataNotifier? _profileDataNotifier;
   @override
@@ -77,8 +74,8 @@ class _EstatePendingState extends State<EstatePending> {
                                 color: kPrimary,
                                 size: 30,
                               ),
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/messages'),
+                              onPressed: () => Navigator.pushNamed(
+                                  context, '/company_messages'),
                             ),
                             Container(
                               width: 26,
@@ -150,10 +147,10 @@ class _EstatePendingState extends State<EstatePending> {
 
   checkAcceptedStatus() async {
     _profileDataNotifier!.setLoading(true);
-    _estateServices.getEstateDetail().then((value) {
-      saveEstate(context);
+    _companyServices.getCompanyDetail().then((value) {
+      // saveCompany(context);
       if (value.results?[0].accepted == true) {
-        Navigator.pushNamed(context, '/estate_dashboard');
+        Navigator.pushNamed(context, '/company_dashboard');
         _profileDataNotifier!.setLoading(false);
       } else {
         _profileDataNotifier!.setLoading(false);

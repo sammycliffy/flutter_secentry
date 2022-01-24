@@ -6,6 +6,7 @@ import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/format_date.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/helpers/sharedpreferences.dart';
 import 'package:flutter_secentry/models/estatemessage_model.dart';
 import 'package:flutter_secentry/services/message_service.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
@@ -40,19 +41,23 @@ class _MessagesState extends State<Messages> {
   Widget build(BuildContext context) {
     _profileDataNotifier = context.watch<ProfileDataNotifier>();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimary,
+        onPressed: () => Navigator.pushNamed(context, '/compose_message'),
+        child: const Icon(Icons.email),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            heightSpace(30),
-            IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.arrow_back_ios)),
-            heightSpace(20),
+            heightSpace(60),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icon(Icons.arrow_back_ios)),
                 heightSpace(50),
                 const Text(
                   'Messages',
@@ -66,15 +71,15 @@ class _MessagesState extends State<Messages> {
                 //       size: 40,
                 //       color: kBlack,
                 //     )),
-                IconButton(
-                  icon: const Icon(
-                    Icons.email,
-                    size: 35,
-                    color: kPrimary,
-                  ),
-                  onPressed: () =>
-                      Navigator.pushNamed(context, '/compose_message'),
-                )
+                // IconButton(
+                //   icon: const Icon(
+                //     Icons.reply,
+                //     size: 35,
+                //     color: kPrimary,
+                //   ),
+                //   onPressed: () =>
+                //       Navigator.pushNamed(context, '/compose_message'),
+                // )
               ],
             ),
             heightSpace(20),
@@ -118,6 +123,7 @@ class _MessagesState extends State<Messages> {
   firstTimeLoad() {
     _messageModel = _messageServices.getAllMessage();
     _messageModel.then((value) {
+      SharedPreference().saveCount('count', value.count);
       setState(() {
         loading = false;
       });

@@ -1,34 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutter_secentry/Pages/Estate/message_details.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
+import 'package:flutter_secentry/helpers/format_date.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
-import 'package:flutter_secentry/models/emergency_model.dart';
-import 'package:flutter_secentry/services/emergency_services.dart';
+import 'package:flutter_secentry/helpers/sharedpreferences.dart';
+import 'package:flutter_secentry/models/company/companymessage_model.dart';
+import 'package:flutter_secentry/services/company/company_message_services.dart';
 import 'package:flutter_secentry/widget/shimmer_widgets/vertical_boxes.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class EmergencyContact extends StatefulWidget {
-  const EmergencyContact({Key? key}) : super(key: key);
+class CompanyMessages extends StatefulWidget {
+  const CompanyMessages({Key? key}) : super(key: key);
 
   @override
-  State<EmergencyContact> createState() => _EmergencyContactState();
+  State<CompanyMessages> createState() => _CompanyMessagesState();
 }
 
-class _EmergencyContactState extends State<EmergencyContact> {
+class _CompanyMessagesState extends State<CompanyMessages> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  final EmergencyServices _emergencyServices = EmergencyServices();
+  final CompanyMessageServices _messageServices = CompanyMessageServices();
   bool loading = true;
   bool noinvitations = false;
-  Future<EmergencyModel>? _emergencyModel;
+  late Future<CompanyMessage> _messageModel;
   ProfileDataNotifier? _profileDataNotifier;
-  List<String> contactName = [];
-  List<String> contactPhone = [];
-  List designation = [];
+  List message = [];
+  List time = [];
   int pageNumber = 1;
   @override
   void initState() {
@@ -40,30 +41,30 @@ class _EmergencyContactState extends State<EmergencyContact> {
   Widget build(BuildContext context) {
     _profileDataNotifier = context.watch<ProfileDataNotifier>();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kPrimary,
+        onPressed: () =>
+            Navigator.pushNamed(context, '/company_compose_message'),
+        child: const Icon(Icons.email),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            heightSpace(70),
+            heightSpace(60),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(Icons.arrow_back_ios)),
+                heightSpace(50),
                 const Text(
-                  'Emergency',
+                  'Messages',
                   style: TextStyle(fontSize: 25),
                 ),
-                widthSpace(50),
-                // const IconButton(
-                //     onPressed: null,
-                //     icon: Icon(
-                //       Icons.search,
-                //       size: 40,
-                //       color: kBlack,
-                //     ))
+                widthSpace(60),
               ],
             ),
             heightSpace(20),
@@ -96,7 +97,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
           heightSpace(20),
           const Center(
             child: Text(
-              'No emergency contact yet.\n Ask your admin to add at least one',
+              'You don\'t have any message.\n Click to compose message',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18, color: kGray),
             ),
@@ -105,21 +106,19 @@ class _EmergencyContactState extends State<EmergencyContact> {
       );
 
   firstTimeLoad() {
-    _emergencyModel = _emergencyServices.getAllContact();
-    _emergencyModel!.then((value) {
+    _messageModel = _messageServices.getAllMessage();
+    _messageModel.then((value) {
+      SharedPreference().saveCount('count', value.count);
       setState(() {
         loading = false;
       });
       if (value.count == 0) {
         noinvitations = true;
       } else {
-        setState(() {
-          value.results!.forEach((element) {
-            setState(() {
-              contactName.add(element.contactName!);
-              contactPhone.add(element.contactPhone!);
-              designation.add(element.contactDesignation);
-            });
+        value.results?.forEach((element) {
+          setState(() {
+            message.add(element.message);
+            time.add(formatDate(DateTime.parse(element.time!)));
           });
         });
       }
@@ -128,8 +127,8 @@ class _EmergencyContactState extends State<EmergencyContact> {
 
   //reload data
   Future _loadData() async {
-    _emergencyModel = _emergencyServices.getAllContactByPagenumber(pageNumber);
-    _emergencyModel!.then((value) {
+    _messageModel = _messageServices.getAllMessageByPageNumber(pageNumber);
+    _messageModel.then((value) {
       setState(() {
         loading = false;
       });
@@ -139,9 +138,9 @@ class _EmergencyContactState extends State<EmergencyContact> {
         setState(() {
           value.results!.forEach((element) {
             setState(() {
-              contactName.add(element.contactName!);
-              contactPhone.add(element.contactPhone!);
-              designation.add(element.contactDesignation);
+              message.add(element.message);
+
+              time.add(formatDate(DateTime.parse(element.time!)));
             });
           });
         });
@@ -193,41 +192,45 @@ class _EmergencyContactState extends State<EmergencyContact> {
   listView() => ListView.builder(
       primary: true,
       shrinkWrap: true,
-      itemCount: contactName.length,
+      itemCount: message.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: ListTile(
-            trailing: IconButton(
-                icon: const Icon(
-                  Icons.phone,
-                  color: kPrimary,
-                ),
-                onPressed: () => callNumber(contactPhone[index])),
-            leading: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                  color: kPrimary, borderRadius: BorderRadius.circular(5)),
-              child: const Center(
-                  child: Icon(
-                Icons.person,
-                color: kWhite,
-              )),
-            ),
-            title: Text(
-              contactName[index],
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
-            ),
-            subtitle: Text(
-              designation[index],
-              style: const TextStyle(color: kGray, fontSize: 12),
+        return GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MessageDetails(
+                        message: message[index],
+                      ))),
+          child: Card(
+            child: ListTile(
+              leading: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                    color: kPrimary, borderRadius: BorderRadius.circular(25)),
+                child: const Center(
+                    child: Icon(
+                  Icons.message,
+                  color: kWhite,
+                )),
+              ),
+              title: Text(
+                truncateWithEllipsis(12, message[index]),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: kPrimary, fontSize: 14),
+              ),
+              subtitle: Text(
+                time[index],
+                style: const TextStyle(color: kGray, fontSize: 12),
+              ),
             ),
           ),
         );
       });
+}
 
-  callNumber(number) async {
-    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
-  }
+String truncateWithEllipsis(int cutoff, String myString) {
+  return (myString.length <= cutoff)
+      ? myString
+      : '${myString.substring(0, cutoff)}...';
 }

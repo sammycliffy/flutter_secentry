@@ -37,7 +37,7 @@ class Results {
   String? state;
   String? estateVisitorPhone;
   String? purposeOfVisit;
-  String? duration;
+  int? duration;
   bool? approved;
   bool? checkOut;
   String? dateJoined;
