@@ -26,14 +26,25 @@ import 'package:flutter_secentry/Pages/company/company_code.dart';
 import 'package:flutter_secentry/Pages/company/company_compose_message.dart';
 import 'package:flutter_secentry/Pages/company/company_dashboard.dart';
 import 'package:flutter_secentry/Pages/company/company_emergency.dart';
+import 'package:flutter_secentry/Pages/company/company_guest_entry.dart';
+import 'package:flutter_secentry/Pages/company/company_info.dart';
+import 'package:flutter_secentry/Pages/company/company_invite_guest.dart';
+import 'package:flutter_secentry/Pages/company/company_item_pass.dart';
 import 'package:flutter_secentry/Pages/company/company_join_facility.dart';
 import 'package:flutter_secentry/Pages/company/company_message.dart';
 import 'package:flutter_secentry/Pages/company/company_news.dart';
 import 'package:flutter_secentry/Pages/company/company_pending.dart';
+import 'package:flutter_secentry/Pages/company/company_visitor_info.dart';
+import 'package:flutter_secentry/Pages/guard/company_user_entry.dart';
+import 'package:flutter_secentry/Pages/guard/company_user_exit.dart';
+import 'package:flutter_secentry/Pages/guard/company_visitor_entry.dart';
+import 'package:flutter_secentry/Pages/guard/company_visitor_exit.dart';
 import 'package:flutter_secentry/Pages/guard/entry_approved_page.dart';
 import 'package:flutter_secentry/Pages/guard/entry_info.dart';
 import 'package:flutter_secentry/Pages/guard/exit_approved_page.dart';
+import 'package:flutter_secentry/Pages/guard/guard_company_dashboard.dart';
 import 'package:flutter_secentry/Pages/guard/guard_estate_dashboard.dart';
+import 'package:flutter_secentry/Pages/guard/guard_join_company.dart';
 import 'package:flutter_secentry/Pages/guard/guard_join_facility.dart';
 import 'package:flutter_secentry/Pages/guard/no_guard_facility.dart';
 import 'package:flutter_secentry/Pages/guard/user_entry.dart';
@@ -80,15 +91,26 @@ final route = {
   '/company_news': (context) => const CompanyNews(),
   '/company_badge': (context) => const CompanyUserBadge(),
   '/company_emergency': (context) => const CompanyEmergencyContact(),
+  '/company_guest_entry': (context) => const CompanyGuestEntry(),
+  '/company_item_pass': (context) => const CompanyAddItemPass(),
+  '/company_invite_guest': (context) => const CompanyInviteGuest(),
+  '/company_visitor_info': (context) => const CompanyVisitorInfo(),
+  '/company_information': (context) => const CompanyInfo(),
 
   //guard
   '/guard_join_facility': (context) => const GuardJoinFacility(),
-  '/guard_dashboard': (context) => const GuardEstateDashboard(),
+  '/guard_join_company': (context) => const GuardJoinCompany(),
+  '/guard_estate_dashboard': (context) => const GuardEstateDashboard(),
+  '/guard_company_dashboard': (context) => const GuardCompanyDashboard(),
   '/no_guard_facility': (context) => const NoGuardFacility(),
   '/user_entry': (context) => const UserEntry(),
+  '/company_user_entry': (context) => const CompanyUserEntry(),
+  '/company_user_exit': (context) => const CompanyUserExit(),
   '/user_exit': (context) => const UserExit(),
   '/visitor_entry': (context) => const VisitorEntryApproval(),
   '/visitor_exit': (context) => const VisitorExitApproval(),
+  '/company_visitor_entry': (context) => const CompanyVisitorEntryApproval(),
+  '/company_visitor_exit': (context) => const CompanyVisitorExitApproval(),
   '/entry_approved': (context) => const EntryApproved(),
   '/exit_approved': (context) => const ExitApproved(),
 };

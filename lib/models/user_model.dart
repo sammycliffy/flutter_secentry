@@ -27,6 +27,8 @@ class UserModel {
   String? belongToEstatenameGuard;
   String? belongToEstateaddressGuard;
   String? belongToEstateadminphoneGuard;
+  String? getEstateIdGuard;
+  String? getCompanyIdGuard;
   String? activeSubscription;
   String? verified;
 
@@ -60,6 +62,8 @@ class UserModel {
     required this.belongToEstateaddressGuard,
     required this.belongToEstateadminphoneGuard,
     required this.activeSubscription,
+    required this.getCompanyIdGuard,
+    required this.getEstateIdGuard,
     required this.verified,
   });
 
@@ -93,6 +97,8 @@ class UserModel {
     belongToEstateaddressGuard = json['belong_to_estateaddress_guard'];
     belongToEstateadminphoneGuard = json['belong_to_estateadminphone_guard'];
     activeSubscription = json['active_subscription'];
+    getEstateIdGuard = json['get_estateid_guard'];
+    getCompanyIdGuard = json['get_companyid_guard'];
     verified = json['verified'];
   }
 }

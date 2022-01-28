@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
+import 'package:flutter_secentry/models/company/company_visitor_model.dart';
 import 'package:flutter_secentry/models/user_model.dart';
 import 'package:flutter_secentry/models/visitor_entry_model.dart';
-import 'package:flutter_secentry/models/visitor_model.dart';
 import 'package:flutter_secentry/services/api.dart';
 import 'package:flutter_secentry/widget/toast.dart';
 import 'package:http/http.dart' as http;
@@ -18,7 +18,10 @@ class CompanyGuestEntryServices {
       String country,
       String state,
       duration,
-      itemPass) async {
+      itemPass,
+      String model,
+      String plate,
+      String color) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
     try {
       var client = http.Client();
@@ -38,9 +41,9 @@ class CompanyGuestEntryServices {
               "state": state,
               "company_visitor_phone": visitorPhone,
               "purpose_of_visit": purposeOfVisit,
-              "vehicle_model": "",
-              "vehicle_colour": "",
-              "vehicle_plate_number": "",
+              "vehicle_model": model,
+              "vehicle_colour": color,
+              "vehicle_plate_number": plate,
               "duration": duration,
               "item_pass": itemPass.map((i) => i.toJson()).toList()
             }),
@@ -68,9 +71,9 @@ class CompanyGuestEntryServices {
     }
   }
 
-  Future<VisitorModel> getInvitation(context) async {
+  Future<CompanyVisitorModel> getInvitation(context) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
-    VisitorModel _visitorModel = VisitorModel();
+    CompanyVisitorModel _companyVisitorModel = CompanyVisitorModel();
     try {
       var client = http.Client();
       var url = Uri.parse(
@@ -88,8 +91,8 @@ class CompanyGuestEntryServices {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseJson = json.decode(response.body);
 
-        _visitorModel = VisitorModel.fromJson(responseJson);
-        return _visitorModel;
+        _companyVisitorModel = CompanyVisitorModel.fromJson(responseJson);
+        return _companyVisitorModel;
       } else {
         final responseJson = json.decode(response.body);
         print(responseJson);
@@ -105,12 +108,12 @@ class CompanyGuestEntryServices {
       //   print(e.toString());
       // }
     }
-    return _visitorModel;
+    return _companyVisitorModel;
   }
 
-  Future<VisitorModel> getInvitationByNumber(context, pageNumber) async {
+  Future<CompanyVisitorModel> getInvitationByNumber(context, pageNumber) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
-    VisitorModel _visitorModel = VisitorModel();
+    CompanyVisitorModel _companyVisitorModel = CompanyVisitorModel();
     try {
       var client = http.Client();
       var url = Uri.parse(
@@ -128,8 +131,8 @@ class CompanyGuestEntryServices {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseJson = json.decode(response.body);
 
-        _visitorModel = VisitorModel.fromJson(responseJson);
-        return _visitorModel;
+        _companyVisitorModel = CompanyVisitorModel.fromJson(responseJson);
+        return _companyVisitorModel;
       } else {
         final responseJson = json.decode(response.body);
         print(responseJson);
@@ -145,12 +148,12 @@ class CompanyGuestEntryServices {
       //   print(e.toString());
       // }
     }
-    return _visitorModel;
+    return _companyVisitorModel;
   }
 
-  Future<VisitorModel> getInvitedLists(context) async {
+  Future<CompanyVisitorModel> getInvitedLists(context) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
-    VisitorModel _visitorModel = VisitorModel();
+    CompanyVisitorModel _companyVisitorModel = CompanyVisitorModel();
     print(userData.phoneNumber);
     try {
       var client = http.Client();
@@ -168,7 +171,7 @@ class CompanyGuestEntryServices {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseJson = json.decode(response.body);
-        _visitorModel = VisitorModel.fromJson(responseJson);
+        _companyVisitorModel = CompanyVisitorModel.fromJson(responseJson);
       } else {
         ToastUtils.showRedToast(response.body);
         log("error login: ${response.body}");
@@ -176,12 +179,13 @@ class CompanyGuestEntryServices {
     } catch (e) {
       print(e.toString());
     }
-    return _visitorModel;
+    return _companyVisitorModel;
   }
 
-  Future<VisitorModel> getInvitedListsByNumber(context, pageNumber) async {
+  Future<CompanyVisitorModel> getInvitedListsByNumber(
+      context, pageNumber) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
-    VisitorModel _visitorModel = VisitorModel();
+    CompanyVisitorModel _companyVisitorModel = CompanyVisitorModel();
     try {
       var client = http.Client();
       var url = Uri.parse(
@@ -198,7 +202,7 @@ class CompanyGuestEntryServices {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final responseJson = json.decode(response.body);
-        _visitorModel = VisitorModel.fromJson(responseJson);
+        _companyVisitorModel = CompanyVisitorModel.fromJson(responseJson);
       } else {
         ToastUtils.showRedToast(response.body);
         log("error login: ${response.body}");
@@ -212,6 +216,6 @@ class CompanyGuestEntryServices {
       //   print(e.toString());
       // }
     }
-    return _visitorModel;
+    return _companyVisitorModel;
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
+import 'package:flutter_secentry/helpers/getFacilityDetails.dart';
 import 'package:flutter_secentry/helpers/profile_helpers.dart';
 import 'package:flutter_secentry/helpers/profile_selector.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
@@ -121,12 +122,11 @@ class _LoginState extends State<Login> {
           await _authServices.loginUser(context, email.text, password.text);
       if (result) {
         _profileDataNotifier!.setLoading(false);
-        dynamic result = await _estateServices.getEstateDetail();
-        dynamic companyResults = await _companyServices.getCompanyDetail();
+        checkProfile(context);
         saveUser(context);
         saveEstate(context);
         saveCompany(context);
-        checkProfile(context);
+        saveGuard(context);
       } else {
         _profileDataNotifier!.setLoading(false);
       }

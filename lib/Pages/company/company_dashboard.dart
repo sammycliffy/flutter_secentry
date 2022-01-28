@@ -109,7 +109,8 @@ class _CompanyDashoardState extends State<CompanyDashoard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      cellIcon(guestEntry, 'Guest Entry', '/guest_entry'),
+                      cellIcon(
+                          guestEntry, 'Guest Entry', '/company_guest_entry'),
                       cellIcon(
                           emergencyIcon, 'Emergency', '/company_emergency'),
                       cellIcon(reportIcon, 'Report', null)
@@ -120,7 +121,7 @@ class _CompanyDashoardState extends State<CompanyDashoard> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       cellIcon(newsIcon, 'News', '/company_news'),
-                      cellIcon(badgeIcon, 'Badge', '/company_user_badge'),
+                      cellIcon(badgeIcon, 'Badge', '/company_badge'),
                       cellIcon(messageIcon, 'Messages', '/company_messages')
                     ],
                   ),

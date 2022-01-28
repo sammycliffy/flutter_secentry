@@ -5,23 +5,27 @@ import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/invitation.dart';
+import 'package:flutter_secentry/services/company/invitation_services.dart';
 import 'package:flutter_secentry/services/invitation_services.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
-class VisitorInfo extends StatefulWidget {
-  const VisitorInfo({Key? key}) : super(key: key);
+import 'company_qr_code.dart';
+
+class CompanyVisitorInfo extends StatefulWidget {
+  const CompanyVisitorInfo({Key? key}) : super(key: key);
 
   @override
-  State<VisitorInfo> createState() => _VisitorInfoState();
+  State<CompanyVisitorInfo> createState() => _CompanyVisitorInfoState();
 }
 
-class _VisitorInfoState extends State<VisitorInfo> {
+class _CompanyVisitorInfoState extends State<CompanyVisitorInfo> {
   final country = TextEditingController();
   final state = TextEditingController();
   final address = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final GuestEntryServices _guestEntryServices = GuestEntryServices();
+  final CompanyGuestEntryServices _guestEntryServices =
+      CompanyGuestEntryServices();
   InvitationNotifier? _invitationNotifier;
 
   @override
@@ -120,13 +124,16 @@ class _VisitorInfoState extends State<VisitorInfo> {
         country.text,
         state.text,
         _invitationNotifier!.duration,
-        _invitationNotifier!.items);
+        _invitationNotifier!.items,
+        _invitationNotifier!.vehicleModel!,
+        _invitationNotifier!.vehiclePlate!,
+        _invitationNotifier!.vehicleColor!);
     if (result != false) {
       _invitationNotifier!.setLoading(false);
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => EstateQRCode(visitorEntryModel: result)));
+              builder: (context) => CompanyQRCode(visitorEntryModel: result)));
     } else {
       _invitationNotifier!.setLoading(false);
     }
@@ -144,9 +151,9 @@ class _VisitorInfoState extends State<VisitorInfo> {
           state.text,
           address.text,
           _invitationNotifier!.purposeOfVisit,
-          null,
-          null,
-          null);
+          _invitationNotifier!.vehicleModel,
+          _invitationNotifier!.vehiclePlate,
+          _invitationNotifier!.vehicleColor);
       dynamic result = await _guestEntryServices.inviteGuest(
           context,
           _invitationNotifier!.fullName!,
@@ -156,7 +163,10 @@ class _VisitorInfoState extends State<VisitorInfo> {
           country.text,
           state.text,
           _invitationNotifier!.duration,
-          _invitationNotifier!.items);
+          _invitationNotifier!.items,
+          _invitationNotifier!.vehicleModel!,
+          _invitationNotifier!.vehiclePlate!,
+          _invitationNotifier!.vehicleColor!);
       if (result != false) {
         _invitationNotifier!.setLoading(false);
         print(result);

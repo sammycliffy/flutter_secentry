@@ -11,21 +11,21 @@ import 'package:flutter_secentry/widget/button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
-class AddItemPass extends StatefulWidget {
-  const AddItemPass({Key? key}) : super(key: key);
+class CompanyAddItemPass extends StatefulWidget {
+  const CompanyAddItemPass({Key? key}) : super(key: key);
 
   @override
-  State<AddItemPass> createState() => _AddItemPassState();
+  State<CompanyAddItemPass> createState() => _CompanyAddItemPassState();
 }
 
-class _AddItemPassState extends State<AddItemPass> {
+class _CompanyAddItemPassState extends State<CompanyAddItemPass> {
   final title = TextEditingController();
   final quantity = TextEditingController();
   final description = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final AuthServices _authServices = AuthServices();
   InvitationNotifier? _invitationNotifier;
-  List<Item> listofItems = [
+  List<Item>? listofItems = [
     Item(description: 'first item', quantity: 0, itemName: 'no title')
   ];
   @override
@@ -55,15 +55,15 @@ class _AddItemPassState extends State<AddItemPass> {
                         ),
                         widthSpace(40),
                         GestureDetector(
-                          onTap: () {
-                            listofItems.removeAt(0);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ItemList(
-                                          listofItems: listofItems,
-                                        )));
-                          },
+                          // onTap: () {
+                          //   listofItems!.removeAt(0);
+                          //   Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => ItemList(
+                          //                 listofItems: listofItems,
+                          //               )));
+                          // },
                           child: Container(
                             width: 80,
                             height: 30,
@@ -72,7 +72,7 @@ class _AddItemPassState extends State<AddItemPass> {
                                 borderRadius: BorderRadius.circular(5)),
                             child: Center(
                               child: Text(
-                                (listofItems.length - 1).toString(),
+                                (listofItems!.length - 1).toString(),
                                 style: TextStyle(color: kWhite),
                               ),
                             ),
@@ -86,7 +86,7 @@ class _AddItemPassState extends State<AddItemPass> {
                         width: 500,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: listofItems.length,
+                            itemCount: listofItems!.length,
                             itemBuilder: (context, index) {
                               return index == 0
                                   ? Container()
@@ -111,13 +111,13 @@ class _AddItemPassState extends State<AddItemPass> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              '${listofItems.indexOf(listofItems[index])}',
+                                              '${listofItems!.indexOf(listofItems![index])}',
                                               style: const TextStyle(
                                                   color: kWhite, fontSize: 18),
                                             ),
                                             IconButton(
                                                 onPressed: () => setState(() {
-                                                      listofItems
+                                                      listofItems!
                                                           .removeAt(index);
                                                     }),
                                                 icon: const Icon(
@@ -154,7 +154,7 @@ class _AddItemPassState extends State<AddItemPass> {
   addItem() {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        listofItems.add(Item(
+        listofItems!.add(Item(
             itemName: title.text,
             quantity: int.parse(quantity.text),
             description: description.text));
@@ -231,7 +231,7 @@ class _AddItemPassState extends State<AddItemPass> {
           border: InputBorder.none,
           hintText: 'Description'));
   validate() async {
-    listofItems.removeAt(0);
+    listofItems!.removeAt(0);
     _invitationNotifier!.setItemPass(
         _invitationNotifier!.fullName,
         _invitationNotifier!.phoneNumber,
@@ -241,10 +241,10 @@ class _AddItemPassState extends State<AddItemPass> {
         null,
         null,
         _invitationNotifier!.purposeOfVisit,
-        null,
-        null,
-        null);
-    Navigator.pushNamed(context, '/visitor_info');
+        _invitationNotifier!.vehicleModel,
+        _invitationNotifier!.vehiclePlate,
+        _invitationNotifier!.vehicleColor);
+    Navigator.pushNamed(context, '/company_visitor_info');
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
 import 'package:flutter_secentry/models/company/company_details_model.dart';
 import 'package:flutter_secentry/models/estate_details.dart';
+import 'package:flutter_secentry/models/guard/guard_details.dart';
 import 'package:flutter_secentry/models/user_model.dart';
 import 'package:provider/provider.dart';
 
@@ -27,4 +28,12 @@ saveCompany(context) async {
   CompanyDetails companyDetails =
       await SharedPreference().readCompanyModel('companydetails');
   _profileNotifier.setCompanyDetail(companyDetails);
+}
+
+saveGuard(context) async {
+  ProfileDataNotifier _profileNotifier =
+      Provider.of<ProfileDataNotifier>(context, listen: false);
+  GuardModel guardModel =
+      await SharedPreference().readGuardModel('guarddetails');
+  _profileNotifier.setGuardDetail(guardModel);
 }

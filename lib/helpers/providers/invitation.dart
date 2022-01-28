@@ -8,6 +8,9 @@ class InvitationNotifier with ChangeNotifier {
   String? _state;
   String? _address;
   String? _purposeOfVisit;
+  String? _vehicleModel;
+  String? _vehicleColor;
+  String? _vehiclePlate;
   List? _items = [];
   bool _loading = false;
 
@@ -17,12 +20,15 @@ class InvitationNotifier with ChangeNotifier {
   String? get country => _country;
   String? get state => _state;
   String? get address => _address;
+  String? get vehicleColor => _vehicleColor;
+  String? get vehiclePlate => _vehiclePlate;
+  String? get vehicleModel => _vehicleModel;
   List? get items => _items;
   String? get purposeOfVisit => _purposeOfVisit;
   bool get loading => _loading;
 
   setItemPass(fullName, phoneNumber, duration, items, country, state, address,
-      purposeOfVisit) {
+      purposeOfVisit, vehicleModel, vehiclePlate, vehicleColor) {
     _fullName = fullName;
     _phoneNumber = phoneNumber;
     _duration = duration;
@@ -31,6 +37,9 @@ class InvitationNotifier with ChangeNotifier {
     _state = state;
     _address = address;
     _purposeOfVisit = purposeOfVisit;
+    _vehicleModel = vehicleModel;
+    _vehiclePlate = vehiclePlate;
+    _vehicleColor = vehicleColor;
   }
 
   setLoading(bool loading) {

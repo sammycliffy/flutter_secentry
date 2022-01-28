@@ -34,14 +34,9 @@ class _NoGuardFacilityState extends State<NoGuardFacility> {
       drawer: const Drawer(
         backgroundColor: kBlack,
       ),
-      appBar: AppBar(
-        backgroundColor: kWhite,
-        elevation: 0.0,
-        iconTheme: const IconThemeData(color: kBlack),
-      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 60),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,15 +48,18 @@ class _NoGuardFacilityState extends State<NoGuardFacility> {
                     'Hi Samuel,',
                     style: TextStyle(fontSize: 40),
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.notifications,
-                      color: kPrimary,
-                      size: 30,
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/my_account'),
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kPrimary,
+                      ),
+                      child: const Icon(Icons.person, color: kWhite, size: 20),
                     ),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/my_invitations'),
-                  )
+                  ),
                 ],
               ),
               const Text(
@@ -115,7 +113,8 @@ class _NoGuardFacilityState extends State<NoGuardFacility> {
               heightSpace(40),
               _currentPosition == 0.0
                   ? CustomButton(text: 'Join Estate', validate: validateEstate)
-                  : CustomButton(text: 'Join Company', validate: null)
+                  : CustomButton(
+                      text: 'Join Company', validate: validateCompany)
             ],
           ),
         ),
@@ -131,6 +130,10 @@ class _NoGuardFacilityState extends State<NoGuardFacility> {
 
   validateEstate() {
     Navigator.pushNamed(context, '/guard_join_facility');
+  }
+
+  validateCompany() {
+    Navigator.pushNamed(context, '/guard_join_company');
   }
 }
 

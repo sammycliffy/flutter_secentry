@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secentry/models/company/company_details_model.dart';
 import 'package:flutter_secentry/models/estate_details.dart';
+import 'package:flutter_secentry/models/guard/guard_details.dart';
 import 'package:flutter_secentry/models/user_model.dart';
 
 class ProfileDataNotifier with ChangeNotifier {
   UserModel? _userProfile;
   EstateDetails? _estateDetails;
   CompanyDetails? _companyDetails;
+  GuardModel? _guardModel;
   bool _loading = false;
 
   UserModel? get userProfile => _userProfile;
+  GuardModel? get guardModel => _guardModel;
   EstateDetails? get estateDetails => _estateDetails;
   CompanyDetails? get companyDetails => _companyDetails;
   bool get loading => _loading;
@@ -25,6 +28,11 @@ class ProfileDataNotifier with ChangeNotifier {
 
   setCompanyDetail(CompanyDetails? companyDetails) {
     _companyDetails = companyDetails;
+    notifyListeners();
+  }
+
+  setGuardDetail(GuardModel? guardModel) {
+    _guardModel = guardModel;
     notifyListeners();
   }
 

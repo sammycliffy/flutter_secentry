@@ -46,6 +46,8 @@ class CompanyServices {
       }
     } catch (e) {
       print(e.toString());
+      return false;
+
       // if (e is SocketException) {
       //   return '"Please check your Internet Connection", "No Internet Connection"';
       // } else {

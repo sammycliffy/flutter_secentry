@@ -10,15 +10,16 @@ import 'api.dart';
 
 class GuestEntryServices {
   Future<dynamic> inviteGuest(
-      context,
-      String visitorName,
-      String visitorAddress,
-      String visitorPhone,
-      String purposeOfVisit,
-      String country,
-      String state,
-      duration,
-      itemPass) async {
+    context,
+    String visitorName,
+    String visitorAddress,
+    String visitorPhone,
+    String purposeOfVisit,
+    String country,
+    String state,
+    duration,
+    itemPass,
+  ) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
     try {
       var client = http.Client();

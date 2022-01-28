@@ -5,8 +5,8 @@ import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:provider/src/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class CompanyUserBadge extends StatelessWidget {
-  const CompanyUserBadge({Key? key}) : super(key: key);
+class CompanyInfo extends StatelessWidget {
+  const CompanyInfo({Key? key}) : super(key: key);
   static ProfileDataNotifier? _profileDataNotifier;
   @override
   Widget build(BuildContext context) {
@@ -18,20 +18,15 @@ class CompanyUserBadge extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              heightSpace(80),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back_ios)),
-                  heightSpace(50),
-                  const Text(
-                    'Staff Badge',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  widthSpace(60),
-                ],
+              heightSpace(30),
+              IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () => Navigator.pop(context),
+              ),
+              heightSpace(20),
+              const Text(
+                'Company Information',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               heightSpace(20),
               Text(
@@ -39,24 +34,21 @@ class CompanyUserBadge extends StatelessWidget {
                 style: TextStyle(fontSize: 23),
               ),
               heightSpace(20),
-              text('Company',
-                  '${_profileDataNotifier!.companyDetails?.results?[0].companyName}'),
+              text('company Name',
+                  '${_profileDataNotifier!.companyDetails!.results?[0].companyName}'),
               Divider(),
               heightSpace(20),
-              text(
-                  'Phone', '${_profileDataNotifier!.userProfile!.phoneNumber}'),
-              Divider(),
-              text('Gender', '${_profileDataNotifier!.userProfile!.gender}'),
+              text('company code',
+                  '${_profileDataNotifier!.companyDetails!.results?[0].companyUserCode}'),
               Divider(),
               heightSpace(20),
-              Center(
-                child: QrImage(
-                  data:
-                      _profileDataNotifier!.userProfile!.phoneNumber.toString(),
-                  version: QrVersions.auto,
-                  size: 200.0,
-                ),
-              ),
+              text('Accepted',
+                  '${_profileDataNotifier!.companyDetails!.results?[0].accepted}'),
+              Divider(),
+              heightSpace(20),
+              text('Address',
+                  '${_profileDataNotifier!.companyDetails!.results?[0].companyAddress}'),
+              Divider(),
             ],
           ),
         ),

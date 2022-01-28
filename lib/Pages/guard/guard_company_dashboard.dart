@@ -5,14 +5,14 @@ import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:provider/src/provider.dart';
 
-class GuardEstateDashboard extends StatefulWidget {
-  const GuardEstateDashboard({Key? key}) : super(key: key);
+class GuardCompanyDashboard extends StatefulWidget {
+  const GuardCompanyDashboard({Key? key}) : super(key: key);
 
   @override
-  _GuardEstateDashboardState createState() => _GuardEstateDashboardState();
+  _GuardCompanyDashboardState createState() => _GuardCompanyDashboardState();
 }
 
-class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
+class _GuardCompanyDashboardState extends State<GuardCompanyDashboard> {
   ProfileDataNotifier? _profileDataNotifier;
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                             children: [
                               heightSpace(30),
                               Text(
-                                '${_profileDataNotifier!.guardModel!.results![0].facilityName}',
+                                '${_profileDataNotifier!.guardModel!.results![0].companyName}',
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                               ),
                               heightSpace(5),
                               const Text(
-                                'Tap to view estate info',
+                                'Tap to view Company info',
                                 style: TextStyle(fontSize: 16, color: kWhite),
                               )
                             ],
@@ -92,7 +92,7 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                           ),
                           'User Entry',
                           kPrimary,
-                          '/user_entry'),
+                          '/company_user_entry'),
                       block(
                           const Icon(
                             Icons.arrow_forward,
@@ -101,7 +101,7 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                           ),
                           'User Exit',
                           kPrimary,
-                          '/user_exit')
+                          '/company_user_exit')
                     ],
                   ),
                   heightSpace(50),
@@ -116,7 +116,7 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                           ),
                           'Visitor Entry',
                           kPrimary,
-                          '/visitor_entry'),
+                          '/company_visitor_entry'),
                       block(
                           const Icon(
                             Icons.person,
@@ -125,7 +125,7 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                           ),
                           'Vistor Exit',
                           kPrimary,
-                          '/visitor_exit')
+                          '/company_visitor_exit')
                     ],
                   ),
                 ],

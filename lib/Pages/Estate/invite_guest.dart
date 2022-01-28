@@ -172,8 +172,18 @@ class _InviteGuestState extends State<InviteGuest> {
 
   addItemPass() {
     if (_formKey.currentState!.validate()) {
-      _invitationNotifier!.setItemPass(fullName.text, phone.text,
-          visitingNumber.text, [], null, null, null, purposeOfVisit.text);
+      _invitationNotifier!.setItemPass(
+          fullName.text,
+          phone.text,
+          visitingNumber.text,
+          [],
+          null,
+          null,
+          null,
+          purposeOfVisit.text,
+          null,
+          null,
+          null);
       Navigator.pushNamed(context, '/add_item_pass');
     }
   }
@@ -181,8 +191,18 @@ class _InviteGuestState extends State<InviteGuest> {
   // validate() => Navigator.pushNamed(context, '/pending_request');
   validate() async {
     if (_formKey.currentState!.validate()) {
-      _invitationNotifier!.setItemPass(fullName.text, phone.text,
-          visitingNumber.text, [], null, null, null, purposeOfVisit.text);
+      _invitationNotifier!.setItemPass(
+          fullName.text,
+          phone.text,
+          visitingNumber.text,
+          [],
+          null,
+          null,
+          null,
+          purposeOfVisit.text,
+          null,
+          null,
+          null);
       Navigator.pushNamed(context, '/visitor_info');
     }
   }

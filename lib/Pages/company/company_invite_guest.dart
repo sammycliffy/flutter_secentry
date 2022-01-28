@@ -21,6 +21,9 @@ class _CompanyInviteGuestState extends State<CompanyInviteGuest> {
   final _formKey = GlobalKey<FormState>();
   final visitingNumber = TextEditingController();
   final purposeOfVisit = TextEditingController();
+  final vehicleColor = TextEditingController();
+  final vehiclePlate = TextEditingController();
+  final vehicleModel = TextEditingController();
 
   InvitationNotifier? _invitationNotifier;
 
@@ -57,6 +60,21 @@ class _CompanyInviteGuestState extends State<CompanyInviteGuest> {
                     phoneText(),
                     heightSpace(20),
                     purposeText(),
+                    heightSpace(20),
+                    Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: kGrayLight, width: 3)),
+                        child: Column(children: [
+                          Text('Vehicle Details (Optional)'),
+                          heightSpace(20),
+                          vehicleColorText(),
+                          heightSpace(20),
+                          vehicleModelText(),
+                          heightSpace(20),
+                          vehiclePlateText(),
+                          heightSpace(20),
+                        ])),
                     heightSpace(20),
                     durationWidget(),
                     heightSpace(30),
@@ -114,7 +132,38 @@ class _CompanyInviteGuestState extends State<CompanyInviteGuest> {
           contentPadding: EdgeInsets.all(12),
           border: InputBorder.none,
           hintText: 'Phone number'));
+  vehicleColorText() => TextFormField(
+      controller: vehicleColor,
+      keyboardType: TextInputType.number,
+      validator: (value) => null,
+      decoration: const InputDecoration(
+          fillColor: kGrayLight,
+          filled: true,
+          contentPadding: EdgeInsets.all(12),
+          border: InputBorder.none,
+          hintText: 'Vehicle Color'));
 
+  vehicleModelText() => TextFormField(
+      controller: vehicleModel,
+      keyboardType: TextInputType.number,
+      validator: (value) => null,
+      decoration: const InputDecoration(
+          fillColor: kGrayLight,
+          filled: true,
+          contentPadding: EdgeInsets.all(12),
+          border: InputBorder.none,
+          hintText: 'Vehicle Model'));
+
+  vehiclePlateText() => TextFormField(
+      controller: vehiclePlate,
+      keyboardType: TextInputType.number,
+      validator: (value) => null,
+      decoration: const InputDecoration(
+          fillColor: kGrayLight,
+          filled: true,
+          contentPadding: EdgeInsets.all(12),
+          border: InputBorder.none,
+          hintText: 'Vehicle Plate no'));
   durationWidget() {
     return Row(
       children: [
@@ -172,18 +221,38 @@ class _CompanyInviteGuestState extends State<CompanyInviteGuest> {
 
   addItemPass() {
     if (_formKey.currentState!.validate()) {
-      _invitationNotifier!.setItemPass(fullName.text, phone.text,
-          visitingNumber.text, [], null, null, null, purposeOfVisit.text);
-      Navigator.pushNamed(context, '/add_item_pass');
+      _invitationNotifier!.setItemPass(
+          fullName.text,
+          phone.text,
+          visitingNumber.text,
+          [],
+          null,
+          null,
+          null,
+          purposeOfVisit.text,
+          vehicleModel.text,
+          vehiclePlate.text,
+          vehicleColor.text);
+      Navigator.pushNamed(context, '/company_item_pass');
     }
   }
 
   // validate() => Navigator.pushNamed(context, '/pending_request');
   validate() async {
     if (_formKey.currentState!.validate()) {
-      _invitationNotifier!.setItemPass(fullName.text, phone.text,
-          visitingNumber.text, [], null, null, null, purposeOfVisit.text);
-      Navigator.pushNamed(context, '/visitor_info');
+      _invitationNotifier!.setItemPass(
+          fullName.text,
+          phone.text,
+          visitingNumber.text,
+          [],
+          null,
+          null,
+          null,
+          purposeOfVisit.text,
+          vehicleModel.text,
+          vehiclePlate.text,
+          vehicleColor.text);
+      Navigator.pushNamed(context, '/company_visitor_info');
     }
   }
 }

@@ -14,7 +14,7 @@ class VisitorEntryModel {
   String? estateVisitorAddress;
   String? estateVisitorPhone;
   String? purposeOfVisit;
-  String? duration;
+  int? duration;
   String? visitorId;
   List<ItemPass>? itemPass;
   bool? visitExpired;
