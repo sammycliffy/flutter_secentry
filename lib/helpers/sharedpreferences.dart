@@ -55,4 +55,10 @@ class SharedPreference {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt(key, value);
   }
+
+  Future<int?> readInt(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    int? getInt = prefs.getInt(key);
+    return getInt;
+  }
 }

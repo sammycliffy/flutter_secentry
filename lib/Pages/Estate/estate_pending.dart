@@ -6,6 +6,7 @@ import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
 import 'package:flutter_secentry/models/estate_details.dart';
 import 'package:flutter_secentry/services/estate_service.dart';
+import 'package:flutter_secentry/services/message_service.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:flutter_secentry/widget/toast.dart';
 import 'package:provider/src/provider.dart';
@@ -19,8 +20,29 @@ class EstatePending extends StatefulWidget {
 
 class _EstatePendingState extends State<EstatePending> {
   final EstateServices _estateServices = EstateServices();
-
+  final MessageServices _messageServices = MessageServices();
+  int? count = 0;
+  int? storedCount = 0;
   ProfileDataNotifier? _profileDataNotifier;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInt();
+  }
+
+  getInt() async {
+    _messageServices.getAllMessage().then((value) {
+      setState(() {
+        count = value.count;
+      });
+    });
+
+    SharedPreference().readInt('message').then((value) {
+      storedCount = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _profileDataNotifier = context.watch<ProfileDataNotifier>();
@@ -56,7 +78,7 @@ class _EstatePendingState extends State<EstatePending> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Hi ${_profileDataNotifier!.userProfile!.fullName},',
+                          name(_profileDataNotifier!.userProfile!.fullName),
                           style: TextStyle(fontSize: 25),
                         ),
                         widthSpace(40),
@@ -69,31 +91,46 @@ class _EstatePendingState extends State<EstatePending> {
                           onPressed: () =>
                               Navigator.pushNamed(context, '/my_invitations'),
                         ),
-                        Stack(
-                          children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.email,
-                                color: kPrimary,
-                                size: 30,
-                              ),
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, '/messages'),
-                            ),
-                            Container(
-                              width: 26,
-                              height: 26,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: kGreen),
-                              child: Center(
-                                child: Text(
-                                  '1',
-                                  style: TextStyle(color: kWhite),
+                        count == storedCount
+                            ? IconButton(
+                                icon: const Icon(
+                                  Icons.email,
+                                  color: kPrimary,
+                                  size: 30,
                                 ),
-                              ),
-                            )
-                          ],
-                        )
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, '/messages'),
+                              )
+                            : GestureDetector(
+                                onTap: () =>
+                                    Navigator.pushNamed(context, '/messages'),
+                                child: Stack(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.email,
+                                        color: kPrimary,
+                                        size: 30,
+                                      ),
+                                      onPressed: () => Navigator.pushNamed(
+                                          context, '/messages'),
+                                    ),
+                                    Container(
+                                      width: 26,
+                                      height: 26,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kGreen),
+                                      child: const Center(
+                                        child: Text(
+                                          '1',
+                                          style: TextStyle(color: kWhite),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
                       ],
                     ),
                     const Text(
@@ -139,7 +176,7 @@ class _EstatePendingState extends State<EstatePending> {
                   color: kWhite,
                 ),
                 const Text(
-                  'Tap to refresh',
+                  'Tap to Refresh',
                   style: TextStyle(color: kWhite, fontSize: 20),
                 )
               ],
@@ -161,4 +198,6 @@ class _EstatePendingState extends State<EstatePending> {
       }
     });
   }
+
+  name(name) => 'Hi, ' + name.substring(0, name.indexOf(' '));
 }

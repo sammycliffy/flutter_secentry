@@ -123,7 +123,7 @@ class _MessagesState extends State<Messages> {
   firstTimeLoad() {
     _messageModel = _messageServices.getAllMessage();
     _messageModel.then((value) {
-      SharedPreference().saveCount('count', value.count);
+      SharedPreference().saveCount('message', value.count);
       setState(() {
         loading = false;
       });

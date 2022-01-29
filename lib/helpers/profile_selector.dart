@@ -20,39 +20,41 @@ checkProfile(context) async {
   } else if (userData.isEstateuser == true) {
     //is estate user
     if (userData.belongEstateId != "No Estate ID") {
-      _getDetails.getEstateDetails();
-      EstateDetails estateDetails =
-          await SharedPreference().readEstateModel('estateDetails');
-      if (estateDetails.results?[0].accepted != true) {
-        bool? result = await SharedPreference().readPendingStatus('pending');
-        if (result == true || result == null) {
-          Navigator.pushNamed(context, '/estate_pending');
+      _getDetails.getEstateDetails().then((value) async {
+        EstateDetails estateDetails =
+            await SharedPreference().readEstateModel('estateDetails');
+        if (estateDetails.results?[0].accepted != true) {
+          bool? result = await SharedPreference().readPendingStatus('pending');
+          if (result == true || result == null) {
+            Navigator.pushNamed(context, '/estate_pending');
+          } else {
+            Navigator.pushNamed(context, '/estatejoinfacility');
+          }
         } else {
-          Navigator.pushNamed(context, '/estatejoinfacility');
+          Navigator.pushNamed(context, '/estate_dashboard');
         }
-      } else {
-        Navigator.pushNamed(context, '/estate_dashboard');
-      }
+      });
     } else {
       Navigator.pushNamed(context, '/estatejoinfacility');
     }
   } else if (userData.isCompanyuser == true) {
     if (userData.belongCompanyId != "No Company ID") {
-      _getDetails.getCompanyDetails();
-      CompanyDetails companyDetails =
-          await SharedPreference().readCompanyModel("companydetails");
+      _getDetails.getCompanyDetails().then((value) async {
+        CompanyDetails companyDetails =
+            await SharedPreference().readCompanyModel("companydetails");
 
-      print(companyDetails.results?[0].accepted);
-      if (companyDetails.results?[0].accepted != true) {
-        bool? result = await SharedPreference().readPendingStatus('pending');
-        if (result == true || result == null) {
-          Navigator.pushNamed(context, '/company_pending');
+        print(companyDetails.results?[0].accepted);
+        if (companyDetails.results?[0].accepted != true) {
+          bool? result = await SharedPreference().readPendingStatus('pending');
+          if (result == true || result == null) {
+            Navigator.pushNamed(context, '/company_pending');
+          } else {
+            Navigator.pushNamed(context, '/companyjoinfacility');
+          }
         } else {
-          Navigator.pushNamed(context, '/companyjoinfacility');
+          Navigator.pushNamed(context, '/company_dashboard');
         }
-      } else {
-        Navigator.pushNamed(context, '/company_dashboard');
-      }
+      });
     } else {
       Navigator.pushNamed(context, '/companyjoinfacility');
     }

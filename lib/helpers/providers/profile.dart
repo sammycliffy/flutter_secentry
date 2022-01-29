@@ -10,11 +10,13 @@ class ProfileDataNotifier with ChangeNotifier {
   CompanyDetails? _companyDetails;
   GuardModel? _guardModel;
   bool _loading = false;
+  int? _messageCount = 0;
 
   UserModel? get userProfile => _userProfile;
   GuardModel? get guardModel => _guardModel;
   EstateDetails? get estateDetails => _estateDetails;
   CompanyDetails? get companyDetails => _companyDetails;
+  int? get messageCount => _messageCount;
   bool get loading => _loading;
   setUserProfile(UserModel? userProfile) {
     _userProfile = userProfile;
@@ -39,5 +41,9 @@ class ProfileDataNotifier with ChangeNotifier {
   setLoading(bool loading) {
     _loading = loading;
     notifyListeners();
+  }
+
+  setMessageCount(int? count) {
+    _messageCount = count;
   }
 }

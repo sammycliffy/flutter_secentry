@@ -6,19 +6,19 @@ class GetDetails {
   final EstateServices _estateServices = EstateServices();
   final CompanyServices _companyServices = CompanyServices();
   final GuardServices _guardServices = GuardServices();
-  void getCompanyDetails() async {
+  Future getCompanyDetails() async {
     dynamic companyResults = await _companyServices.getCompanyDetail();
   }
 
-  void getEstateDetails() async {
+  Future getEstateDetails() async {
     dynamic result = await _estateServices.getEstateDetail();
   }
 
-  void getEstateGuardDetails() async {
+  Future getEstateGuardDetails() async {
     dynamic result = await _guardServices.getEstateGuardDetail();
   }
 
-  void getCompanyGuardDetails() async {
+  Future getCompanyGuardDetails() async {
     dynamic result = await _guardServices.getCompanyGuardDetail();
   }
 }
