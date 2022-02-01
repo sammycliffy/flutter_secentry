@@ -39,7 +39,7 @@ class CompanyInfo extends StatelessWidget {
               Divider(),
               heightSpace(20),
               text('company code',
-                  '${_profileDataNotifier!.companyDetails!.results?[0].companyUserCode}'),
+                  '${_profileDataNotifier!.companyDetails!.results?[0].companyId}'),
               Divider(),
               heightSpace(20),
               text('Accepted',

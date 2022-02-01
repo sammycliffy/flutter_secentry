@@ -7,22 +7,26 @@ import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/services/guard/estate_company_guard.dart';
 import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
-class VisitorEntryApproval extends StatefulWidget {
-  const VisitorEntryApproval({Key? key}) : super(key: key);
+class EstateCompanyVisitorEntryApproval extends StatefulWidget {
+  const EstateCompanyVisitorEntryApproval({Key? key}) : super(key: key);
 
   @override
-  State<VisitorEntryApproval> createState() => _VisitorEntryApprovalState();
+  State<EstateCompanyVisitorEntryApproval> createState() =>
+      _EstateCompanyVisitorEntryApprovalState();
 }
 
-class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
+class _EstateCompanyVisitorEntryApprovalState
+    extends State<EstateCompanyVisitorEntryApproval> {
   final code = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final GuardServices _guardServices = GuardServices();
+  final EstateCompanyGuardServices _guardServices =
+      EstateCompanyGuardServices();
   ProfileDataNotifier? _profileDataNotifier;
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
@@ -59,23 +63,14 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
                               onPressed: () => Navigator.pop(context),
                               icon: const Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Text(
-                                'Visitor entry',
-                                style: TextStyle(fontSize: 40),
-                              ),
-                              IconButton(
-                                  onPressed: () => Navigator.pushNamed(
-                                      context, '/estate_company_visitor_entry'),
-                                  icon: Icon(
-                                    Icons.house,
-                                    size: 30,
-                                    color: kGreen,
-                                  ))
-                            ],
+                          const Text(
+                            'Visitor entry',
+                            style: TextStyle(fontSize: 40),
+                          ),
+                          heightSpace(5),
+                          const Text(
+                            'For companies inside an estate',
+                            style: TextStyle(color: kGray),
                           ),
                           heightSpace(80),
                           visitorCode(),

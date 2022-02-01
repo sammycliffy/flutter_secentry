@@ -175,8 +175,8 @@ class _EstatePendingState extends State<EstatePending> {
                   size: 40,
                   color: kWhite,
                 ),
-                const Text(
-                  'Tap to Refresh',
+                Text(
+                  'Tap to refresh',
                   style: TextStyle(color: kWhite, fontSize: 20),
                 )
               ],
@@ -193,6 +193,7 @@ class _EstatePendingState extends State<EstatePending> {
         Navigator.pushNamed(context, '/estate_dashboard');
         _profileDataNotifier!.setLoading(false);
       } else {
+        getInt();
         _profileDataNotifier!.setLoading(false);
         ToastUtils.showRedToast('Not yet accepted');
       }

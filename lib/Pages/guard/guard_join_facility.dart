@@ -38,8 +38,8 @@ class _GuardJoinFacilityState extends State<GuardJoinFacility> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           heightSpace(40),
-                          const IconButton(
-                              onPressed: null,
+                          IconButton(
+                              onPressed: () => Navigator.pop(context),
                               icon: Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
                           const Text(
@@ -78,7 +78,7 @@ class _GuardJoinFacilityState extends State<GuardJoinFacility> {
       dynamic result = await _guardServices.joinEstate(context, code.text);
       if (result == true) {
         _profileDataNotifier!.setLoading(false);
-        Navigator.pushNamed(context, '/guard_dashboard');
+        Navigator.pushNamed(context, '/guard_estate_dashboard');
       } else {
         _profileDataNotifier!.setLoading(false);
       }

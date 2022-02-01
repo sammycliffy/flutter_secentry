@@ -2,28 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_secentry/Pages/guard/entry_info.dart';
+import 'package:flutter_secentry/Pages/guard/exit_info.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/services/guard/estate_company_guard.dart';
 import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
-class VisitorEntryApproval extends StatefulWidget {
-  const VisitorEntryApproval({Key? key}) : super(key: key);
+class EstateCompanyVisitorExitApproval extends StatefulWidget {
+  const EstateCompanyVisitorExitApproval({Key? key}) : super(key: key);
 
   @override
-  State<VisitorEntryApproval> createState() => _VisitorEntryApprovalState();
+  State<EstateCompanyVisitorExitApproval> createState() =>
+      _EstateCompanyVisitorExitApprovalState();
 }
 
-class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
+class _EstateCompanyVisitorExitApprovalState
+    extends State<EstateCompanyVisitorExitApproval> {
   final code = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final GuardServices _guardServices = GuardServices();
+  final EstateCompanyGuardServices _guardServices =
+      EstateCompanyGuardServices();
   ProfileDataNotifier? _profileDataNotifier;
+
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
@@ -57,25 +63,16 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
                           heightSpace(40),
                           IconButton(
                               onPressed: () => Navigator.pop(context),
-                              icon: const Icon(Icons.arrow_back_ios)),
+                              icon: Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Text(
-                                'Visitor entry',
-                                style: TextStyle(fontSize: 40),
-                              ),
-                              IconButton(
-                                  onPressed: () => Navigator.pushNamed(
-                                      context, '/estate_company_visitor_entry'),
-                                  icon: Icon(
-                                    Icons.house,
-                                    size: 30,
-                                    color: kGreen,
-                                  ))
-                            ],
+                          const Text(
+                            'Visitor exit',
+                            style: TextStyle(fontSize: 40),
+                          ),
+                          heightSpace(5),
+                          const Text(
+                            'For companies inside an estate',
+                            style: TextStyle(color: kGray),
                           ),
                           heightSpace(80),
                           visitorCode(),
@@ -114,7 +111,7 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => EntryInfo(
+                builder: (context) => ExitInfo(
                       visitorModel: value,
                     )));
       }).whenComplete(() => _profileDataNotifier!.setLoading(false));

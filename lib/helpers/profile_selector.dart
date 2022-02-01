@@ -64,6 +64,7 @@ checkProfile(context) async {
         userData.getCompanyIdGuard == "None") {
       Navigator.pushNamed(context, '/no_guard_facility');
     } else if (userData.getCompanyIdGuard != "None") {
+      print(userData.getCompanyIdGuard);
       _getDetails.getCompanyGuardDetails();
 
       Navigator.pushNamed(context, '/guard_company_dashboard');

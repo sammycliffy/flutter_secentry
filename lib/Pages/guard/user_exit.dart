@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
@@ -58,9 +59,23 @@ class _UserExitState extends State<UserExit> {
                               onPressed: () => Navigator.pop(context),
                               icon: const Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
-                          const Text(
-                            'User Exit',
-                            style: TextStyle(fontSize: 40),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              const Text(
+                                'User exit',
+                                style: TextStyle(fontSize: 40),
+                              ),
+                              IconButton(
+                                  onPressed: () => Navigator.pushNamed(
+                                      context, '/estate_company_user_exit'),
+                                  icon: Icon(
+                                    Icons.house,
+                                    size: 30,
+                                    color: kGreen,
+                                  ))
+                            ],
                           ),
                           heightSpace(80),
                           visitorCode(),

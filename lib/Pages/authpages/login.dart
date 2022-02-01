@@ -8,6 +8,7 @@ import 'package:flutter_secentry/helpers/getFacilityDetails.dart';
 import 'package:flutter_secentry/helpers/profile_helpers.dart';
 import 'package:flutter_secentry/helpers/profile_selector.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/helpers/sharedpreferences.dart';
 import 'package:flutter_secentry/services/auth_service.dart';
 import 'package:flutter_secentry/services/company/company_services.dart';
 import 'package:flutter_secentry/services/estate_service.dart';
@@ -127,6 +128,7 @@ class _LoginState extends State<Login> {
         saveEstate(context);
         saveCompany(context);
         saveGuard(context);
+        SharedPreference().saveCount('message', 0);
       } else {
         _profileDataNotifier!.setLoading(false);
       }

@@ -41,6 +41,10 @@ import 'package:flutter_secentry/Pages/guard/company_visitor_entry.dart';
 import 'package:flutter_secentry/Pages/guard/company_visitor_exit.dart';
 import 'package:flutter_secentry/Pages/guard/entry_approved_page.dart';
 import 'package:flutter_secentry/Pages/guard/entry_info.dart';
+import 'package:flutter_secentry/Pages/guard/estatecompany_user_entry.dart';
+import 'package:flutter_secentry/Pages/guard/estatecompany_user_exit.dart';
+import 'package:flutter_secentry/Pages/guard/estatecompany_visitor_entry.dart';
+import 'package:flutter_secentry/Pages/guard/estatecompany_visitor_exit.dart';
 import 'package:flutter_secentry/Pages/guard/exit_approved_page.dart';
 import 'package:flutter_secentry/Pages/guard/guard_company_dashboard.dart';
 import 'package:flutter_secentry/Pages/guard/guard_estate_dashboard.dart';
@@ -113,4 +117,10 @@ final route = {
   '/company_visitor_exit': (context) => const CompanyVisitorExitApproval(),
   '/entry_approved': (context) => const EntryApproved(),
   '/exit_approved': (context) => const ExitApproved(),
+  '/estate_company_user_entry': (context) => const EstateCompanyUserEntry(),
+  '/estate_company_user_exit': (context) => const EstateCompanyUserExit(),
+  '/estate_company_visitor_entry': (context) =>
+      const EstateCompanyVisitorEntryApproval(),
+  '/estate_company_visitor_exit': (context) =>
+      const EstateCompanyVisitorExitApproval()
 };

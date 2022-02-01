@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_secentry/Pages/guard/entry_info.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
+import 'package:flutter_secentry/services/estate_service.dart';
 import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
-class VisitorEntryApproval extends StatefulWidget {
-  const VisitorEntryApproval({Key? key}) : super(key: key);
+class EstateCompanyUserExit extends StatefulWidget {
+  const EstateCompanyUserExit({Key? key}) : super(key: key);
 
   @override
-  State<VisitorEntryApproval> createState() => _VisitorEntryApprovalState();
+  State<EstateCompanyUserExit> createState() => _EstateCompanyUserExitState();
 }
 
-class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
+class _EstateCompanyUserExitState extends State<EstateCompanyUserExit> {
   final code = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final GuardServices _guardServices = GuardServices();
@@ -59,23 +59,14 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
                               onPressed: () => Navigator.pop(context),
                               icon: const Icon(Icons.arrow_back_ios)),
                           heightSpace(40),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Text(
-                                'Visitor entry',
-                                style: TextStyle(fontSize: 40),
-                              ),
-                              IconButton(
-                                  onPressed: () => Navigator.pushNamed(
-                                      context, '/estate_company_visitor_entry'),
-                                  icon: Icon(
-                                    Icons.house,
-                                    size: 30,
-                                    color: kGreen,
-                                  ))
-                            ],
+                          const Text(
+                            'User Exit',
+                            style: TextStyle(fontSize: 40),
+                          ),
+                          heightSpace(5),
+                          const Text(
+                            'For companies inside an estate',
+                            style: TextStyle(color: kGray),
                           ),
                           heightSpace(80),
                           visitorCode(),
@@ -109,15 +100,13 @@ class _VisitorEntryApprovalState extends State<VisitorEntryApproval> {
   validate() async {
     if (_formKey.currentState!.validate()) {
       _profileDataNotifier!.setLoading(true);
-      _guardServices.searchVisitor(context, code.text).then((value) {
+      dynamic result = await _guardServices.exitUser(context, code.text);
+      if (result) {
         _profileDataNotifier!.setLoading(false);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => EntryInfo(
-                      visitorModel: value,
-                    )));
-      }).whenComplete(() => _profileDataNotifier!.setLoading(false));
+        Navigator.pushNamed(context, '/no_facility_invitation');
+      } else {
+        _profileDataNotifier!.setLoading(false);
+      }
     }
   }
 }
