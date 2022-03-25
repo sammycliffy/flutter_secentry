@@ -34,7 +34,7 @@ class _MyAccountState extends State<MyAccount> {
                   heightSpace(10),
                   listItem('Logout', Icons.logout, logout),
                   heightSpace(10),
-                  listItem('Help', Icons.help, logout),
+                  // listItem('Help', Icons.help, logout),
                 ],
               ),
             ),

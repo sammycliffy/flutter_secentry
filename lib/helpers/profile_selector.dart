@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secentry/helpers/getFacilityDetails.dart';
+import 'package:flutter_secentry/helpers/profile_helpers.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
 import 'package:flutter_secentry/models/company/company_details_model.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 checkProfile(context) async {
+  saveUser(context);
   GetDetails _getDetails = GetDetails();
   ProfileDataNotifier _profileNotifier =
       Provider.of<ProfileDataNotifier>(context, listen: false);
@@ -31,6 +33,8 @@ checkProfile(context) async {
             Navigator.pushNamed(context, '/estatejoinfacility');
           }
         } else {
+          saveUser(context);
+          saveEstate(context);
           Navigator.pushNamed(context, '/estate_dashboard');
         }
       });
@@ -47,11 +51,15 @@ checkProfile(context) async {
         if (companyDetails.results?[0].accepted != true) {
           bool? result = await SharedPreference().readPendingStatus('pending');
           if (result == true || result == null) {
+            saveUser(context);
             Navigator.pushNamed(context, '/company_pending');
           } else {
+            saveUser(context);
             Navigator.pushNamed(context, '/companyjoinfacility');
           }
         } else {
+          saveUser(context);
+          saveCompany(context);
           Navigator.pushNamed(context, '/company_dashboard');
         }
       });
@@ -62,15 +70,21 @@ checkProfile(context) async {
     //guard
     if (userData.getEstateIdGuard == "None" &&
         userData.getCompanyIdGuard == "None") {
+      saveUser(context);
       Navigator.pushNamed(context, '/no_guard_facility');
     } else if (userData.getCompanyIdGuard != "None") {
       print(userData.getCompanyIdGuard);
-      _getDetails.getCompanyGuardDetails();
-
-      Navigator.pushNamed(context, '/guard_company_dashboard');
+      _getDetails.getCompanyGuardDetails().then((value) {
+        saveUser(context);
+        saveGuard(context);
+        Navigator.pushNamed(context, '/guard_company_dashboard');
+      });
     } else {
-      _getDetails.getEstateGuardDetails();
-      Navigator.pushNamed(context, '/guard_estate_dashboard');
+      _getDetails.getEstateGuardDetails().then((value) {
+        saveUser(context);
+        saveGuard(context);
+        Navigator.pushNamed(context, '/guard_estate_dashboard');
+      });
     }
   }
 

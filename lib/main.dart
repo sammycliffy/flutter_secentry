@@ -26,14 +26,14 @@ class MyApp extends StatelessWidget {
       providers: providers,
       child: MaterialApp(
         routes: route,
-        title: 'Flutter Secentry',
+        title: 'Secentry',
         theme: ThemeData(
           scaffoldBackgroundColor: kWhite,
           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context).textTheme,
           ),
         ),
-        home: const Login(),
+        home: const SplashScreen(),
       ),
     );
   }

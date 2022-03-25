@@ -22,6 +22,8 @@ class Images {
   static String exit_approved = 'assets/images/exit_approved.svg';
   static String secentryLogo = 'assets/images/secentry_logo.png';
   static String badge_icon = 'assets/images/badge.png';
+  static String coming_soon = 'assets/images/coming_soon.png';
+  static String onboard1 = 'assets/images/onboard.png';
 }
 
 final noEstateImage =

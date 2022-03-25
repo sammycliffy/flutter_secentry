@@ -113,7 +113,7 @@ class _CompanyDashoardState extends State<CompanyDashoard> {
                           guestEntry, 'Guest Entry', '/company_guest_entry'),
                       cellIcon(
                           emergencyIcon, 'Emergency', '/company_emergency'),
-                      cellIcon(reportIcon, 'Report', null)
+                      cellIcon(reportIcon, 'Report', '/coming_soon')
                     ],
                   ),
                   heightSpace(50),

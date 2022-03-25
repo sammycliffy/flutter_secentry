@@ -124,10 +124,10 @@ class _LoginState extends State<Login> {
       if (result) {
         _profileDataNotifier!.setLoading(false);
         checkProfile(context);
-        saveUser(context);
-        saveEstate(context);
-        saveCompany(context);
-        saveGuard(context);
+        // saveUser(context);
+        // saveEstate(context);
+        // saveCompany(context);
+        // saveGuard(context);
         SharedPreference().saveCount('message', 0);
       } else {
         _profileDataNotifier!.setLoading(false);

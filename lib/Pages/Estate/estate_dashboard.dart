@@ -111,7 +111,7 @@ class _EstateDashoardState extends State<EstateDashoard> {
                     children: [
                       cellIcon(guestEntry, 'Guest Entry', '/guest_entry'),
                       cellIcon(emergencyIcon, 'Emergency', '/emergency'),
-                      cellIcon(reportIcon, 'Report', null)
+                      cellIcon(reportIcon, 'Report', '/coming_soon')
                     ],
                   ),
                   heightSpace(50),
@@ -153,5 +153,12 @@ class _EstateDashoardState extends State<EstateDashoard> {
         ],
       );
 
-  name(name) => 'Hi, ' + name.substring(0, name.indexOf(' '));
+  name(name) {
+    try {
+      return 'Hi, ' + name.substring(0, name.indexOf(' '));
+    } catch (e) {
+      print(e.toString());
+      return name;
+    }
+  }
 }

@@ -48,9 +48,7 @@ class _GuestInfoState extends State<GuestInfo> {
                                 ),
                                 widthSpace(60),
                               ]),
-                          IconButton(
-                              onPressed: () => Navigator.pop(context),
-                              icon: Icon(Icons.arrow_back_ios)),
+
                           heightSpace(30),
                           const Text(
                             'Guest Info',

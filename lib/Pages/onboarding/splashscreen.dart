@@ -39,15 +39,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   checkLoginState() async {
-    final EstateServices _estateServices = EstateServices();
     SharedPreferences sharedPreferences;
     sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString("token");
     print(token);
     if (token != null) {
-      dynamic result = await _estateServices.getEstateDetails();
-      saveUser(context);
-      saveEstate(context);
       checkProfile(context);
     } else {
       Navigator.pushNamed(context, '/login');

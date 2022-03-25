@@ -200,5 +200,11 @@ class _EstatePendingState extends State<EstatePending> {
     });
   }
 
-  name(name) => 'Hi, ' + name.substring(0, name.indexOf(' '));
+  name(name) {
+    try {
+      return 'Hi, ' + name.substring(0, name.indexOf(' '));
+    } catch (e) {
+      return name;
+    }
+  }
 }

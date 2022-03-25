@@ -43,17 +43,16 @@ class _MyInvitationsState extends State<MyInvitations> {
           children: [
             heightSpace(50),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                widthSpace(20),
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icon(Icons.arrow_back_ios)),
                 const Text(
                   'My Invitations',
-                  style: TextStyle(fontSize: 40),
+                  style: TextStyle(fontSize: 25),
                 ),
+                widthSpace(50),
               ],
             ),
             heightSpace(50),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secentry/constants/colors.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
+import 'package:flutter_secentry/helpers/profile_helpers.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/services/company/company_services.dart';
 import 'package:flutter_secentry/widget/loading.dart';
@@ -35,19 +36,7 @@ class _CompanyPendingState extends State<CompanyPending> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     heightSpace(30),
-                    GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/my_account'),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: kPrimary,
-                        ),
-                        child:
-                            const Icon(Icons.person, color: kWhite, size: 25),
-                      ),
-                    ),
+
                     heightSpace(20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,7 +79,21 @@ class _CompanyPendingState extends State<CompanyPending> {
                               ),
                             )
                           ],
-                        )
+                        ),
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.pushNamed(context, '/my_account'),
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: kPrimary,
+                            ),
+                            child: const Icon(Icons.person,
+                                color: kWhite, size: 25),
+                          ),
+                        ),
                       ],
                     ),
                     const Text(
@@ -148,7 +151,7 @@ class _CompanyPendingState extends State<CompanyPending> {
   checkAcceptedStatus() async {
     _profileDataNotifier!.setLoading(true);
     _companyServices.getCompanyDetail().then((value) {
-      // saveCompany(context);
+      saveCompany(context);
       if (value.results?[0].accepted == true) {
         Navigator.pushNamed(context, '/company_dashboard');
         _profileDataNotifier!.setLoading(false);

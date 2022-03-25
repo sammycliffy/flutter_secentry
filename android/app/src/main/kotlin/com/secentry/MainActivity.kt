@@ -1,4 +1,4 @@
-package com.example.flutter_secentry
+package com.secentry
 
 import io.flutter.embedding.android.FlutterActivity
 

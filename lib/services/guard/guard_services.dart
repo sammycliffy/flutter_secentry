@@ -53,6 +53,7 @@ class GuardServices {
   Future<VisitorModel> searchVisitor(context, visitorId) async {
     UserModel userData = await SharedPreference().readAsModel('userData');
     VisitorModel _visitorModel = VisitorModel();
+
     try {
       var client = http.Client();
       var url = Uri.parse(
@@ -79,6 +80,7 @@ class GuardServices {
         log("error login: ${response.body}");
       }
     } catch (e) {
+      print(e.toString());
       if (e is SocketException) {
         ToastUtils.showRedToast('Network Error');
       } else {
@@ -188,7 +190,7 @@ class GuardServices {
       var client = http.Client();
       var url =
           Uri.parse("${Api.baseUrl}estate-user-guest/$visitorPrimaryKey/");
-      print(url);
+
       final http.Response response = await client
           .patch(
             url,
@@ -218,7 +220,7 @@ class GuardServices {
       if (e is SocketException) {
         ToastUtils.showRedToast('Network Error');
       } else {
-        ToastUtils.showRedToast('Network Error');
+        print(e.toString());
       }
     }
     return result;

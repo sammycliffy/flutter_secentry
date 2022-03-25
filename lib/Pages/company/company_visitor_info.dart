@@ -173,7 +173,8 @@ class _CompanyVisitorInfoState extends State<CompanyVisitorInfo> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => EstateQRCode(visitorEntryModel: result)));
+                builder: (context) =>
+                    CompanyQRCode(visitorEntryModel: result)));
       } else {
         _invitationNotifier!.setLoading(false);
       }
