@@ -59,10 +59,12 @@ class _OnboardingState extends State<Onboarding> {
               heightSpace(40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: CustomButton(text: 'Continue', validate: null),
+                child: CustomButton(text: 'Continue', validate: validate),
               )
             ],
           ),
         ));
   }
+
+  validate() => Navigator.pushNamed(context, '/login');
 }

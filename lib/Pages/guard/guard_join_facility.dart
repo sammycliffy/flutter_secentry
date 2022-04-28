@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
+import 'package:flutter_secentry/helpers/profile_helpers.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/services/guard/guard_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
@@ -78,6 +79,8 @@ class _GuardJoinFacilityState extends State<GuardJoinFacility> {
       dynamic result = await _guardServices.joinEstate(context, code.text);
       if (result == true) {
         _profileDataNotifier!.setLoading(false);
+        saveUser(context);
+        saveGuard(context);
         Navigator.pushNamed(context, '/guard_estate_dashboard');
       } else {
         _profileDataNotifier!.setLoading(false);

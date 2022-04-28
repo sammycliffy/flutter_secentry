@@ -23,6 +23,7 @@ class _RegistrationState extends State<Registration> {
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
   final phone = TextEditingController();
+  final address = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String dropdownValue = 'Company user';
   String gender = 'Male';
@@ -63,6 +64,8 @@ class _RegistrationState extends State<Registration> {
                           heightSpace(20),
                           phoneText(),
                           heightSpace(20),
+                          addressText(),
+                          heightSpace(20),
                           passwordText(),
                           heightSpace(20),
                           confirmpasswordText(),
@@ -101,7 +104,15 @@ class _RegistrationState extends State<Registration> {
           fillColor: kGrayLight,
           border: InputBorder.none,
           hintText: 'Full name'));
-
+  addressText() => TextFormField(
+      controller: address,
+      validator: (value) => FormValidation().stringValidation(fullName.text),
+      decoration: const InputDecoration(
+          contentPadding: EdgeInsets.all(12),
+          filled: true,
+          fillColor: kGrayLight,
+          border: InputBorder.none,
+          hintText: 'Address'));
   phoneText() => TextFormField(
       controller: phone,
       validator: (value) {
@@ -202,7 +213,7 @@ class _RegistrationState extends State<Registration> {
           email.text,
           fullName.text,
           phone.text,
-          'no address',
+          address.text,
           gender,
           password.text,
           companyUser,

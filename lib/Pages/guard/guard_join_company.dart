@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secentry/constants/images.dart';
 import 'package:flutter_secentry/constants/spaces.dart';
 import 'package:flutter_secentry/helpers/formvalidation.dart';
+import 'package:flutter_secentry/helpers/profile_helpers.dart';
 import 'package:flutter_secentry/helpers/providers/profile.dart';
 import 'package:flutter_secentry/services/guard_company/guard_company_services.dart';
 import 'package:flutter_secentry/widget/green_button.dart';
@@ -77,6 +78,8 @@ class _GuardJoinCompanyState extends State<GuardJoinCompany> {
       _profileDataNotifier!.setLoading(true);
       dynamic result = await _guardServices.joinCompany(context, code.text);
       if (result == true) {
+        saveUser(context);
+        saveGuard(context);
         _profileDataNotifier!.setLoading(false);
         Navigator.pushNamed(context, '/guard_dashboard');
       } else {

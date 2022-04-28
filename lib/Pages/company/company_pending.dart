@@ -66,18 +66,18 @@ class _CompanyPendingState extends State<CompanyPending> {
                               onPressed: () => Navigator.pushNamed(
                                   context, '/company_messages'),
                             ),
-                            Container(
-                              width: 26,
-                              height: 26,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle, color: kGreen),
-                              child: Center(
-                                child: Text(
-                                  '1',
-                                  style: TextStyle(color: kWhite),
-                                ),
-                              ),
-                            )
+                            // Container(
+                            //   width: 26,
+                            //   height: 26,
+                            //   decoration: BoxDecoration(
+                            //       shape: BoxShape.circle, color: kGreen),
+                            //   child: Center(
+                            //     child: Text(
+                            //       '1',
+                            //       style: TextStyle(color: kWhite),
+                            //     ),
+                            //   ),
+                            // )
                           ],
                         ),
                         GestureDetector(
