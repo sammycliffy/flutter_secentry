@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
+import 'package:flutter_secentry/models/company/company_visitor_model.dart';
 import 'package:flutter_secentry/models/user_model.dart';
 import 'package:flutter_secentry/models/visitor_model.dart';
 import 'package:flutter_secentry/services/api.dart';
@@ -15,6 +16,7 @@ class CompanyGuardServices {
       var client = http.Client();
       var url = Uri.parse("${Api.baseUrl}guard/");
       print(url);
+      print(facilityId);
       final http.Response response = await client
           .post(
             url,
@@ -23,15 +25,13 @@ class CompanyGuardServices {
               'Accept': 'application/json',
               'Authorization': 'Token ${userData.key}'
             },
-            body: jsonEncode(<String, dynamic>{
-              "company_id": facilityId,
-            }),
+            body: jsonEncode(
+                <String, dynamic>{"company_id": facilityId, "facility_id": ""}),
           )
           .timeout(Duration(seconds: 15));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final responseJson = json.decode(response.body);
-        print(responseJson);
+        print(response);
         return true;
       } else {
         final responseJson = json.decode(response.body);
@@ -44,6 +44,7 @@ class CompanyGuardServices {
       if (e is SocketException) {
         ToastUtils.showRedToast('Network Error');
       } else {
+        print(e.toString());
         ToastUtils.showRedToast('$e');
       }
     }
@@ -71,6 +72,44 @@ class CompanyGuardServices {
         print(responseJson);
 
         _visitorModel = VisitorModel.fromJson(responseJson);
+      } else {
+        final responseJson = json.decode(response.body);
+        print(responseJson);
+        ToastUtils.showRedToast(response.body);
+        log("error login: ${response.body}");
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        ToastUtils.showRedToast('Network Error');
+      } else {
+        ToastUtils.showRedToast('Network Error');
+      }
+    }
+    return _visitorModel;
+  }
+
+  Future<CompanyVisitorModel> searchCompanyVisitor(context, visitorId) async {
+    UserModel userData = await SharedPreference().readAsModel('userData');
+    CompanyVisitorModel _visitorModel = CompanyVisitorModel();
+    try {
+      var client = http.Client();
+      var url = Uri.parse(
+          "${Api.baseUrl}company-user-guest-search/?visitor_id=$visitorId");
+      print(url);
+      final http.Response response = await client.get(
+        url,
+        headers: <String, String>{
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Token ${userData.key}'
+        },
+      ).timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseJson = json.decode(response.body);
+        print(responseJson);
+
+        _visitorModel = CompanyVisitorModel.fromJson(responseJson);
       } else {
         final responseJson = json.decode(response.body);
         print(responseJson);

@@ -11,6 +11,8 @@ import 'package:flutter_secentry/widget/green_button.dart';
 import 'package:flutter_secentry/widget/loading.dart';
 import 'package:provider/provider.dart';
 
+import 'company_entry_info.dart';
+
 class CompanyVisitorEntryApproval extends StatefulWidget {
   const CompanyVisitorEntryApproval({Key? key}) : super(key: key);
 
@@ -96,12 +98,12 @@ class _CompanyVisitorEntryApprovalState
   validate() async {
     if (_formKey.currentState!.validate()) {
       _profileDataNotifier!.setLoading(true);
-      _guardServices.searchVisitor(context, code.text).then((value) {
+      _guardServices.searchCompanyVisitor(context, code.text).then((value) {
         _profileDataNotifier!.setLoading(false);
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => EntryInfo(
+                builder: (context) => CompanyEntryInfo(
                       visitorModel: value,
                     )));
       }).whenComplete(() => _profileDataNotifier!.setLoading(false));

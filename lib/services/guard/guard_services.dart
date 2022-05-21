@@ -190,7 +190,7 @@ class GuardServices {
       var client = http.Client();
       var url =
           Uri.parse("${Api.baseUrl}estate-user-guest/$visitorPrimaryKey/");
-
+      print(url);
       final http.Response response = await client
           .patch(
             url,
@@ -202,6 +202,102 @@ class GuardServices {
             body: jsonEncode(<String, dynamic>{
               "item_pass": [],
               "approved": true,
+            }),
+          )
+          .timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseJson = json.decode(response.body);
+        result = true;
+      } else {
+        final responseJson = json.decode(response.body);
+        result = false;
+        print(responseJson);
+        ToastUtils.showRedToast(response.body);
+        log("error login: ${response.body}");
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        ToastUtils.showRedToast('Network Error');
+      } else {
+        print(e.toString());
+      }
+    }
+    return result;
+  }
+
+  Future<bool> approveCompanyVisitor(
+    context,
+    visitorPrimaryKey,
+  ) async {
+    bool result = false;
+
+    UserModel userData = await SharedPreference().readAsModel('userData');
+
+    try {
+      var client = http.Client();
+      var url =
+          Uri.parse("${Api.baseUrl}company-user-guest/$visitorPrimaryKey/");
+      print(url);
+      final http.Response response = await client
+          .patch(
+            url,
+            headers: <String, String>{
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Token ${userData.key}'
+            },
+            body: jsonEncode(<String, dynamic>{
+              "item_pass": [],
+              "approved": true,
+            }),
+          )
+          .timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseJson = json.decode(response.body);
+        result = true;
+      } else {
+        final responseJson = json.decode(response.body);
+        result = false;
+        print(responseJson);
+        ToastUtils.showRedToast(response.body);
+        log("error login: ${response.body}");
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        ToastUtils.showRedToast('Network Error');
+      } else {
+        print(e.toString());
+      }
+    }
+    return result;
+  }
+
+  Future<bool> exitCompanyVisitor(
+    context,
+    visitorPrimaryKey,
+  ) async {
+    bool result = false;
+
+    UserModel userData = await SharedPreference().readAsModel('userData');
+
+    try {
+      var client = http.Client();
+      var url =
+          Uri.parse("${Api.baseUrl}company-user-guest/$visitorPrimaryKey/");
+      print(url);
+      final http.Response response = await client
+          .patch(
+            url,
+            headers: <String, String>{
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Token ${userData.key}'
+            },
+            body: jsonEncode(<String, dynamic>{
+              "item_pass": [],
+              "check_out": true,
             }),
           )
           .timeout(const Duration(seconds: 15));

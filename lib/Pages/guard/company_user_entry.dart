@@ -100,7 +100,7 @@ class _CompanyUserEntryState extends State<CompanyUserEntry> {
       dynamic result = await _guardServices.searchUser(context, code.text);
       if (result) {
         _profileDataNotifier!.setLoading(false);
-        Navigator.pushNamed(context, '/no_facility_invitation');
+        Navigator.pushNamed(context, '/entry_approved');
       } else {
         _profileDataNotifier!.setLoading(false);
       }

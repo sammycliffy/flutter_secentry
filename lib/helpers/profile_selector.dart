@@ -72,7 +72,7 @@ checkProfile(context) async {
         userData.getCompanyIdGuard == "None") {
       saveUser(context);
       Navigator.pushNamed(context, '/no_guard_facility');
-    } else if (userData.getCompanyIdGuard != "None") {
+    } else if (userData.getCompanyIdGuard != "") {
       print(userData.getCompanyIdGuard);
       _getDetails.getCompanyGuardDetails().then((value) {
         saveUser(context);

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_secentry/helpers/sharedpreferences.dart';
+import 'package:flutter_secentry/models/user_model.dart';
 import 'package:flutter_secentry/widget/toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -264,5 +265,38 @@ class AuthServices {
       }
     }
     return result;
+  }
+
+  Future<dynamic> deleteAccount() async {
+    UserModel userData = await SharedPreference().readAsModel('userData');
+    try {
+      var client = http.Client();
+      var url = Uri.parse("${Api.baseUrl}users/delete/${userData.phoneNumber}");
+      print(url);
+      final http.Response response = await client.delete(
+        url,
+        headers: <String, String>{
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Token ${userData.key}'
+        },
+      ).timeout(Duration(seconds: 15));
+      print(response.body);
+      if (response.statusCode == 204) {
+        return true;
+      } else {
+        final responseJson = json.decode(response.body);
+        print(responseJson);
+        ToastUtils.showRedToast(response.body);
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      // if (e is SocketException) {
+      //   return '"Please check your Internet Connection", "No Internet Connection"';
+      // } else {
+      //   print(e.toString());
+      // }
+    }
   }
 }

@@ -63,7 +63,7 @@ class _GuardEstateDashboardState extends State<GuardEstateDashboard> {
                             children: [
                               heightSpace(30),
                               Text(
-                                '${_profileDataNotifier!.guardModel!.results![0].facilityName}',
+                                '${_profileDataNotifier!.guardModel!.results![0].facilityName}' ,
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,

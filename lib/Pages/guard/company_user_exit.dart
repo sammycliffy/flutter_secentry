@@ -97,7 +97,7 @@ class _CompanyUserExitState extends State<CompanyUserExit> {
       dynamic result = await _guardServices.exitUser(context, code.text);
       if (result) {
         _profileDataNotifier!.setLoading(false);
-        Navigator.pushNamed(context, '/no_facility_invitation');
+        Navigator.pushNamed(context, '/exit_approved');
       } else {
         _profileDataNotifier!.setLoading(false);
       }

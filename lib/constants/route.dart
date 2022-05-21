@@ -106,6 +106,7 @@ final route = {
 
   //guard
   '/guard_join_facility': (context) => const GuardJoinFacility(),
+  '/guard_dashboard': (context) => const GuardCompanyDashboard(),
   '/guard_join_company': (context) => const GuardJoinCompany(),
   '/guard_estate_dashboard': (context) => const GuardEstateDashboard(),
   '/guard_company_dashboard': (context) => const GuardCompanyDashboard(),

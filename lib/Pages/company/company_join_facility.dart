@@ -104,4 +104,11 @@ class _CompanyJoinFacilityState extends State<CompanyJoinFacility> {
   }
 }
 
-name(name) => 'Hi, ' + name.substring(0, name.indexOf(' '));
+name(name) {
+  try {
+    return 'Hi, ' + name.substring(0, name.indexOf(' '));
+  } catch (e) {
+    print(e.toString());
+    return name;
+  }
+}

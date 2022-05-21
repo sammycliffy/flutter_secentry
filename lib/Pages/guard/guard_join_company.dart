@@ -80,6 +80,7 @@ class _GuardJoinCompanyState extends State<GuardJoinCompany> {
       if (result == true) {
         saveUser(context);
         saveGuard(context);
+        saveCompany(context);
         _profileDataNotifier!.setLoading(false);
         Navigator.pushNamed(context, '/guard_dashboard');
       } else {

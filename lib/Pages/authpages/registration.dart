@@ -114,6 +114,7 @@ class _RegistrationState extends State<Registration> {
           border: InputBorder.none,
           hintText: 'Address'));
   phoneText() => TextFormField(
+      keyboardType: TextInputType.number,
       controller: phone,
       validator: (value) {
         if (value?[0] != '0') {

@@ -118,12 +118,12 @@ class _LoginState extends State<Login> {
 
   validate() async {
     if (_formKey.currentState!.validate()) {
-      _profileDataNotifier!.setLoading(true);
       dynamic result =
           await _authServices.loginUser(context, email.text, password.text);
       if (result) {
         _profileDataNotifier!.setLoading(false);
         checkProfile(context);
+        _profileDataNotifier!.setLoading(true);
         // saveUser(context);
         // saveEstate(context);
         // saveCompany(context);
